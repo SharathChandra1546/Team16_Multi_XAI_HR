@@ -136,9 +136,13 @@ def _norm_dir(d) -> str | None:
     return DIR_NORMAL.get(str(d).strip().lower())
 
 
-def _value_matches(claim_value, it) -> bool:
+def _value_matches(claim_value, it, spec=None) -> bool:
     if claim_value is None or claim_value == "":
         return True
+    if spec is not None and spec.categorical and not isinstance(claim_value, (int, float)):
+        # a category is right only if its label is the evidence label: "below 0 DM" must not pass for "0 to 200 DM"
+        # just because both contain the number 0
+        return norm(str(claim_value)) == norm(it.value_label)
     if isinstance(claim_value, (int, float)) and not isinstance(claim_value, bool):
         nums = [abs(float(it.value))] + [v for v, *_ in extract_numbers(it.value_label)]
         return any(abs(float(claim_value) - n) <= 0.5 + 1e-9 for n in nums)
@@ -185,7 +189,7 @@ def verify(pkg: EvidencePackage, plan: ExplanationPlan, gen: GeneratedExplanatio
 
     cited: set[str] = set()
     for idx, c in enumerate(gen.claims):
-        _check_claim(pkg, plan, c, idx, add, item_ids, allowed, gloss, cited)
+        _check_claim(pkg, plan, c, idx, add, item_ids, allowed, gloss, cited, domain)
         if c.text and norm(c.text) not in ntext:
             add("claim_not_in_text", "Claim text does not appear in the explanation.", idx)
 
@@ -252,7 +256,7 @@ def verify(pkg: EvidencePackage, plan: ExplanationPlan, gen: GeneratedExplanatio
                               violations=v, n_claims=n)
 
 
-def _check_claim(pkg, plan, c: Claim, idx, add, item_ids, allowed, gloss, cited) -> None:
+def _check_claim(pkg, plan, c: Claim, idx, add, item_ids, allowed, gloss, cited, domain=None) -> None:
     ids = [i for i in (c.evidence_ids or []) if i]
     if not ids:
         add("missing_citation", "Claim cites no evidence.", idx)
@@ -317,7 +321,7 @@ def _check_claim(pkg, plan, c: Claim, idx, add, item_ids, allowed, gloss, cited)
     text_dir = "increases" if up and not down else "decreases" if down and not up else None
     if (d and d != it.direction) or (text_dir and text_dir != it.direction):
         add("direction_mismatch", f"Direction differs from the evidence ({it.direction}).", idx, it.id)
-    if not _value_matches(c.value, it):
+    if not _value_matches(c.value, it, domain.spec(it.feature) if domain is not None else None):
         add("value_mismatch", f"Value differs from the evidence ({it.value_label}).", idx, it.id)
     if c.magnitude and str(c.magnitude).lower() != it.magnitude:
         add("magnitude_mismatch", f"Magnitude differs from the evidence ({it.magnitude}).", idx, it.id)

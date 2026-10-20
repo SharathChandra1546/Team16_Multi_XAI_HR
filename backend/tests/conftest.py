@@ -17,6 +17,14 @@ os.environ["MOCK_FAULT_RATE"] = "0"
 
 if not (BACKEND / "models" / "hr_main.joblib").exists():  # first run on a fresh checkout
     subprocess.run([sys.executable, str(BACKEND / "scripts" / "train_hr.py"), "--standin", "--fast"], check=True)
+# every other registered domain: train its stand-in once if no model exists yet
+sys.path.insert(0, str(BACKEND))
+from app.domains.registry import KNOWN_DOMAINS  # noqa: E402
+
+for _name in KNOWN_DOMAINS:
+    if _name != "hr" and not (BACKEND / "models" / f"{_name}_main.joblib").exists():
+        subprocess.run([sys.executable, str(BACKEND / "scripts" / "train_domain.py"), "--domain", _name, "--standin",
+                        "--fast"], check=True)
 
 
 @pytest.fixture(scope="session")
