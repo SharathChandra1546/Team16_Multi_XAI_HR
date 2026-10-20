@@ -198,7 +198,6 @@ def verify(pkg: EvidencePackage, plan: ExplanationPlan, gen: GeneratedExplanatio
             add("missing_required", f"Required evidence {rid} is not cited.", None, rid)
 
     claim_texts = [norm(c.text) for c in gen.claims if c.text]
-    claim_text_by_idx = {i: norm(c.text) for i, c in enumerate(gen.claims) if c.text}
 
     # uncited mentions of model features (protected features are handled by the critic's protected rule)
     aliases = domain.all_aliases()
@@ -218,10 +217,11 @@ def verify(pkg: EvidencePackage, plan: ExplanationPlan, gen: GeneratedExplanatio
             continue
         if re.search(r"\boption\s*$", text[max(0, s - 8):s], re.I) and val.is_integer() and val <= len(pkg.recourse):
             continue  # option numbering
-        sent = next((st for st in sentences(text) if raw in st), "")
-        in_bad = any(i in bad_claims and claim_text_by_idx.get(i) and claim_text_by_idx[i] in norm(sent) or
-                     (i in bad_claims and claim_text_by_idx.get(i) and norm(sent) in claim_text_by_idx[i])
-                     for i in claim_text_by_idx)
+        # skip a number that sits inside a claim already flagged (one code per fault); locate it by its position,
+        # not by searching for its digits (a "4" must not be matched to the "4" inside "124" in another sentence)
+        in_bad = any(start <= s < start + len(gen.claims[i].text)
+                     for i in bad_claims if gen.claims[i].text
+                     for start in _occurrences(text, gen.claims[i].text))
         if not in_bad:
             add("unsupported_number", f"Number {raw} is not in the evidence.", None, raw)
 
@@ -360,3 +360,11 @@ def _check_comparison(c: Claim, pair, idx, add) -> None:
     bigger_first = abs(first.attribution) > abs(second.attribution)
     if (more and not bigger_first) or (less and bigger_first):
         add("rank_mismatch", f"Compares {first.display_name} and {second.display_name} in the wrong order.", idx, first.id)
+
+
+def _occurrences(text: str, sub: str) -> list[int]:
+    out, i = [], text.find(sub)
+    while i >= 0:
+        out.append(i)
+        i = text.find(sub, i + 1)
+    return out

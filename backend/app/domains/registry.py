@@ -17,6 +17,7 @@ log = logging.getLogger("mxai.domains")
 KNOWN_DOMAINS: dict[str, str] = {
     "hr": "app.domains.hr.agent:HrAgent",
     "finance": "app.domains.finance.agent:FinanceAgent",
+    "health": "app.domains.health.agent:HealthAgent",
 }
 ALWAYS_REGISTER = {"hr"}
 
