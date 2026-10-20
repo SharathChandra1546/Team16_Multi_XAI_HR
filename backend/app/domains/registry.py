@@ -1,7 +1,23 @@
-"""DomainRegistry: the only place that knows which domains exist."""
+"""DomainRegistry: the only place that knows which domains exist.
+
+Adding a domain = one line in KNOWN_DOMAINS plus the package app/domains/<name>/. A domain is registered only when
+its main model has been trained (scripts/train_domain.py), so the router can never send a request to a domain that
+cannot answer it. HR is always registered so a fresh checkout reports "train the model" instead of having no domain.
+"""
 from __future__ import annotations
 
+import importlib
+import logging
+
 from .base import DomainAgent
+
+log = logging.getLogger("mxai.domains")
+
+# name -> "module:Class"
+KNOWN_DOMAINS: dict[str, str] = {
+    "hr": "app.domains.hr.agent:HrAgent",
+}
+ALWAYS_REGISTER = {"hr"}
 
 
 class DomainRegistry:
@@ -26,9 +42,17 @@ class DomainRegistry:
         return list(self._agents)
 
 
-def default_registry() -> DomainRegistry:
-    from .hr.agent import HrAgent
+def agent_class(name: str) -> type[DomainAgent]:
+    module, cls = KNOWN_DOMAINS[name].split(":")
+    return getattr(importlib.import_module(module), cls)
 
+
+def default_registry(names: list[str] | None = None) -> DomainRegistry:
     reg = DomainRegistry()
-    reg.register(HrAgent())
+    for name in names or list(KNOWN_DOMAINS):
+        agent = agent_class(name)()
+        if agent.ready or name in ALWAYS_REGISTER:
+            reg.register(agent)
+        else:
+            log.info("domain %s not registered: its model is not trained (scripts/train_domain.py --domain %s)", name, name)
     return reg

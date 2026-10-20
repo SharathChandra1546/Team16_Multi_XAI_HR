@@ -22,7 +22,15 @@ class MockLLM(BaseLLM):
     model = "deterministic-template"
 
     def json(self, task: str, system: str, user: str, payload: dict | None = None) -> dict:
-        payload = payload or {}
+        import json as _json
+
+        from .client import estimate_tokens
+
+        out = self._answer(task, system, user, payload or {})
+        self.record_usage(task, estimate_tokens(system + user), estimate_tokens(_json.dumps(out)), estimated=True)
+        return out
+
+    def _answer(self, task: str, system: str, user: str, payload: dict) -> dict:
         if task == "generate":
             return self._generate(payload)
         if task == "critic":
@@ -35,6 +43,21 @@ class MockLLM(BaseLLM):
             return {"focus_ids": [c["id"] for c in payload.get("candidates", [])], "notes": []}
         if task == "fault":
             return self._fault(payload)
+        # baseline systems (app/baselines.py): template narrative, approving reviewers, extractor falls back to rules
+        if task == "narrate":
+            return {"narrative": self._generate(payload)["explanation"]}
+        if task == "review_score":
+            return {"score": 4, "verdict": "accept", "comment": "mock reviewer"}
+        if task == "grade":
+            return {"accuracy": 4, "completeness": 4, "fluency": 4}
+        if task == "critique_faithful":
+            return {"unfaithful": []}
+        if task == "frame":
+            return {"feature_order": [], "tone": "neutral", "cautions": [], "instructions": []}
+        if task == "review_route":
+            return {"score": 4, "revise": False, "route": "narrator", "instructions": []}
+        if task == "extract":
+            return {"fallback": True}
         return {}
 
     def _fault(self, payload: dict) -> dict:
