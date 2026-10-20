@@ -1,81 +1,77 @@
-# The Claim Fidelity Score (CFS)
+# The Claim Fidelity Score (CFS), version 2
 
-This note formalises a metric the system already computes on every
-explanation (`verifier.verify()`), so it can be reported and discussed as a
-contribution in its own right rather than read back out of the code.
+The verifier (`verifier.verify()`) computes this metric on every explanation. This note defines it so it can be
+reported and discussed as a metric.
 
 ## Definition
 
-An explanation `E` is a set of claims `C_1 .. C_n`, each citing one or more
-ids from a Canonical Evidence Package `P` (`P` the prediction, `E#` an
-attribution item, `R#` a recourse option, `G-#` a glossary entry). The
-deterministic verifier checks each claim against `P`: the cited id must
-exist and not be withheld, and (depending on claim kind) the stated feature,
-direction, value, rank, probability or band must match the corresponding
-field in `P` exactly or within a fixed numeric tolerance (0.5 percentage
-points). A claim with no such mismatch, and whose exact text appears in the
-rendered explanation, is *clean*.
+An explanation `E` has claims `C_1 .. C_n`, each citing one or more ids from a Canonical Evidence Package `P`
+(`P` the prediction, `E#` an attribution item, `R#` a recourse option, `G-#` a glossary entry), plus free text.
+The deterministic verifier reports violations against `P`. Each violation is attached to one **unit**:
 
-    CFS(E, P) = | { C_i : C_i is clean } | / n,  n = |C|
+- **a claim**, if the violation names that claim, or if its span (the offending words or number) occurs in that
+  claim's text;
+- **an unbound sentence**, for a text-level violation (unsupported number, causal wording, raw code, a factor named
+  without a claim) whose span lies in a sentence that is not a claim. Each such sentence is one extra unit;
+- **a missing claim**, for each required evidence id the explanation never cites (`missing_required`). Each is one
+  extra unit: a required statement that should have been made and was not.
 
-A weighted variant additionally gives half credit to a claim that is clean of
-*critical* violations but still carries a *minor* one (currently: a
-readability note), so two explanations that both pass verification can still
-be distinguished by polish rather than collapsing to the same score:
+```
+units  = n + u_sentences + u_missing
+CFS    = |clean claims| / units                                          (0.0 when there are no claims)
+CFS_w  = (|claims with no violation| + 0.5 * |claims with only minor violations|) / units
+```
 
-    CFS_w(E, P) = ( |clean| + 0.5 * |minor-only| ) / n
+A claim is **clean** when no critical violation is attached to it. **Minor** means a non-blocking verifier finding;
+currently only `not_allowed_evidence` (citing an id outside the plan's scope) is minor.
 
-Implementation: `app/metrics/fidelity.py::claim_fidelity_score`. `verify()`
-in `app/agents/verifier.py` calls it directly, so the reported score and the
-pass/fail decision are computed from the same violation list — the score is
-never approximated or recomputed by a second method.
+Critic findings (policy wording, level fit, readability, the LLM quality score) are deliberately **not** part of CFS.
+CFS measures fidelity to the evidence. Policy and level violations are reported separately by category
+(`app/policy_report.py`).
+
+Implementation: `app/metrics/fidelity.py::claim_fidelity_score`. `verify()` calls it with the claim texts and the
+full text, so the score and the pass/fail decision come from the same violation list.
+
+## Changes from version 1
+
+| | v1 | v2 |
+|---|---|---|
+| Text-level violations (unsupported number, causal wording, raw code, uncovered factor) | ignored | counted (attached to a claim or an extra unit) |
+| Missing required citation | ignored | one extra failed unit per id |
+| Explanation with correct claims plus an invented statistic | CFS = 1.0 although rejected | CFS < 1.0 |
+| No claims | doc said 1.0, code returned 0.0 | 0.0 (doc and code agree) |
+| Weighted variant | could exceed 1.0 (half credit added on top of full credit) | bounded in [0, 1] |
+
+Version 2 makes `CFS == 1.0` equivalent to "the verifier found no critical violation" (tested in
+`tests/test_phase1_verifier.py::test_cfs_is_one_exactly_when_verifier_passes`).
 
 ## Properties
 
-- **Bounded.** `CFS, CFS_w ∈ [0, 1]` by construction: a count of claims
-  divided by the total claim count, with a non-negative sub-unit weight on
-  the weighted variant. An explanation with no claims is handled upstream as
-  an unconditional failure (`empty_explanation`), not folded into a vacuous
-  `CFS = 1.0`.
-- **Deterministic and reproducible.** Every check behind CFS is a closed-form
-  comparison against `P` — string/number equality within a fixed tolerance,
-  or a fixed regular expression — never a model call. Re-running `verify()`
-  on the same `(package, plan, explanation)` triple always returns the same
-  score, byte for byte. This is what makes CFS usable as ground truth in the
-  fault-injection benchmark (`eval/run_faults.py`), not just as a monitoring
-  number.
-- **Domain-agnostic.** CFS is computed entirely from the
-  `EvidencePackage`/`Claim` contracts in `app/schemas.py`, which carry no
-  HR-specific fields. `tests/test_graph_domain_agnostic.py` runs the same
-  verifier, unmodified, against a second toy domain and confirms the graph
-  and the score both work unchanged.
-- **Separate from explanation quality.** CFS never calls a language model.
-  The critic's optional LLM-judge pass (clarity / level fit / relevance,
-  `app/agents/critic.py`) is a distinct score, explicitly instructed not to
-  judge facts, so "is this explanation true to the evidence" (CFS) and "is
-  this explanation well written" (the judge score) are never conflated into
-  one number.
+- **Bounded.** `CFS, CFS_w ∈ [0, 1]`.
+- **Consistent with the gate.** `CFS == 1.0` exactly when the explanation has at least one claim and no critical
+  verifier violation anywhere in the text.
+- **Deterministic and reproducible.** Every check behind CFS is a closed-form comparison against `P` (string or
+  number equality within a fixed tolerance, or a fixed regular expression), never a model call.
+- **Domain-agnostic.** CFS is computed from the `EvidencePackage`/`Claim` contracts in `app/schemas.py`. The same
+  function runs unchanged on any registered domain (`tests/test_graph_domain_agnostic.py`).
+- **Separate from explanation quality.** CFS never calls a language model. The LLM critic's quality score is a
+  separate number, so "is it true to the evidence" and "is it well written" are never combined.
 
-## Relationship to existing XAI fidelity/faithfulness metrics
+## Relationship to existing XAI faithfulness metrics
 
-Most faithfulness metrics in the XAI literature (deletion/insertion curves,
-infidelity, comprehensiveness) measure whether an *attribution method*
-reflects the *underlying model* — they test the explainer against the model.
-CFS measures something earlier in the pipeline: whether the *natural-language
-text* a language model wrote reflects the *evidence package it was given* —
-it tests the writer against the explainer's own output, at the level of
-individual factual claims rather than a single aggregate correlation. The two
-are complementary: a low CFS means the written explanation misrepresents
-correct evidence; a faithfulness problem in the underlying Shapley/LIME
-attributions would show up upstream, in the evidence validator
-(`app/xai/validator.py`), not here.
+Most faithfulness metrics (deletion/insertion curves, infidelity, comprehensiveness) test whether an attribution
+method reflects the model. CFS tests an earlier link: whether the natural-language text reflects the evidence
+package it was given, claim by claim. A problem in the Shapley or LIME attributions themselves shows up upstream,
+in the evidence validator (`app/xai/validator.py`), not here. The per-claim value, sign and rank checks are close to
+the agreement metrics of Krishna et al., which Musicco et al. (2026) use for post-hoc evaluation; here they run
+inline, as a gate, before anything is shown.
 
-## Known limitation, stated plainly
+## Known limitation
 
-CFS is computed by the same verifier that fault-injection experiments use as
-ground truth, so a report of "100% detection" on those experiments is
-partly circular — it shows the verifier is internally consistent, not that it
-agrees with human judgement. The project's `--base llm` experiment plus a
-small human-labelled sample (verifier vs. an independent LLM reviewer vs.
-human raters, reporting agreement/kappa) is the planned way to validate CFS
-against an external standard; see `README.md`'s "Notes for honest reporting."
+CFS is computed by the same verifier that decides pass/fail, so a report of "100% detection" on template faults is
+partly circular: it shows internal consistency, not agreement with human judgement. Two things address this:
+
+1. detection on **LLM-written faults** (`eval/run_faults.py --faults llm`), produced from rule-free descriptions
+   by a model that never sees the verifier's patterns;
+2. a **human-labelled sample** (verifier vs LLM reviewer vs two human annotators, with Cohen's kappa), planned for
+   Phase 3.

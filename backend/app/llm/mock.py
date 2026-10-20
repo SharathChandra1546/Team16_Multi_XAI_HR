@@ -3,6 +3,8 @@
 - generate: returns the template explanation (marked as LLM output). If MOCK_FAULT_RATE > 0,
   the first attempt is corrupted with a random fault so the retry loop is exercised.
 - critic / guard / route / review: fixed, neutral answers.
+- plan: keeps the deterministic plan's candidates in rank order, adds no notes.
+- fault: applies the matching template fault (app/faults.py) so the LLM fault pipeline runs without a key.
 Results produced with the mock are NOT valid LLM results for the paper.
 """
 from __future__ import annotations
@@ -29,7 +31,23 @@ class MockLLM(BaseLLM):
             return {"decision_request": False, "reason": "mock: rules layer only"}
         if task == "review":
             return {"faithful": True, "issues": []}
+        if task == "plan":
+            return {"focus_ids": [c["id"] for c in payload.get("candidates", [])], "notes": []}
+        if task == "fault":
+            return self._fault(payload)
         return {}
+
+    def _fault(self, payload: dict) -> dict:
+        from ..faults import inject
+        from ..schemas import EvidencePackage, ExplanationPlan, GeneratedExplanation
+
+        pkg = EvidencePackage(**payload["package"])
+        plan = ExplanationPlan(**payload["plan"])
+        gen = GeneratedExplanation(**payload["explanation"])
+        bad = inject(payload["fault"], gen, pkg, plan, DOMAIN_RESOLVER(payload["domain"]), random.Random(0))
+        if bad is None:
+            return {"explanation": gen.explanation, "claims": [c.model_dump() for c in gen.claims], "changed": ""}
+        return {"explanation": bad.explanation, "claims": [c.model_dump() for c in bad.claims], "changed": "mock"}
 
     def _generate(self, payload: dict) -> dict:
         from ..agents.fallback import build_template

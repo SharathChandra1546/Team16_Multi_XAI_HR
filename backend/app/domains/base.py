@@ -132,6 +132,50 @@ class TextRule:
 
 
 @dataclass
+class DomainLanguage:
+    """Every domain-specific word the generic modules need, so none of them hard-codes a domain.
+
+    The defaults are deliberately neutral ("the person", "the outcome"); each domain overrides them.
+    Templates, prompts, repair instructions, causal-wording patterns and user-facing messages are all
+    built from these fields.
+    """
+
+    subject: str = "the person"  # definite reference used in text ("the employee", "the applicant")
+    subject_indefinite: str = "a person"  # "an employee", "an applicant"
+    subject_plural: str = "people"  # "employees", "applicants"
+    subject_possessive: str = "the person's"
+    reader: str = "a professional user"  # who reads the explanation ("an HR manager")
+    outcome_verb: str = "has the outcome"  # "leaves", "defaults"
+    outcome_gerund: str = "the outcome"  # "leaving", "defaulting"
+    risk_name: str = "risk"  # "attrition risk", "default risk"
+    model_description: str = "a risk model"  # "an attrition-risk model"
+    decision_kind: str = "a decision about the person"  # "an employment decision"
+    decision_examples: str = "approving, rejecting or penalising someone"
+    protected_description: str = "protected personal characteristics"  # "age, gender, marital or family status"
+    character_examples: str = '"lazy", "irresponsible", "their fault"'
+    # outcome words that may not be the object of causal verbs ("attrition", "turnover", "default")
+    outcome_terms: list[str] = field(default_factory=lambda: ["the outcome"])
+    # words that refer to people as the object of causal verbs ("employees", "staff", "the employee")
+    subject_terms: list[str] = field(default_factory=lambda: ["people", "the person"])
+    # verbs for the outcome itself, used in "make them <verb>" causal patterns ("leave", "quit", "resign")
+    outcome_verbs: list[str] = field(default_factory=lambda: [])
+    # who might act on the case in recourse questions ("what can HR do"); generic organisation words are built in
+    actor_terms: list[str] = field(default_factory=list)
+    # nouns/gerunds for this domain's recourse levers in questions ("would a promotion lower the risk")
+    lever_terms: list[str] = field(default_factory=list)
+    missing_instance_message: str = "Provide the case details to explain a risk estimate."
+    batch_question: str = "Why is this case's risk estimated this way?"
+    default_question: str = "Why is this case flagged?"
+    chat_more_details: str = "Could you tell me a bit more about the case?"
+    reference_column: str = ""  # optional CSV column used as a row reference in batch uploads
+    # fault type -> a sentence exhibiting that fault, used by the template fault injector (app/faults.py).
+    # Missing entries fall back to generic sentences built from the fields above.
+    fault_sentences: dict[str, str] = field(default_factory=dict)
+    # data_source -> limitation sentence added to every evidence package trained on that source
+    data_notes: dict[str, str] = field(default_factory=dict)
+
+
+@dataclass
 class DomainPolicy:
     sensitive: list[str]  # protected attributes: excluded from the main model, used for audit
     actionability: dict[str, Actionability]
@@ -150,6 +194,7 @@ class DomainPolicy:
     withheld_note: str = (
         "Some factors relate to protected personal characteristics and are shown only at expert level."
     )
+    language: DomainLanguage = field(default_factory=DomainLanguage)
 
     def status(self, feature: str) -> ActionStatus:
         a = self.actionability.get(feature)
@@ -244,6 +289,14 @@ class DomainAgent:
     def all_aliases(self) -> dict[str, list[str]]:
         return {f.name: sorted({f.display.lower(), *f.aliases}, key=len, reverse=True) for f in self.features}
 
+    @property
+    def language(self) -> DomainLanguage:
+        return self.policy.language
+
+    def data_note(self) -> str:
+        """Limitation sentence for the dataset this domain's model was trained on (empty if none)."""
+        return self.language.data_notes.get(getattr(self, "data_source", ""), "")
+
     def schema(self, variant: str = "main") -> dict:
         try:
             feats = self.model_features(variant)
@@ -259,3 +312,58 @@ class DomainAgent:
             "actionable": [n for n in feats if self.policy.status(n) in ("actionable", "partial")],
             "ready": self.ready,
         }
+
+
+# ---------------------------------------------------------------- plug-in contract
+REQUIRED_GLOSSARY = ("G-RISK", "G-BAND", "G-CONTRIBUTION")
+
+
+def validate_domain(agent: DomainAgent, check_runtime: bool = True) -> list[str]:
+    """Check that a DomainAgent satisfies the plug-in contract. Returns a list of problems (empty = valid).
+
+    A domain package (app/domains/<name>/) must supply: feature specs with glossary entries, an actionability
+    status for every model feature, protected attributes that are real features, a disclosure, refusal and
+    escalation messages, wording rules with unique codes, and the DomainLanguage the generic modules use.
+    Nothing outside the package should need to change to add a domain; scripts/transfer_effort.py measures that.
+    """
+    problems: list[str] = []
+    if not agent.name or agent.name == "base":
+        problems.append("name is not set")
+    names = {f.name for f in agent.features}
+    if len(names) != len(agent.features):
+        problems.append("duplicate feature names")
+    for f in agent.features:
+        if f.glossary_id not in agent.glossary:
+            problems.append(f"feature {f.name}: glossary entry {f.glossary_id} missing")
+    pol = agent.policy
+    for s in pol.sensitive:
+        if s not in names:
+            problems.append(f"protected attribute {s} is not a feature")
+    for field_name in ("disclosure", "high_risk_notice", "refusal_message", "escalation_uncertain", "escalation_ood"):
+        if not str(getattr(pol, field_name, "")).strip():
+            problems.append(f"policy.{field_name} is empty")
+    if "{reasons}" not in pol.escalation_ood:
+        problems.append("policy.escalation_ood must contain {reasons}")
+    for ph in ("{low}", "{high}", "{band_a}", "{band_b}"):
+        if ph not in pol.escalation_uncertain:
+            problems.append(f"policy.escalation_uncertain must contain {ph}")
+    lang = pol.language
+    if lang == DomainLanguage():
+        problems.append("policy.language is not set (generic defaults would be used in user-facing text)")
+    for attr in ("subject", "risk_name", "reader", "decision_kind", "protected_description"):
+        if not str(getattr(lang, attr)).strip():
+            problems.append(f"language.{attr} is empty")
+    if check_runtime:
+        try:
+            feats = agent.model_features("main")
+        except Exception as e:  # model not trained yet
+            problems.append(f"runtime unavailable: {type(e).__name__}")
+            feats = []
+        for f in feats:
+            if f not in names:
+                problems.append(f"model feature {f} has no FeatureSpec")
+            if f not in pol.actionability:
+                problems.append(f"model feature {f} has no actionability status")
+        if any(f in set(pol.sensitive) for f in feats):
+            problems.append("main model uses a protected attribute")
+    return problems

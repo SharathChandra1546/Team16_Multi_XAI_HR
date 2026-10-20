@@ -10,12 +10,7 @@ from collections import Counter, defaultdict
 import numpy as np
 
 from .agents import preferences as prefs
-from .agents.critic import critique
-from .agents.fallback import build_template
-from .agents.generator import generate
-from .agents.planner import make_plan
-from .agents.repair import build_repair_instructions
-from .agents.verifier import verify
+from .agents.profile_agent import choose_level
 from .config import settings
 from .domains.registry import DomainRegistry, default_registry
 from .graph import ExplanationGraph
@@ -24,17 +19,18 @@ from .llm import mock as mock_llm
 from .llm.client import BaseLLM, get_llm
 from .llm.prompts import GUIDANCE_BY_CODE
 from .pii import domain_vocab, scrub
+from .pipeline import PipelineConfig
+from .provenance import audit_export
 from .schemas import (
-    ChatIntakeRequest, EvidencePackage, ExplanationPlan, ExplanationRequest, ExplanationResponse, FeedbackRequest,
-    FeedbackSignalRecord, FollowupRequest, IntakeRequest, RefinementRequest, Violation, WhatIfRequest,
-    WorkflowTraceRecord,
+    ChatIntakeRequest, ExplanationRequest, ExplanationResponse, FeedbackRequest, FeedbackSignalRecord,
+    FollowupRequest, IntakeRequest, RefinementRequest, WhatIfRequest, WorkflowTraceRecord,
 )
 from .store import Store, now
-from .xai.evidence import build_package
 
 LEVEL_ORDER = ["novice", "intermediate", "expert"]
 VERDICT = {"verified": "passed", "fallback": "failed_then_fallback", "escalated": "escalated", "refused": "refused",
-           "withheld": "withheld", "concept": "concept", "clarify": "clarify", "error": "error"}
+           "withheld": "withheld", "concept": "concept", "clarify": "clarify", "error": "error",
+           "unverified": "shown_unverified (ablation)"}
 
 
 class SpamError(ValueError):
@@ -42,13 +38,15 @@ class SpamError(ValueError):
 
 
 class Service:
-    def __init__(self, registry: DomainRegistry | None = None, store: Store | None = None, llm: BaseLLM | None = None):
+    def __init__(self, registry: DomainRegistry | None = None, store: Store | None = None, llm: BaseLLM | None = None,
+                 reviewer_llm: BaseLLM | None = None, pipeline: PipelineConfig | None = None):
         self.registry = registry or default_registry()
         self.store = store or Store(settings.db_path)
         self.llm = llm or get_llm()
         mock_llm.DOMAIN_RESOLVER = self.registry.get
-        self.graph = ExplanationGraph(self.registry, self.llm)
+        self.graph = ExplanationGraph(self.registry, self.llm, reviewer_llm=reviewer_llm)
         self.vocab = domain_vocab(self.registry)
+        self.pipeline = pipeline or PipelineConfig.from_env()
 
     # ---------------------------------------------------------------- info
     def config(self) -> dict:
@@ -56,34 +54,48 @@ class Service:
         for d in self.registry.list():
             doms.append({"name": d.name, "title": d.title, "ready": d.ready,
                          "data_source": getattr(d, "data_source", "unknown")})
+        from .agents.registry import describe
+
         return {"llm": self.llm.id, "llm_is_cloud": settings.llm_is_cloud and self.llm.name != "mock",
                 "graph_engine": self.graph.engine, "domains": doms, "max_attempts": settings.max_attempts,
-                "admin_enabled": bool(settings.admin_token)}
+                "admin_enabled": bool(settings.admin_token), "agents": describe(),
+                "pipeline": self.pipeline.as_dict()}
 
     # ---------------------------------------------------------------- explanations
     def _use_llm(self, consent: bool) -> bool:
         cloud = settings.llm_is_cloud and self.llm.name != "mock"
         return (not cloud) or consent
 
-    def explain(self, req: ExplanationRequest) -> ExplanationResponse:
-        if req.website:
-            raise SpamError("rejected")
-        query, n_masked = scrub(req.query, self.vocab)
-        profile = self.store.profile(req.user_id)
-        level = req.level or profile.expertise
-        use_llm = self._use_llm(req.consent_cloud)
-        prompt = self.store.active_prompt("generator")
-        pref_notes = profile.preferences.get("notes", [])
-        pref_text = prefs.render_preferences(pref_notes)
-        request = req.model_dump(exclude={"website"}) | {"query": query, "preferences_text": pref_text}
+    def explain(self, req: ExplanationRequest, pipeline: PipelineConfig | None = None,
+                forced_intent: str | None = None, parent_trace_id: str | None = None,
+                extra_notices: list[str] | None = None) -> ExplanationResponse:
+        """Run one request through the graph. `pipeline` (switches) is set by code only, never by HTTP callers."""
         import time
 
+        if req.website:
+            raise SpamError("rejected")
+        cfg = pipeline or self.pipeline
+        query, n_masked = scrub(req.query, self.vocab)
+        profile = self.store.profile(req.user_id)
+        choice = choose_level(req.level, profile, query, enabled=cfg.profile_agent)
+        level = choice["level"]
+        use_llm = self._use_llm(req.consent_cloud)
+        prompt = self.store.active_prompt("generator")
+        pref_notes = choice["notes"]
+        request = req.model_dump(exclude={"website"}) | {"query": query, "preferences_text": choice["preferences_text"]}
+        if forced_intent:
+            request["forced_intent"] = forced_intent
+
         t0 = time.perf_counter()
-        s = self.graph.run(request, level, use_llm, prompt)
+        s = self.graph.run(request, level, use_llm, prompt, cfg)
         latency = (time.perf_counter() - t0) * 1000
         status = s.get("status") or ("verified" if s.get("generated") else "error")
         pkg = s.get("package")
         trace_id = uuid.uuid4().hex[:16]
+        shown = status in ("verified", "fallback", "unverified")
+        profile_entry = {"node": "profile", "agent": "Profile agent", "kind": "deterministic", "authority": "route",
+                         "level": level, "source": choice["source"], "notes": len(pref_notes)}
+        notices = (s.get("notices") or []) + [n for n in (extra_notices or []) if shown]
         resp = ExplanationResponse(
             trace_id=trace_id,
             status=status,
@@ -91,24 +103,30 @@ class Service:
             level=level if s.get("domain") else None,
             intent=s.get("intent"),
             message=s.get("message", ""),
-            notices=s.get("notices") or [],
+            notices=notices,
             disclosure=s.get("disclosure", ""),
             prediction=pkg["prediction"] if pkg else None,
             evidence=pkg,
             explanation=s.get("generated") if status not in ("withheld", "escalated", "refused", "error", "clarify") else None,
-            verification=s.get("verification") if status in ("verified", "fallback") else None,
-            critic=s.get("critic") if status in ("verified", "fallback") else None,
+            verification=s.get("verification") if shown else None,
+            critic=s.get("critic") if shown else None,
             attempts=s.get("attempts", 0),
             prompt_version=prompt.get("version", "") if use_llm else "template",
             llm=self.llm.id if use_llm else "none",
-            trace=s.get("trace", []),
+            trace=[profile_entry, *s.get("trace", [])],
             latency_ms=round(latency, 1),
             preferences_applied=[n["text"] for n in pref_notes] if use_llm else [],
+            parent_trace_id=parent_trace_id,
+            level_source=choice["source"],
+            review=s.get("review"),
+            policy_report=s.get("policy_report"),
+            provenance=s.get("provenance") or [],
+            pipeline=cfg.as_dict(),
         )
         violations = []
         for h in s.get("history") or []:
             for v in h["violations"]:
-                violations.append({"attempt": h["attempt"], "stage": h["stage"], **v})
+                violations.append({"attempt": h["attempt"], "stage": h["stage"], "gated": h.get("gated", True), **v})
         rec = WorkflowTraceRecord(
             trace_id=trace_id, created_at=now(), user_id=req.user_id, domain=resp.domain, intent=resp.intent,
             level=resp.level, model_variant=req.model_variant, prompt_version=resp.prompt_version, llm=resp.llm,
@@ -116,10 +134,18 @@ class Service:
             withheld_features=[i["feature"] for i in (pkg or {}).get("items", []) if i.get("withheld")],
             pii_masked=n_masked, cloud_consent=req.consent_cloud, query=query,
             request=request, response=resp.model_dump(exclude={"evidence"}) | {"evidence_id": (pkg or {}).get("package_id")},
-            latency_ms=resp.latency_ms,
+            latency_ms=resp.latency_ms, parent_trace_id=parent_trace_id,
+            policy_report=s.get("policy_report") or {},
+            escalation=((pkg or {}).get("prediction") or {}).get("escalation") or {},
         )
         self.store.save_trace(rec)
         return resp
+
+    def audit(self, trace_id: str) -> dict:
+        rec = self.store.get_trace(trace_id)
+        if rec is None:
+            raise KeyError("Unknown trace id")
+        return audit_export(rec.model_dump())
 
     def refine(self, req: RefinementRequest) -> ExplanationResponse:
         rec = self.store.get_trace(req.trace_id)
@@ -165,13 +191,16 @@ class Service:
 
     # ---------------------------------------------------------------- follow-up questions
     def followup(self, req: FollowupRequest) -> ExplanationResponse:
-        """A new question about an already-shown explanation. Reuses the original Evidence Package (rebuilt
-        deterministically from the same instance/level/variant, not re-fetched) rather than recomputing XAI from
-        scratch, and the new draft goes through the identical verify -> critic -> retry -> fallback loop as a
-        first-time explanation, so a follow-up carries the same fidelity guarantee. Every answered turn also
-        updates this user's descriptive preferences (see app/agents/preferences.py)."""
-        import time
+        """A new question about an already-shown explanation.
 
+        The evidence package is rebuilt from the stored (already validated) case details. Evidence building is
+        seeded, so for the same case, level and intent this reproduces the original attributions exactly; if the
+        question needs different evidence (e.g. it asks about recourse after an explain turn), the recourse search
+        runs for that intent. No new case data is used. The draft goes through the same graph as a first-time
+        explanation (verify -> critic -> retry -> fallback, escalation, agents), so a follow-up carries the same
+        guarantees. Every answered turn can also update this user's descriptive preferences
+        (see app/agents/preferences.py).
+        """
         if req.website:
             raise SpamError("rejected")
         rec = self.store.get_trace(req.trace_id)
@@ -183,122 +212,30 @@ class Service:
         variant = rec.request.get("model_variant", "main")
         raw_instance = rec.request.get("instance") or {}
         assumed_fields = rec.request.get("assumed_fields") or []
-        instance, errors = d.parse_instance(raw_instance, variant)
+        _, errors = d.parse_instance(raw_instance, variant)
         if errors:
             raise ValueError("The original request's details could not be re-validated.")
-        query, n_masked = scrub(req.query, self.vocab)
         use_llm = self._use_llm(req.consent_cloud)
-        profile = self.store.profile(req.user_id)
-        level = profile.expertise or rec.level or "intermediate"
-        prompt = self.store.active_prompt("generator")
-        pref_notes = profile.preferences.get("notes", [])
-        pref_text = prefs.render_preferences(pref_notes)
-
-        t0 = time.perf_counter()
-        trace_id = uuid.uuid4().hex[:16]
-        trace: list[dict] = []
-        history: list[dict] = []
-
-        def done(status: str, intent: str | None = None, **fields) -> ExplanationResponse:
-            latency = round((time.perf_counter() - t0) * 1000, 1)
-            resp = ExplanationResponse(trace_id=trace_id, status=status, domain=rec.domain, level=level, intent=intent,
-                                       llm=self.llm.id if use_llm else "none", parent_trace_id=req.trace_id,
-                                       trace=trace, latency_ms=latency, **fields)
-            violations = [{"attempt": h["attempt"], "stage": h["stage"], **v} for h in history for v in h["violations"]]
-            evid = fields.get("evidence")
-            wrec = WorkflowTraceRecord(
-                trace_id=trace_id, created_at=now(), user_id=req.user_id, domain=rec.domain, intent=intent,
-                level=level, model_variant=variant, prompt_version=resp.prompt_version, llm=resp.llm, status=status,
-                verdict=VERDICT.get(status, status), attempts=resp.attempts, violations=violations,
-                withheld_features=[i.feature for i in (evid.items if isinstance(evid, EvidencePackage) else []) if i.withheld],
-                pii_masked=n_masked, cloud_consent=req.consent_cloud, query=query,
-                request={"instance": raw_instance, "query": query, "domain": rec.domain, "model_variant": variant,
-                         "assumed_fields": assumed_fields},
-                response=resp.model_dump(exclude={"evidence"})
-                | {"evidence_id": evid.package_id if isinstance(evid, EvidencePackage) else None},
-                latency_ms=latency, parent_trace_id=req.trace_id,
-            )
-            self.store.save_trace(wrec)
-            return resp
-
+        query, _ = scrub(req.query, self.vocab)
         routing = self.graph.router.route(query, raw_instance, rec.domain, self.llm if use_llm else None)
-        trace.append({"node": "route", "intent": routing.intent, "confidence": routing.confidence})
-        if routing.intent == "out_of_scope":
-            return done("refused", "out_of_scope", message=d.policy.refusal_message)
+        forced = "recourse" if routing.intent == "recourse" else "explain"
         if routing.intent == "concept":
-            from .agents.fallback import build_concept
-
-            term = d.concept_lookup(query)
-            if not term:
-                return done("clarify", "concept", message="Which term would you like defined?")
-            return done("concept", "concept", explanation=build_concept(d, term), prompt_version="template")
-
-        intent = "recourse" if routing.intent == "recourse" else "explain"
-        pkg = build_package(d, instance, level, intent, variant, assumed_fields)
-        trace.append({"node": "xai", "valid": pkg.valid, "method": pkg.method})
-        if not pkg.valid:
-            failed = [c.name for c in pkg.checks if not c.passed and c.severity == "critical"]
-            return done("error", intent, message="Explanation unavailable: the evidence failed validation (" + ", ".join(failed) + ").")
-        pr = pkg.prediction
-        if pr.band_uncertain or pr.out_of_distribution:
-            rt = d.runtime(variant)
-            if pr.out_of_distribution:
-                msg = d.policy.escalation_ood.format(reasons="; ".join(pr.ood_reasons))
-            else:
-                lo, hi = pr.interval
-                msg = d.policy.escalation_uncertain.format(low=round(lo * 100), high=round(hi * 100), band_a=rt.band(lo), band_b=rt.band(hi))
-            return done("escalated", intent, message=msg, notices=[msg], prediction=pr, evidence=pkg)
-
-        plan = make_plan(pkg, level, intent)
-        attempts = 0
-        status = "error"
-        gen = ver = cri = None
-        while attempts < settings.max_attempts:
-            attempts += 1
-            prev_critical = [Violation(**v) for v in (history[-1]["violations"] if history else []) if v["severity"] == "critical"]
-            repair = build_repair_instructions(prev_critical, pkg)
-            if use_llm:
-                gen = generate(pkg, plan, d, self.llm, prompt.get("template", ""), prompt.get("guidance", []), query,
-                               prev_critical, attempts, repair_instructions=repair, preferences_text=pref_text)
-            else:
-                gen = build_template(pkg, plan, d, variant=attempts % 2)
-            ver = verify(pkg, plan, gen, d)
-            history.append({"attempt": attempts, "stage": "verifier", "violations": [v.model_dump() for v in ver.violations], "passed": ver.passed})
-            if not ver.passed:
-                continue
-            cri = critique(pkg, plan, gen, d, self.llm if use_llm else None, query)
-            history.append({"attempt": attempts, "stage": "critic", "violations": [v.model_dump() for v in cri.violations], "passed": cri.approved})
-            if cri.approved:
-                status = "verified"
-                break
-        if status != "verified":
-            gen = build_template(pkg, plan, d)
-            ver = verify(pkg, plan, gen, d)
-            cri = critique(pkg, plan, gen, d)
-            status = "fallback" if ver.passed and cri.approved else "error"
-        if status == "error":
-            return done("error", intent, message="Explanation unavailable after retries.", evidence=pkg, prediction=pr, attempts=attempts)
-
-        gen.explanation = (gen.explanation.rstrip() + " " + d.policy.disclosure).strip()
-        notices = ["This reuses the evidence from the original explanation; no new prediction was made."]
-        if pr.band == "high":
-            notices.insert(0, d.policy.high_risk_notice)
-        if status == "fallback":
-            notices.append("The language model's drafts did not pass verification, so a verified template is shown.")
-        elif not use_llm:
-            notices.append("Written from verified templates because the language model was not used for this request.")
-
-        # learn a preference from this turn; the newer statement always replaces the older one on the same topic
-        applied_texts = [n["text"] for n in pref_notes]
-        note = prefs.extract_preference(req.query, gen.explanation, self.llm if use_llm else None)
-        if note:
-            profile.preferences["notes"] = prefs.merge_preferences(pref_notes, note, trace_id)
-            self.store.save_profile(profile)
-
-        return done(status, intent, notices=notices, disclosure=d.policy.disclosure, prediction=pr, evidence=pkg,
-                   explanation=gen, verification=ver, critic=cri, attempts=attempts,
-                   prompt_version=prompt.get("version", "") if use_llm else "template",
-                   preferences_applied=applied_texts)
+            forced = None  # the graph answers concept questions from the glossary
+        base = ExplanationRequest(user_id=req.user_id, query=req.query, domain=rec.domain, instance=raw_instance,
+                                  level=None, model_variant=variant, consent_cloud=req.consent_cloud,
+                                  assumed_fields=assumed_fields)
+        resp = self.explain(base, forced_intent=forced, parent_trace_id=req.trace_id,
+                            extra_notices=["This answer reuses the case details from the original explanation; "
+                                           "no new data was used."])
+        if resp.status in ("verified", "fallback") and resp.explanation is not None:
+            profile = self.store.profile(req.user_id)
+            note = prefs.extract_preference(req.query, resp.explanation.explanation, self.llm if use_llm else None,
+                                            d.language)
+            if note:
+                profile.preferences["notes"] = prefs.merge_preferences(profile.preferences.get("notes", []), note,
+                                                                       resp.trace_id)
+                self.store.save_profile(profile)
+        return resp
 
     def profile_view(self, user_id: str) -> dict:
         p = self.store.profile(user_id)
@@ -373,7 +310,7 @@ class Service:
 
     # ---------------------------------------------------------------- chat intake (free text + optional PDF)
     def pdf_intake(self, domain: str, data: bytes, consent_cloud: bool = False) -> dict:
-        """Extract whatever employee details a PDF states. Never blocks: unparseable or missing fields are just
+        """Extract whatever case details a PDF states. Never blocks: unparseable or missing fields are just
         left for the chat to ask about next."""
         d = self.registry.get(domain)
         text = extract_pdf_text(data)
@@ -424,7 +361,7 @@ class Service:
         elif result["next"]:
             reply = self._chat_question(d, result["next"][0], understood)
         else:
-            reply = "Could you tell me a bit more about the employee?"
+            reply = d.language.chat_more_details
         return result | {"reply": reply, "understood": understood, "unparsed": unparsed}
 
     # ---------------------------------------------------------------- batch
@@ -451,7 +388,7 @@ class Service:
             if errs:
                 errors.append({"row": i, "errors": list(errs.values())[:3]})
                 continue
-            ref = (row.get("EmployeeNumber") or "").strip()[:20]
+            ref = (row.get(d.language.reference_column) or "").strip()[:20] if d.language.reference_column else ""
             rows.append({"row": i, "reference": ref, "instance": {f: inst[f] for f in rt.features}})
         if not rows:
             return {"batch_id": None, "n_rows": len(errors), "n_valid": 0, "errors": errors[:50], "rows": []}
@@ -487,7 +424,7 @@ class Service:
             raise KeyError("Unknown row")
         d = self.registry.get(b["domain"])
         inst = {f: (d.readable(f, v) if d.spec(f).categorical else v) for f, v in r["instance"].items()}
-        resp = self.explain(ExplanationRequest(user_id=user_id, query="Why is this employee's risk estimated this way?",
+        resp = self.explain(ExplanationRequest(user_id=user_id, query=d.language.batch_question,
                                                domain=b["domain"], instance=inst, level=level, consent_cloud=consent,
                                                batch_mode=True))
         for res in b["results"]:

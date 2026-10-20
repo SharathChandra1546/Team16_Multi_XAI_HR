@@ -1,50 +1,47 @@
-"""The Claim Fidelity Score (CFS): a formal definition of the metric the verifier computes.
+"""The Claim Fidelity Score (CFS): the share of an explanation's checkable units that are faithful to the evidence.
 
-Definition
-----------
-Given a generated explanation E = (claims C_1 .. C_n) checked against a
-Canonical Evidence Package P:
+Definition (v2)
+---------------
+An explanation E has claims C_1 .. C_n (structured statements citing evidence ids) and free text. The verifier
+reports violations against the Canonical Evidence Package P. Each violation is attached to a unit:
 
-    CFS(E, P) = |{ C_i : C_i has no CRITICAL violation against P }| / n          (n = |C|)
+- a CLAIM, if the violation names that claim (claim_index) or its span (the offending words/number) occurs in that
+  claim's text;
+- an UNBOUND SENTENCE, if it is a text-level violation (unsupported number, causal wording, raw code, a factor
+  named without a claim) whose span lies in a sentence that is not a claim. Each such sentence is one extra unit;
+- a MISSING CLAIM, for each required evidence id the explanation never cites (missing_required). Each is one
+  extra unit: a required statement that should have been made and was not.
 
-CFS(E, P) = 1.0 when there are no claims (an empty explanation is handled as a
-separate, always-failing case upstream, not as a vacuous 1.0 — see
-VerificationResult in verifier.py).
+    units  = n + u_sentences + u_missing
+    CFS    = |clean claims| / units                                   (0.0 when units == 0)
+    CFS_w  = (|claims with no violation| + 0.5 * |claims with only minor violations|) / units
 
-A weighted variant additionally discounts, rather than ignores, MINOR
-violations (readability, non-blocking terminology notes) on claims that are
-otherwise critical-violation-free, so two explanations that both pass can
-still be told apart by polish, not just by pass/fail:
+A claim is clean when no CRITICAL violation is attached to it (CFS counts it fully); CFS_w gives full credit only
+to claims with no violation at all and half credit to claims whose only violations are minor. (v1's code added
+the half credit on top of full credit, so CFS_w could exceed 1; fixed in v2.) "Minor" means a non-blocking verifier finding;
+currently only not_allowed_evidence (citing an id outside this plan's scope) is minor. Critic findings (policy
+wording, level fit, readability) are deliberately NOT part of CFS: CFS measures fidelity to the evidence, and
+policy/level are reported separately (app/policy_report.py).
 
-    CFS_w(E, P) = ( |clean claims| + 0.5 * |claims with only minor violations| ) / n
+Why v2: v1 counted only violations bound to a claim, so an explanation with correct claims plus an extra sentence
+containing an invented number or a causal statement scored 1.0 although the verifier rejected it. v2 makes
+"CFS == 1.0" imply "no critical fidelity violation anywhere in the text".
 
 Properties
 ----------
-- Bounded: CFS, CFS_w in [0, 1] by construction (a count of claims divided by
-  the total count, optionally with a non-negative sub-unit weight).
-- Deterministic / reproducible: every check in verifier.py is a closed-form
-  comparison against the Evidence Package (string/number equality within a
-  fixed tolerance, or a fixed regex), not a model call. Re-running verify()
-  on the same (package, plan, explanation) always returns the same score.
-- Domain-agnostic: the score is computed from the EvidencePackage/Claim
-  contracts in schemas.py, which carry no domain-specific fields. The same
-  function runs unchanged for the HR domain and any other DomainAgent
-  (exercised by tests/test_graph_domain_agnostic.py).
-- Distinct from, and verifiable independently of, a judge-model's opinion:
-  CFS never calls an LLM. The critic's optional LLM-judge quality score
-  (clarity/level_fit/relevance) is a separate number precisely so that
-  fidelity (did it say true things) and quality (is it well written) are
-  never conflated into one figure.
-
-This module does not change what verifier.verify() computes; it names the
-same computation formally, in one place, so it can be reported and reasoned
-about as a metric in its own right rather than read back out of an
-implementation detail.
+- Bounded: CFS, CFS_w in [0, 1].
+- CFS == 1.0  iff  the verifier found no critical violation and the explanation has at least one claim.
+- Deterministic / reproducible: every check in verifier.py is a closed-form comparison against P (string/number
+  equality within a fixed tolerance, or a fixed regex), not a model call.
+- Domain-agnostic: computed from the EvidencePackage/Claim contracts in schemas.py.
+- Independent of any judge model: CFS never calls an LLM.
+- An explanation with no claims scores 0.0 (and is rejected upstream as empty_explanation or missing_required).
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
 
+from ..agents.textutil import norm, sentences
 from ..schemas import Violation
 
 NAME = "Claim Fidelity Score (CFS)"
@@ -53,39 +50,82 @@ NAME = "Claim Fidelity Score (CFS)"
 @dataclass(frozen=True)
 class FidelityReport:
     n_claims: int
-    n_clean: int  # claims with zero critical violations
+    n_clean: int  # claims with zero critical violations (includes minor-only claims)
     n_minor_only: int  # claims with zero critical but at least one minor violation
-    score: float  # CFS: n_clean / n_claims, in [0, 1]
-    weighted_score: float  # CFS_w: (n_clean + 0.5 * n_minor_only) / n_claims, in [0, 1]
+    score: float  # CFS
+    weighted_score: float  # CFS_w
+    n_unbound_sentences: int = 0  # non-claim sentences with a critical text-level violation
+    n_missing_required: int = 0  # required evidence ids never cited
+    version: str = "v2"
+
+    @property
+    def n_units(self) -> int:
+        return self.n_claims + self.n_unbound_sentences + self.n_missing_required
 
     def as_dict(self) -> dict:
-        return {"name": NAME, "n_claims": self.n_claims, "n_clean": self.n_clean, "n_minor_only": self.n_minor_only,
+        return {"name": NAME, "version": self.version, "n_claims": self.n_claims, "n_clean": self.n_clean,
+                "n_minor_only": self.n_minor_only, "n_unbound_sentences": self.n_unbound_sentences,
+                "n_missing_required": self.n_missing_required, "n_units": self.n_units,
                 "score": self.score, "weighted_score": self.weighted_score}
 
 
-def claim_fidelity_score(n_claims: int, violations: list[Violation]) -> FidelityReport:
-    """Compute CFS and CFS_w from the per-claim violations the verifier already found.
+def _claim_for_span(span: str, claim_texts: list[str]) -> int | None:
+    s = norm(span)
+    if not s:
+        return None
+    for i, ct in enumerate(claim_texts):
+        if ct and s in ct:
+            return i
+    return None
 
-    `violations` is the full violation list from VerificationResult; only
-    those with a claim_index (i.e. bound to one specific claim) count toward
-    the per-claim tallies, matching how verify() tracks bad_claims.
+
+def _sentence_for_span(span: str, sents: list[str]) -> int | None:
+    s = norm(span)
+    for i, st in enumerate(sents):
+        ns = norm(st)
+        if s and (s in ns or ns.startswith(s)):
+            return i
+    return None
+
+
+def claim_fidelity_score(n_claims: int, violations: list[Violation], claim_texts: list[str] | None = None,
+                         text: str = "") -> FidelityReport:
+    """Compute CFS v2 from the verifier's violations.
+
+    `claim_texts` and `text` let text-level violations (no claim_index) be attached to the claim whose text
+    contains their span, or else to the non-claim sentence that contains it. Without them, every text-level
+    critical violation counts as one unbound unit (conservative).
     """
+    cts = [norm(t) for t in (claim_texts or [])]
+    sents = sentences(text) if text else []
     critical_claims: set[int] = set()
     minor_claims: set[int] = set()
+    unbound: set = set()
+    missing: set[str] = set()
     for v in violations:
-        if v.claim_index is None:
+        if v.code == "empty_explanation":
+            continue
+        idx = v.claim_index
+        if idx is None and v.code == "missing_required":
+            if v.severity == "critical":
+                missing.add(v.span or v.message)
+            continue
+        if idx is None and v.span:
+            idx = _claim_for_span(v.span, cts)
+        if idx is not None and 0 <= idx < n_claims:
+            (critical_claims if v.severity == "critical" else minor_claims).add(idx)
             continue
         if v.severity == "critical":
-            critical_claims.add(v.claim_index)
-        else:
-            minor_claims.add(v.claim_index)
-    if n_claims == 0:
-        return FidelityReport(0, 0, 0, 0.0, 0.0)
+            si = _sentence_for_span(v.span or "", sents) if sents else None
+            unbound.add(("s", si) if si is not None else ("v", v.code, v.span))
+    units = n_claims + len(unbound) + len(missing)
+    if n_claims == 0 or units == 0:
+        return FidelityReport(n_claims, 0, 0, 0.0, 0.0, len(unbound), len(missing))
     n_clean = sum(1 for i in range(n_claims) if i not in critical_claims)
     n_minor_only = sum(1 for i in range(n_claims) if i not in critical_claims and i in minor_claims)
-    score = round(n_clean / n_claims, 4)
-    weighted = round((n_clean + 0.5 * n_minor_only) / n_claims, 4)
-    return FidelityReport(n_claims, n_clean, n_minor_only, score, weighted)
+    score = round(n_clean / units, 4)
+    weighted = round((n_clean - n_minor_only + 0.5 * n_minor_only) / units, 4)
+    return FidelityReport(n_claims, n_clean, n_minor_only, score, weighted, len(unbound), len(missing))
 
 
 def aggregate(reports: list[FidelityReport], n_boot: int = 2000, seed: int = 0) -> dict:

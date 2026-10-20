@@ -131,9 +131,11 @@ class HrAgent(DomainAgent):
                     list(rt.examples[["Department", "JobRole"]].itertuples(index=False))
                 counts = Counter(int(r) for d, r in rows if int(d) == int(out["Department"]))
                 options = [r for d, r in pairs if d == int(out["Department"])]
-                out["JobRole"] = float(max(options, key=lambda r: counts.get(r, 0)))
+                if options:  # pairs come from the training split; keep the default if none is known
+                    out["JobRole"] = float(max(options, key=lambda r: counts.get(r, 0)))
             else:
-                out["Department"] = float(next(d for d, r in sorted(pairs) if r == int(out["JobRole"])))
+                out["Department"] = float(next((d for d, r in sorted(pairs) if r == int(out["JobRole"])),
+                                               out["Department"]))
         # time fields: role, promotion and manager years <= years at company <= total working years
         if "TotalWorkingYears" in assumed:
             out["TotalWorkingYears"] = max(out["TotalWorkingYears"], out["YearsAtCompany"])

@@ -9,6 +9,16 @@ Codes (all critical unless noted):
   feature_mismatch, direction_mismatch, value_mismatch, magnitude_mismatch, rank_mismatch,
   risk_mismatch, recourse_mismatch, claim_not_in_text, missing_required,
   uncovered_feature_mention, unsupported_number, causal_wording, raw_code_leak, empty_explanation
+
+Claim checks read both the structured fields an LLM fills in AND the claim's own wording, so a claim whose fields
+are right but whose sentence says something else is still caught:
+  - direction: up/down cues in the sentence must match the evidence direction
+  - magnitude: intensity words ("strongly", "slightly", "(weak)") must match the evidence magnitude
+  - rank: "largest/main factor" needs rank 1; "second/third largest" needs that rank; "X more than Y" needs
+    |attribution(X)| > |attribution(Y)| when both are cited
+  - risk: a band word in a risk claim must match the predicted band, and if the claim states percentages one of
+    them must be the predicted risk (not, say, the average or the interval bound)
+  - recourse: if the claim states percentages, one must be the option's re-predicted risk
 """
 from __future__ import annotations
 
@@ -19,22 +29,63 @@ from ..schemas import Claim, EvidencePackage, ExplanationPlan, GeneratedExplanat
 from ..metrics.fidelity import claim_fidelity_score
 from .textutil import extract_numbers, find_rule_matches, norm, sentences
 
-CAUSAL_PATTERNS = [
+GENERIC_CAUSAL_PATTERNS = [
     r"\bcaus(?:e|es|ed|ing)\b",
     r"\b(?:lead|leads|leading|led) to\b",
     r"\bresult(?:s|ed|ing)? in\b",
-    r"\b(?:drive|drives|driving|drove)\s+(?:\w+\s+)?(?:attrition|turnover|them|employees|people|departures?|resignations?|leaving|quitting|the employee)\b",
-    r"\bmak(?:e|es|ing)\s+(?:them|him|her|employees|people|the employee|staff)\s+(?:leave|quit|resign|stay|unhappy)\b",
     r"\bwill\s+(?:make|cause|keep|stop|prevent|ensure|lead|force|push)\b",
     r"\bprevent(?:s|ing|ed)?\b",
-    r"\bensur(?:e|es|ing)\s+(?:that\s+)?(?:they|he|she|the employee|employees)\s+(?:stay|remain)\b",
     r"\bis (?:the|a) (?:reason|cause) (?:why|that|for)\b",
-    r"\b(?:reduc(?:e|es|ed|ing)|lower(?:s|ed|ing)?|increas(?:e|es|ed|ing)|rais(?:e|es|ed|ing)|cut(?:s|ting)?)\s+"
-    r"(?:attrition|turnover|resignations)\b(?!\s+(?:risk|estimate|probability|score|likelihood))",
 ]
+
+
+def causal_patterns(domain: DomainAgent) -> list[str]:
+    """Generic causal patterns plus patterns built from the domain's outcome/subject vocabulary and its extras."""
+    lang = domain.language
+    outcomes = "|".join(lang.outcome_terms) or "the outcome"
+    subjects = "|".join(re.escape(t) for t in lang.subject_terms) or "people"
+    pats = list(GENERIC_CAUSAL_PATTERNS)
+    pats.append(rf"\b(?:drive|drives|driving|drove)\s+(?:\w+\s+)?(?:{outcomes}|{subjects})\b")
+    if lang.outcome_verbs:
+        verbs = "|".join(re.escape(v) for v in lang.outcome_verbs)
+        pats.append(rf"\bmak(?:e|es|ing)\s+(?:{subjects})\s+(?:{verbs})\b")
+        stay = [v for v in lang.outcome_verbs if v in ("stay", "remain", "repay", "recover")] or ["stay", "remain"]
+        pats.append(rf"\bensur(?:e|es|ing)\s+(?:that\s+)?(?:they|he|she|{subjects})\s+(?:{'|'.join(stay)}|remain)\b")
+    pats.append(rf"\b(?:reduc(?:e|es|ed|ing)|lower(?:s|ed|ing)?|increas(?:e|es|ed|ing)|rais(?:e|es|ed|ing)|cut(?:s|ting)?)\s+"
+                rf"(?:{outcomes})\b(?!\s+(?:risk|estimate|probability|score|likelihood))")
+    return pats + list(domain.policy.causal_extra)
+
+
 UP_CUES = re.compile(r"\b(?:rais(?:e|es|ed|ing)|increas(?:e|es|ed|ing)|higher|push(?:es|ed|ing)?\s+(?:it\s+|the estimate\s+|risk\s+)?up|add(?:s|ed)? to)\b|(?<![\w.])\+\s?\d", re.I)
 DOWN_CUES = re.compile(r"\b(?:lower(?:s|ed|ing)?|reduc(?:e|es|ed|ing)|decreas(?:e|es|ed|ing)|less|pull(?:s|ed|ing)?\s+(?:it\s+|the estimate\s+|risk\s+)?down|offset(?:s)?)\b|(?<![\w.])[-−]\s?\d", re.I)
 TOP_CUES = re.compile(r"\b(?:most important|largest|biggest|main|top|strongest|primary|leading)\s+(?:factor|driver|reason|contribution|contributor)\b", re.I)
+SECOND_CUES = re.compile(r"\b(second|third|fourth|fifth)[- ](?:largest|biggest|most important|strongest|main|"
+                         r"leading|greatest)\b", re.I)
+ORDINAL = {"second": 2, "third": 3, "fourth": 4, "fifth": 5}
+MORE_THAN = re.compile(r"\b(?:more|larger|bigger|stronger|greater|heavier)\b(?:\s+\w+){0,3}?\s+than\b", re.I)
+LESS_THAN = re.compile(r"\b(?:less|smaller|weaker|lighter|lower)\b(?:\s+\w+){0,3}?\s+than\b", re.I)
+MAGNITUDE_CUES = {
+    "strong": re.compile(r"\b(?:strongly|sharply|substantially|significantly|greatly|heavily|considerably|dramatically|"
+                         r"strong|major|a lot)\b", re.I),
+    "moderate": re.compile(r"\b(?:moderately|moderate|somewhat)\b", re.I),
+    "weak": re.compile(r"\b(?:slightly|marginally|a little|minor|weak|weakly|barely|modestly)\b", re.I),
+}
+BAND_WORD = re.compile(r"\b(low|medium|high)(?:\s+risk)?\s+band\b|\(\s*(low|medium|high)\s+band\b", re.I)
+PERCENT = re.compile(r"(?<![\w.])(\d+(?:\.\d+)?)\s?%")
+# words that mark a percentage as something other than the point estimate (a range bound, an average, a threshold)
+QUALIFIER = re.compile(r"\b(?:range|between|from|to|and|average|baseline|base|mean|typical|threshold|cut-?off|"
+                       r"interval|bootstrap|lower|upper|bound|minimum|maximum|up)\b", re.I)
+
+
+def _headline_percent(text: str) -> tuple[float, str] | None:
+    """The first percentage in the sentence that is not qualified as a range bound, average or threshold."""
+    for m in PERCENT.finditer(text):
+        before = " ".join(text[:m.start()].split()[-3:])
+        after = " ".join(text[m.end():].split()[:1])
+        if QUALIFIER.search(before) or QUALIFIER.search(after):
+            continue
+        return float(m.group(1)), m.group(1)
+    return None
 KEY_VALUE = re.compile(r"\b[A-Za-z]{2,}\s*=\s*[A-Za-z0-9_]+")
 UNDERSCORE = re.compile(r"\b[A-Za-z]+_[A-Za-z]+\b")
 CAMEL = re.compile(r"\b[A-Z][a-z]+(?:[A-Z][a-z]+)+\b")
@@ -171,7 +222,7 @@ def verify(pkg: EvidencePackage, plan: ExplanationPlan, gen: GeneratedExplanatio
             add("unsupported_number", f"Number {raw} is not in the evidence.", None, raw)
 
     # causal wording (generic + domain extras)
-    pats = [re.compile(p, re.I) for p in CAUSAL_PATTERNS + domain.policy.causal_extra]
+    pats = [re.compile(p, re.I) for p in causal_patterns(domain)]
     for span in find_rule_matches(text, pats, negatable=True):
         add("causal_wording", "Describes an association as a cause.", None, span)
 
@@ -196,7 +247,7 @@ def verify(pkg: EvidencePackage, plan: ExplanationPlan, gen: GeneratedExplanatio
 
     critical = [x for x in v if x.severity == "critical"]
     n = len(gen.claims)
-    report = claim_fidelity_score(n, v)
+    report = claim_fidelity_score(n, v, [c.text for c in gen.claims], text)
     return VerificationResult(passed=not critical, fidelity_score=report.score, fidelity=report.as_dict(),
                               violations=v, n_claims=n)
 
@@ -226,6 +277,14 @@ def _check_claim(pkg, plan, c: Claim, idx, add, item_ids, allowed, gloss, cited)
         if c.band and str(c.band).lower() != pr.band:
             add("risk_mismatch", "Stated band differs from the prediction.", idx, "P")
         if c.kind == "risk":
+            for m in BAND_WORD.finditer(c.text or ""):
+                if (m.group(1) or m.group(2)).lower() != pr.band:
+                    add("risk_mismatch", f"The sentence names the {(m.group(1) or m.group(2)).lower()} band; the "
+                        f"prediction is in the {pr.band} band.", idx, "P")
+            head = _headline_percent(c.text or "")
+            if head and not _close(head[0], head[1], pr.probability * 100):
+                add("risk_mismatch", f"The sentence gives the risk as {head[1]}%; the predicted risk is "
+                    f"{pr.probability * 100:.1f}%.", idx, "P")
             return
     if c.kind == "recourse":
         opt = next((pkg.option(i) for i in ids if pkg.option(i)), None)
@@ -238,6 +297,9 @@ def _check_claim(pkg, plan, c: Claim, idx, add, item_ids, allowed, gloss, cited)
             add("recourse_mismatch", "Recourse claim names a factor the option does not change.", idx, opt.id)
         if c.band and str(c.band).lower() != opt.band_after:
             add("recourse_mismatch", "Stated post-change band differs.", idx, opt.id)
+        pcts = [(float(m.group(1)), m.group(1)) for m in PERCENT.finditer(c.text or "")]
+        if pcts and not any(_close(v, raw, opt.probability_after * 100) for v, raw in pcts):
+            add("recourse_mismatch", "The sentence does not state the option's re-predicted risk.", idx, opt.id)
         return
     if c.kind == "glossary":
         return
@@ -259,5 +321,38 @@ def _check_claim(pkg, plan, c: Claim, idx, add, item_ids, allowed, gloss, cited)
         add("value_mismatch", f"Value differs from the evidence ({it.value_label}).", idx, it.id)
     if c.magnitude and str(c.magnitude).lower() != it.magnitude:
         add("magnitude_mismatch", f"Magnitude differs from the evidence ({it.magnitude}).", idx, it.id)
-    if (c.is_top or TOP_CUES.search(c.text or "")) and it.rank != 1:
+    elif len(items) == 1:
+        said = {m for m, pat in MAGNITUDE_CUES.items() if pat.search(c.text or "")}
+        if said and it.magnitude not in said:
+            add("magnitude_mismatch", f"The wording says {'/'.join(sorted(said))}; the evidence magnitude is "
+                f"{it.magnitude}.", idx, it.id)
+    no_ordinals = SECOND_CUES.sub(" ", c.text or "")  # "second largest factor" is not a top-factor claim
+    if (c.is_top or TOP_CUES.search(no_ordinals)) and it.rank != 1:
         add("rank_mismatch", "Claims a top factor that is not ranked first.", idx, it.id)
+    m2 = SECOND_CUES.search(c.text or "")
+    if m2 and it.rank != ORDINAL[m2.group(1).lower()]:
+        add("rank_mismatch", f"Calls a factor {m2.group(1).lower()}-ranked; its rank is {it.rank}.", idx, it.id)
+    if len(items) >= 2:
+        _check_comparison(c, items[:2], idx, add)
+
+
+def _first_pos(text: str, it) -> int:
+    t = text.lower()
+    pos = [t.find(n.lower()) for n in (it.display_name, it.feature) if n and t.find(n.lower()) >= 0]
+    return min(pos) if pos else -1
+
+
+def _check_comparison(c: Claim, pair, idx, add) -> None:
+    """'X ... more than Y': the factor named first must have the larger absolute attribution (reverse for 'less')."""
+    text = c.text or ""
+    more, less = bool(MORE_THAN.search(text)), bool(LESS_THAN.search(text))
+    if more == less:
+        return
+    a, b = pair
+    pa, pb = _first_pos(text, a), _first_pos(text, b)
+    if pa < 0 or pb < 0:
+        return
+    first, second = (a, b) if pa < pb else (b, a)
+    bigger_first = abs(first.attribution) > abs(second.attribution)
+    if (more and not bigger_first) or (less and bigger_first):
+        add("rank_mismatch", f"Compares {first.display_name} and {second.display_name} in the wrong order.", idx, first.id)

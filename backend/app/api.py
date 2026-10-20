@@ -235,6 +235,13 @@ async def admin_trace(request: Request):
 
 
 @handle
+async def admin_audit(request: Request):
+    """Archivable audit document for one trace: evidence, plan, attempts, provenance, agent trace (admin only)."""
+    require_admin(request)
+    return JSONResponse(service().audit(request.path_params["trace_id"]))
+
+
+@handle
 async def admin_prompts(request: Request):
     require_admin(request)
     return JSONResponse(service().store.prompts("generator"))
@@ -349,6 +356,7 @@ routes = [
     Route("/api/batch/{batch_id}/explain/{row:int}", batch_explain, methods=["POST"]),
     Route("/api/admin/traces", admin_traces),
     Route("/api/admin/traces/{trace_id}", admin_trace),
+    Route("/api/admin/traces/{trace_id}/audit", admin_audit),
     Route("/api/admin/prompts", admin_prompts),
     Route("/api/admin/prompts/propose", admin_propose, methods=["POST"]),
     Route("/api/admin/prompts/{prompt_id:int}/approve", admin_approve, methods=["POST"]),

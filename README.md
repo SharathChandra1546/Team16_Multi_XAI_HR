@@ -60,6 +60,15 @@ The diagrams say FastAPI. The API uses Starlette, the ASGI toolkit FastAPI is bu
 - **Descriptive preferences**: a level change or a follow-up question produces one short, dated, topic-scoped note (e.g. "Detail level: asked to switch to clear professional-level explanations."). A new note on a topic replaces the older one on that topic, so a contradictory later statement always wins. The current notes for a user are appended to every generator prompt for them (`preferences_applied` on the response says which ones were used) and shown in "What this system has learned about how you like explanations."
 - **Fidelity metric and repair**: `app/metrics/fidelity.py` defines the Claim Fidelity Score (CFS), a bounded, deterministic, judge-independent score (see `docs/FIDELITY_METRIC.md` for its properties and stated circularity limitation), returned as `VerificationResult.fidelity`. On a failed attempt, `app/agents/repair.py` turns each violation into a specific repair instruction (pulling the correct value from the evidence package when the violation names an evidence id) instead of handing the raw violation list back to the language model.
 
+## Phase 1: verified, policy-constrained pipeline
+
+Phase 1 of the paper plan added a hardened claim-level verifier, CFS v2 (text-level violations now count), a
+violation report by category, an escalation score logged for every case, verified recourse, sentence-level
+provenance with an audit export, checkable reader levels, a rule-free fault taxonomy with an LLM fault generator,
+optional LLM agents (planner, critic, reviewer) that can advise but never override the deterministic gates, a
+profile agent, switches for every component (with shadow-mode checks for ablations), and a domain plug-in contract
+with no domain vocabulary left in generic modules. See `docs/PHASE1.md` for the full list, file locations and tests.
+
 ## Quick start (one step)
 
 You need Python 3.10 or newer. Node.js is only needed for a public deployment build.
@@ -126,7 +135,7 @@ Results go to `backend/results/` as JSON and Markdown. Run each experiment with 
 
 Notes for honest reporting:
 
-- **Fault-injection results on template bases are an upper bound.** Faults inserted into template text are easier to catch than real LLM errors. Report `--base llm` results as the main numbers and Phase I raw error counts alongside them.
+- **Fault-injection results on template faults are an upper bound.** Template fault wording overlaps the detector's patterns. Report `--faults llm --base llm` (faults written by a separate LLM from rule-free descriptions) as the main numbers, and Phase I raw error counts alongside them.
 - **The verifier also produces the fidelity metric.** Using it as both detector and judge is circular. Back it up with the LLM reviewer comparison and a small human labelling of explanations.
 - **Escalation can be frequent.** With the default rule (the 10th to 90th percentile interval spans two bands), about 30% of held-out cases were routed to human review on the stand-in data. Check the rate on the real data in the manifest (`uncertainty.escalation_rate_test`) and tune `INTERVAL_LOW_PCT` / `INTERVAL_HIGH_PCT` if needed. Report the rule you use.
 

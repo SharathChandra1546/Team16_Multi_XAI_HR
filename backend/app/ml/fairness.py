@@ -12,6 +12,7 @@ from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
 
 FOUR_FIFTHS = 0.8
 PROXY_AUC_FLAG = 0.70
+MIN_GROUP_N = 30  # groups smaller than this are reported but excluded from the ratio and the TPR/FPR gaps
 
 
 def group_rates(y: np.ndarray, p: np.ndarray, t: float, groups: pd.Series) -> list[dict]:
@@ -31,7 +32,7 @@ def group_rates(y: np.ndarray, p: np.ndarray, t: float, groups: pd.Series) -> li
             "fpr": fp / neg if neg else None,
             "fnr": 1 - tp / pos if pos else None,
             "precision": tp / (tp + fp) if tp + fp else None,
-            "small_group": bool(mask.sum() < 30),
+            "small_group": bool(mask.sum() < MIN_GROUP_N),
         })
     return rows
 
@@ -69,21 +70,32 @@ def proxy_check(X: pd.DataFrame, protected: dict[str, pd.Series], nominal: list[
 
 
 def fairness_report(y: np.ndarray, p: np.ndarray, t: float, groups: dict[str, pd.Series]) -> dict:
+    """Group rates at the model's own decision threshold `t` (the same threshold that flags cases in use).
+
+    One rule for every attribute and every model: groups with fewer than MIN_GROUP_N rows are listed but left out
+    of the disparate-impact ratio and the TPR/FPR gaps, because their rates are too noisy to compare.
+    """
     out = {}
     for attr, g in groups.items():
         rows = group_rates(y, p, t, g)
-        flag_rates = [(r["group"], r["flag_rate"]) for r in rows if r["flag_rate"] is not None and r["n"] > 0]
-        lo = min(flag_rates, key=lambda r: r[1])
-        hi = max(flag_rates, key=lambda r: r[1])
-        dir_ = lo[1] / hi[1] if hi[1] > 0 else None
-        tprs = [r["tpr"] for r in rows if r["tpr"] is not None]
-        fprs = [r["fpr"] for r in rows if r["fpr"] is not None]
+        big = [r for r in rows if not r["small_group"] and r["n"] > 0]
+        flag_rates = [(r["group"], r["flag_rate"]) for r in big if r["flag_rate"] is not None]
+        dir_, lo, hi = None, (None, None), (None, None)
+        if len(flag_rates) >= 2:
+            lo = min(flag_rates, key=lambda r: r[1])
+            hi = max(flag_rates, key=lambda r: r[1])
+            dir_ = lo[1] / hi[1] if hi[1] > 0 else None
+        tprs = [r["tpr"] for r in big if r["tpr"] is not None]
+        fprs = [r["fpr"] for r in big if r["fpr"] is not None]
         out[attr] = {
             "groups": rows,
+            "threshold": t,
+            "min_group_n": MIN_GROUP_N,
+            "excluded_small_groups": [r["group"] for r in rows if r["small_group"]],
             "disparate_impact_ratio": dir_,
             "dir_groups": {"lowest_flag_rate": lo[0], "highest_flag_rate": hi[0]},
             "passes_four_fifths": None if dir_ is None else dir_ >= FOUR_FIFTHS,
-            "tpr_gap": max(tprs) - min(tprs) if tprs else None,
-            "fpr_gap": max(fprs) - min(fprs) if fprs else None,
+            "tpr_gap": max(tprs) - min(tprs) if len(tprs) >= 2 else None,
+            "fpr_gap": max(fprs) - min(fprs) if len(fprs) >= 2 else None,
         }
     return out

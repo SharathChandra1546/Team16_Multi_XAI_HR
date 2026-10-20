@@ -5,6 +5,10 @@ change, consequence features change only through the action that declares them,
 values stay inside the feature's valid range), then (2) re-predicted with the
 model. Only candidates that lower the estimate by at least `min_risk_drop`, or
 move it to a lower band, are returned.
+
+Every returned option is then re-checked independently (`recheck_option`: rebuild the actions from the domain,
+re-apply, re-validate, re-predict); an option that fails the re-check is dropped. Each option records its
+`risk_drop` and `rechecked` flag so recourse validity can be reported.
 """
 from __future__ import annotations
 
@@ -83,7 +87,7 @@ def find_recourse(domain: DomainAgent, x: dict, variant: str = "main", max_optio
         if len(chosen) == max_options:
             break
     options = []
-    for i, (combo, new, p1, b1, c) in enumerate(chosen, start=1):
+    for combo, new, p1, b1, c in chosen:
         changes = []
         conseq = {f for a in combo for f in a.consequences}
         for f in domain.model_features(variant):
@@ -93,12 +97,16 @@ def find_recourse(domain: DomainAgent, x: dict, variant: str = "main", max_optio
                     feature=f, display_name=spec.display if spec else f,
                     from_label=domain.readable(f, x[f]), to_label=domain.readable(f, new[f]), consequence=f in conseq,
                 ))
-        options.append(RecourseOption(
-            id=f"R{i}", actions=[a.id for a in combo], description=" combined with ".join(a.label for a in combo),
+        opt = RecourseOption(
+            id=f"R{len(options) + 1}", actions=[a.id for a in combo], description=" combined with ".join(a.label for a in combo),
             short_description=" and ".join(a.short or a.label for a in combo),
             changes=changes, probability_before=round(p0, 4), probability_after=round(p1, 4), band_before=b0,
             band_after=b1, assumptions=[s for a in combo for s in a.assumptions], cost=c,
-        ))
+            risk_drop=round(round(p0, 4) - round(p1, 4), 4),  # from the stored, rounded probabilities
+        )
+        opt.rechecked = recheck_option(domain, x, opt, variant)
+        if opt.rechecked:
+            options.append(opt)
     note = "" if options else (
         f"No change to actionable factors lowers this estimate by at least {round(domain.policy.min_risk_drop * 100)} "
         "percentage points or moves it to a lower band."

@@ -9,6 +9,14 @@ from ..llm.prompts import render_generator
 from ..schemas import Claim, EvidencePackage, ExplanationPlan, GeneratedExplanation, Violation
 
 
+def _ordered(items, plan: ExplanationPlan):
+    """Items in the planner's discussion order (if it set one), else in the package's rank order."""
+    if not plan.order:
+        return list(items)
+    pos = {eid: i for i, eid in enumerate(plan.order)}
+    return sorted(items, key=lambda it: (pos.get(it.id, len(pos)), getattr(it, "rank", 0)))
+
+
 def evidence_view(pkg: EvidencePackage, plan: ExplanationPlan) -> dict:
     allowed = set(plan.allowed_ids)
     pr = pkg.prediction
@@ -20,7 +28,7 @@ def evidence_view(pkg: EvidencePackage, plan: ExplanationPlan) -> dict:
             {"id": it.id, "feature": it.feature, "display_name": it.display_name, "value_label": it.value_label,
              "direction": it.direction, "magnitude": it.magnitude, "rank": it.rank,
              "contribution_percentage_points": round(it.attribution * 100, 1), "glossary_id": it.glossary_id}
-            for it in pkg.visible if it.id in allowed
+            for it in _ordered(pkg.visible, plan) if it.id in allowed
         ],
         "recourse_options": [
             {"id": r.id, "description": r.description, "plain_description": r.short_description,
@@ -54,7 +62,7 @@ def generate(
     repair_instructions: list[str] | None = None, preferences_text: str = "",
 ) -> GeneratedExplanation:
     system = render_generator(prompt_template, guidance, plan.level, plan.max_words, plan.style,
-                              plan.allow_column_names, plan.extra_instructions, preferences_text)
+                              plan.allow_column_names, plan.extra_instructions, preferences_text, domain.language)
     user_payload = {
         "question": question,
         "intent": plan.intent,

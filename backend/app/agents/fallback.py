@@ -4,7 +4,7 @@ Used when retries are exhausted, when no LLM consent is given, and as the mock L
 """
 from __future__ import annotations
 
-from ..domains.base import DomainAgent
+from ..domains.base import DomainAgent, DomainLanguage
 from ..schemas import Claim, EvidenceItem, EvidencePackage, ExplanationPlan, GeneratedExplanation
 
 MAG_ADVERB = {"strong": "strongly", "moderate": "moderately", "weak": "slightly"}
@@ -15,21 +15,23 @@ def pct(p: float, decimals: int = 0) -> str:
     return f"{v:.{decimals}f}" if decimals else f"{int(round(p * 100))}"
 
 
-def _risk_claim(pkg: EvidencePackage, level: str, variant: int = 0) -> Claim:
+def _risk_claim(pkg: EvidencePackage, level: str, variant: int = 0, domain: DomainAgent | None = None) -> Claim:
     pr = pkg.prediction
     lo, hi = pr.interval
+    lang = domain.language if domain is not None else DomainLanguage()
+    risk = lang.risk_name
     if level == "novice":
-        text = (f"The model estimates a {pct(pr.probability)}% chance that an employee with this profile leaves, "
-                f"which is in the {pr.band} risk band.") if variant == 0 else (
-                f"For an employee with this profile, the model puts the chance of leaving at {pct(pr.probability)}%, "
-                f"in the {pr.band} risk band.")
+        text = (f"The model estimates a {pct(pr.probability)}% chance that {lang.subject_indefinite} with this profile "
+                f"{lang.outcome_verb}, which is in the {pr.band} risk band.") if variant == 0 else (
+                f"For {lang.subject_indefinite} with this profile, the model puts the chance of {lang.outcome_gerund} at "
+                f"{pct(pr.probability)}%, in the {pr.band} risk band.")
     elif level == "intermediate":
         text = (f"The model's risk estimate is {pct(pr.probability)}% ({pr.band} band), with a likely range of "
                 f"{pct(lo)}% to {pct(hi)}%.") if variant == 0 else (
-                f"The estimated attrition risk is {pct(pr.probability)}%, in the {pr.band} band (likely range "
+                f"The estimated {risk} is {pct(pr.probability)}%, in the {pr.band} band (likely range "
                 f"{pct(lo)}% to {pct(hi)}%).")
     else:
-        text = (f"Calibrated attrition risk estimate: {pct(pr.probability, 1)}% ({pr.band} band; bootstrap range "
+        text = (f"Calibrated {risk} estimate: {pct(pr.probability, 1)}% ({pr.band} band; bootstrap range "
                 f"{pct(lo, 1)}% to {pct(hi, 1)}%; review threshold {pct(pr.threshold)}%).")
     return Claim(text=text, kind="risk", evidence_ids=["P"], probability=pr.probability, band=pr.band)
 
@@ -59,38 +61,44 @@ def _attr_claim(it: EvidenceItem, level: str, variant: int = 0) -> Claim:
                  value=label, magnitude=it.magnitude, is_top=top)
 
 
-def build_template(pkg: EvidencePackage, plan: ExplanationPlan, domain: DomainAgent, variant: int = 0) -> GeneratedExplanation:
-    claims: list[Claim] = [_risk_claim(pkg, plan.level, variant)]
-    extra_sentences: list[str] = []
+def template_notes(pkg: EvidencePackage, plan: ExplanationPlan, domain: DomainAgent) -> list[str]:
+    """Fixed, evidence-free sentences the template appends (also used by provenance to label them as notes)."""
+    notes: list[str] = []
     if plan.intent == "recourse":
-        if pkg.recourse:
-            opts = [o for o in pkg.recourse if o.id in set(plan.allowed_ids)]
-            for i, opt in enumerate(opts, start=1):
-                novice = plan.level == "novice"
-                verb = "drop" if novice else "fall"
-                band = "" if novice else f" ({opt.band_after} band)"
-                desc = opt.short_description if novice and opt.short_description else opt.description
-                text = (f"Option {i}, {desc}: the model's estimate would {verb} from "
-                        f"{pct(opt.probability_before)}% to {pct(opt.probability_after)}%{band}.")
-                claims.append(Claim(text=text, kind="recourse", evidence_ids=[opt.id],
-                                    feature=opt.changes[0].feature if opt.changes else None,
-                                    probability=opt.probability_after, band=opt.band_after))
+        if not pkg.recourse:
+            notes.append(pkg.recourse_note or "No actionable change lowers this estimate.")
+        notes.append(f"These are model estimates for discussion, not predictions of what {domain.language.subject} will do.")
+    else:
+        if any(i.withheld for i in pkg.items):
+            notes.append(domain.policy.withheld_note)
+        if plan.level == "expert":
+            notes.append(f"Contributions are Shapley values relative to an average estimate of "
+                         f"{pct(pkg.base_value, 1)}%; they describe the model, not causes.")
         else:
-            extra_sentences.append(pkg.recourse_note or "No actionable change lowers this estimate.")
-        extra_sentences.append("These are model estimates for discussion, not predictions of what the employee will do.")
+            notes.append("These are patterns the model learned from past data, not causes.")
+    return notes
+
+
+def build_template(pkg: EvidencePackage, plan: ExplanationPlan, domain: DomainAgent, variant: int = 0) -> GeneratedExplanation:
+    claims: list[Claim] = [_risk_claim(pkg, plan.level, variant, domain)]
+    if plan.intent == "recourse":
+        opts = [o for o in pkg.recourse if o.id in set(plan.allowed_ids)]
+        for i, opt in enumerate(opts, start=1):
+            novice = plan.level == "novice"
+            verb = "drop" if novice else "fall"
+            band = "" if novice else f" ({opt.band_after} band)"
+            desc = opt.short_description if novice and opt.short_description else opt.description
+            text = (f"Option {i}, {desc}: the model's estimate would {verb} from "
+                    f"{pct(opt.probability_before)}% to {pct(opt.probability_after)}%{band}.")
+            claims.append(Claim(text=text, kind="recourse", evidence_ids=[opt.id],
+                                feature=opt.changes[0].feature if opt.changes else None,
+                                probability=opt.probability_after, band=opt.band_after))
     else:
         allowed = set(plan.allowed_ids)
         for it in pkg.visible:
             if it.id in allowed:
                 claims.append(_attr_claim(it, plan.level, variant))
-        if any(i.withheld for i in pkg.items):
-            extra_sentences.append(domain.policy.withheld_note)
-        if plan.level == "expert":
-            extra_sentences.append(f"Contributions are Shapley values relative to an average estimate of "
-                                   f"{pct(pkg.base_value, 1)}%; they describe the model, not causes.")
-        else:
-            extra_sentences.append("These are patterns the model learned from past data, not causes.")
-    text = " ".join([c.text for c in claims] + extra_sentences)
+    text = " ".join([c.text for c in claims] + template_notes(pkg, plan, domain))
     return GeneratedExplanation(explanation=text, claims=claims, source="template")
 
 

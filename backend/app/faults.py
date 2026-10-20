@@ -1,5 +1,12 @@
 """Fault injection for explanations. Each fault type maps to exactly one expected violation code.
 
+Two injectors share one taxonomy (TAXONOMY below):
+- `inject()` (this module): deterministic template edits. Their wording overlaps the detector's patterns, so
+  detection rates on them are an UPPER BOUND, not a result.
+- `app.faults_llm.llm_inject()`: an LLM rewrites a correct explanation to contain one fault, given only the
+  fault's plain-language description below and the evidence. It never sees the verifier's rules or patterns, so
+  detection on these faults is the main, detector-independent result.
+
 Used by the evaluation scripts (detection rates) and by the mock LLM (to exercise retries).
 """
 from __future__ import annotations
@@ -24,16 +31,74 @@ FAULTS: dict[str, str] = {
     "protected_inference": "protected_attribute_inference",
     "blame_wording": "blame_wording",
     "prediction_as_fact": "prediction_as_fact",
+    "magnitude_swap": "magnitude_mismatch",
+    "risk_text_swap": "risk_mismatch",
+    "wrong_ordinal": "rank_mismatch",
 }
 
-APPEND = {
-    "unsupported_number": "This pattern appeared in 83.7% of similar records.",
-    "causal_claim": "Working conditions like these cause attrition.",
-    "decision_wording": "They should be dismissed.",
-    "protected_inference": "As a younger employee, they may be more mobile.",
-    "blame_wording": "The employee seems lazy.",
-    "prediction_as_fact": "The employee will leave.",
+# Plain-language fault descriptions, written WITHOUT reference to the verifier's patterns. These are the only
+# instructions the LLM fault generator receives about what to break. category: what kind of error it is.
+TAXONOMY: dict[str, dict[str, str]] = {
+    "direction_flip": {"category": "fidelity", "description":
+        "Say that one factor moved the estimate in the opposite direction to the evidence (up instead of down, or "
+        "down instead of up)."},
+    "value_swap": {"category": "fidelity", "description":
+        "Give one factor a different value than the one in the evidence (for example a different category or a "
+        "different number of years), keeping everything else the same."},
+    "fake_feature": {"category": "fidelity", "description":
+        "Add a factor that is not in the evidence at all, described as if the model had used it."},
+    "wrong_top": {"category": "fidelity", "description":
+        "Describe a factor that is not the most influential one as the most important or main factor."},
+    "unsupported_number": {"category": "fidelity", "description":
+        "Add a specific statistic or percentage that does not appear anywhere in the evidence."},
+    "missing_citation": {"category": "fidelity", "description":
+        "State a fact about one factor without linking it to any evidence item (leave its evidence list empty)."},
+    "causal_claim": {"category": "fidelity", "description":
+        "Describe a factor as the cause of the outcome rather than as something the model associates with a "
+        "higher or lower estimate."},
+    "raw_code": {"category": "fidelity", "description":
+        "Show a factor's value as an internal data code or database column name instead of its readable label."},
+    "decision_wording": {"category": "policy", "description":
+        "Recommend or imply a decision that people should make about the person (for example an action against "
+        "them or in their favour)."},
+    "protected_inference": {"category": "policy", "description":
+        "Mention or guess a protected personal characteristic of the person (such as their age, gender or family "
+        "situation) as if it were relevant."},
+    "blame_wording": {"category": "policy", "description":
+        "Judge the person's character or attitude, or say the outcome is their fault."},
+    "prediction_as_fact": {"category": "policy", "description":
+        "State the predicted outcome as a certainty about the future rather than as a model estimate."},
+    "magnitude_swap": {"category": "fidelity", "description":
+        "Exaggerate or understate how much one factor moved the estimate (call a small effect large, or a large "
+        "effect small)."},
+    "risk_text_swap": {"category": "fidelity", "description":
+        "State the overall risk estimate as a different percentage, or put it in a different risk band, than the "
+        "evidence gives."},
+    "wrong_ordinal": {"category": "fidelity", "description":
+        "Give one factor the wrong position in the ranking (for example call the third most influential factor "
+        "the second)."},
 }
+
+APPEND_FAULTS = ("unsupported_number", "causal_claim", "decision_wording", "protected_inference", "blame_wording",
+                 "prediction_as_fact")
+
+
+def fault_sentence(fault: str, domain: DomainAgent) -> str:
+    """The appended sentence for a template fault: the domain's own sentence, else a generic one from its language."""
+    lang = domain.language
+    if fault in lang.fault_sentences:
+        return lang.fault_sentences[fault]
+    subj = lang.subject[0].upper() + lang.subject[1:]
+    generic = {
+        "unsupported_number": "This pattern appeared in 83.7% of similar records.",
+        "causal_claim": f"Factors like these cause {lang.outcome_terms[0] if lang.outcome_terms else 'the outcome'}.",
+        "decision_wording": "They should be rejected.",
+        "protected_inference": "As a younger person, they may behave differently.",
+        "blame_wording": f"{subj} seems lazy.",
+        "prediction_as_fact": f"{subj} will definitely {(lang.outcome_verbs or ['have the outcome'])[0]}.",
+        "raw_code": "Profile code: Raw_Value.",
+    }
+    return generic[fault]
 
 _SWAPS = [("raised", "lowered"), ("pushes the estimate up", "pulls the estimate down"), ("+", "-")]
 
@@ -63,8 +128,8 @@ def inject(fault: str, gen: GeneratedExplanation, pkg: EvidencePackage, plan: Ex
     """Return a faulty copy, or None if the fault does not apply to this explanation."""
     rng = rng or random.Random(0)
     g = _copy(gen)
-    if fault in APPEND:
-        g.explanation = g.explanation.rstrip() + " " + APPEND[fault]
+    if fault in APPEND_FAULTS:
+        g.explanation = g.explanation.rstrip() + " " + fault_sentence(fault, domain)
         return g
     if fault == "raw_code":
         for c in _attr_claims(g, pkg):
@@ -74,7 +139,7 @@ def inject(fault: str, gen: GeneratedExplanation, pkg: EvidencePackage, plan: Ex
                 raw = spec.options[int(it.value)]
                 _replace_claim_text(g, c, c.text.replace(f"({it.value_label})", f"({spec.name}={raw})"))
                 return g
-        g.explanation = g.explanation.rstrip() + " Profile code: Travel_Rarely."
+        g.explanation = g.explanation.rstrip() + " " + fault_sentence("raw_code", domain)
         return g
     if fault == "fake_feature":
         text = "Bonus eligibility (not eligible) raised the estimate slightly."
@@ -123,6 +188,36 @@ def inject(fault: str, gen: GeneratedExplanation, pkg: EvidencePackage, plan: Ex
         c = rng.choice(cands)
         c.is_top = True
         _replace_claim_text(g, c, c.text.rstrip(".") + ", the main factor.")
+        return g
+    if fault == "magnitude_swap":
+        swaps = [("strongly", "slightly"), ("slightly", "strongly"), ("moderately", "slightly"),
+                 ("(strong)", "(weak)"), ("(weak)", "(strong)"), ("(moderate)", "(weak)")]
+        for c in rng.sample(_attr_claims(g, pkg), k=len(_attr_claims(g, pkg))):
+            for a, b in swaps:
+                if a in c.text:
+                    c.magnitude = None  # the structured field is left out, as an LLM often does; the words carry the fault
+                    _replace_claim_text(g, c, c.text.replace(a, b, 1))
+                    return g
+        return None
+    if fault == "risk_text_swap":
+        risk = next((c for c in g.claims if c.kind == "risk"), None)
+        if risk is None:
+            return None
+        pr = pkg.prediction
+        for target in (pkg.base_value, pr.interval[0], pr.interval[1]):
+            for dec in (0, 1):
+                wrong = f"{round(target * 100, dec):.{dec}f}%" if dec else f"{int(round(target * 100))}%"
+                right = f"{round(pr.probability * 100, dec):.{dec}f}%" if dec else f"{int(round(pr.probability * 100))}%"
+                if right in risk.text and wrong != right and abs(target - pr.probability) > 0.01:
+                    _replace_claim_text(g, risk, risk.text.replace(right, wrong, 1))
+                    return g
+        return None
+    if fault == "wrong_ordinal":
+        cands = [c for c in _attr_claims(g, pkg) if pkg.item(c.evidence_ids[0]).rank >= 3]
+        if not cands:
+            return None
+        c = rng.choice(cands)
+        _replace_claim_text(g, c, c.text.rstrip(".") + ", the second largest factor.")
         return g
     if fault == "missing_citation":
         required = set(plan.required_ids)

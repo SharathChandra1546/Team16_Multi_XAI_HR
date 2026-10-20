@@ -10,6 +10,7 @@ the Evidence Package so the instruction is self-correcting rather than just
 """
 from __future__ import annotations
 
+from ..domains.base import DomainLanguage
 from ..schemas import EvidencePackage, Violation
 
 # Generic instruction per code when the violation can't be bound to a specific evidence id
@@ -32,9 +33,9 @@ GENERIC: dict[str, str] = {
     "unsupported_number": "Remove this number or replace it with one that appears in the evidence JSON (percentages, contributions, thresholds).",
     "causal_wording": "Rewrite as an association, not a cause: 'the model associates X with a higher/lower estimate', never 'X causes/drives/leads to'.",
     "raw_code_leak": "Replace the raw code/column name with the evidence item's value_label.",
-    "decision_wording": "Remove any recommendation or mention of an employment decision (firing, promoting, etc.).",
-    "protected_attribute_inference": "Remove any reference to age, gender, marital or family status. Say 'the employee' or 'they'.",
-    "blame_wording": "Remove judgemental language about the employee's character. Describe factors neutrally.",
+    "decision_wording": "Remove any recommendation or mention of {decision_kind} ({decision_examples}).",
+    "protected_attribute_inference": "Remove any reference to {protected_description}. Say '{subject}' or 'they'.",
+    "blame_wording": "Remove judgemental language about {subject_possessive} character. Describe factors neutrally.",
     "prediction_as_fact": "Describe the outcome as an estimate ('the model estimates...'), never as a certainty ('will leave').",
     "terminology": "Remove the flagged technical term; it is not allowed at this reader level.",
     "word_budget": "The draft is over the word budget for this level. Cut it down.",
@@ -43,6 +44,11 @@ GENERIC: dict[str, str] = {
     "disclosure_missing": "Append the mandatory disclosure sentence verbatim at the end.",
     "empty_explanation": "The explanation field was empty. Write the actual explanation text, not just claims.",
 }
+
+
+class _Defaults(dict):
+    def __missing__(self, key: str) -> str:
+        return "{" + key + "}"
 
 
 def _evidence_fact(pkg: EvidencePackage, eid: str | None) -> str:
@@ -60,8 +66,13 @@ def _evidence_fact(pkg: EvidencePackage, eid: str | None) -> str:
     return ""
 
 
-def build_repair_instructions(violations: list[Violation], pkg: EvidencePackage) -> list[str]:
-    """One instruction per distinct critical violation, each self-correcting where an evidence id is known."""
+def build_repair_instructions(violations: list[Violation], pkg: EvidencePackage,
+                              language: DomainLanguage | None = None) -> list[str]:
+    """One instruction per distinct critical violation, each self-correcting where an evidence id is known.
+
+    Domain words (subject, decision kind, protected attributes) come from the domain's DomainLanguage.
+    """
+    lang = vars(language or DomainLanguage())
     seen: set[tuple[str, str | None]] = set()
     out: list[str] = []
     for v in violations:
@@ -71,7 +82,7 @@ def build_repair_instructions(violations: list[Violation], pkg: EvidencePackage)
         if key in seen:
             continue
         seen.add(key)
-        base = GENERIC.get(v.code, v.message)
+        base = GENERIC.get(v.code, v.message).format_map(_Defaults(lang))
         # span is the evidence id for citation-shaped codes; a fact pulled straight from the package beats prose
         fact = _evidence_fact(pkg, v.span) if v.code in (
             "direction_mismatch", "value_mismatch", "magnitude_mismatch", "rank_mismatch", "unknown_evidence", "withheld_citation",
