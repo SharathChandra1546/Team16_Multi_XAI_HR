@@ -46,6 +46,13 @@ def instance_words(lang: DomainLanguage) -> re.Pattern:
     return re.compile(rf"\b(?:this|their|his|her|why|flagged|{poss})\b", re.I)
 
 
+# Words every domain uses ("risk", "estimate", "band"...). They never count as evidence for a particular domain, so a
+# vague question asks for clarification instead of going to whichever domain happens to list them as keywords.
+GENERIC_ROUTING_TERMS = {"risk", "risks", "estimate", "estimates", "estimated", "factor", "factors", "band", "bands",
+                         "flagged", "model", "score", "chance", "probability", "case", "explain", "why", "high", "low",
+                         "medium", "lower", "raise", "change"}
+
+
 def _any(patterns: list[str], text: str) -> bool:
     return any(re.search(p, text, re.I) for p in patterns)
 
@@ -107,7 +114,8 @@ class Router:
             q = normalise(query)
             scored = []
             for d in self.registry.list():
-                hits = sum(1 for k in d.routing_keywords if re.search(rf"\b{re.escape(k)}\b", q))
+                hits = sum(1 for k in d.routing_keywords
+                           if k not in GENERIC_ROUTING_TERMS and re.search(rf"\b{re.escape(k)}\b", q))
                 overlap = 0.0
                 if instance:
                     names = {f.name for f in d.features}

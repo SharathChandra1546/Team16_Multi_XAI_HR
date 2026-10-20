@@ -1,6 +1,7 @@
 # Requirements, decisions and acceptance evidence
 
-Scope: HR attrition only (finance deferred). Perspective: HR manager. Decisions agreed before the build:
+Scope: HR attrition, finance (credit risk) and healthcare (diabetes risk) since Phase 2; the decisions below were
+agreed for HR and carried over to the other domains as described in `docs/PHASE2.md`. Perspective: HR manager. Decisions agreed before the build:
 
 - **Escalation:** "route to human review" replaces the explanation when the risk band is uncertain (the bootstrap range spans two bands) or the profile is out of distribution. High-risk cases get the verified explanation plus a mandatory review notice.
 - **Protected attributes:** age, gender and marital status are excluded from the main model. They are kept for the fairness audit and for one audit model used for comparison.
@@ -47,6 +48,14 @@ Scope: HR attrition only (finance deferred). Perspective: HR manager. Decisions 
 | 30 | Detector-independent fault generator with a rule-free taxonomy | `app/faults.py::TAXONOMY`, `app/faults_llm.py`, `eval/run_faults.py --faults llm` | The fault prompt contains the plain-language description but no violation code and no regex (tested). |
 | 31 | Domain plug-in contract; no domain vocabulary in generic modules | `app/domains/base.py::DomainLanguage`, `validate_domain`, `scripts/transfer_effort.py` | `test_graph_domain_agnostic.py`: 26 generic modules scanned for domain vocabulary; HR and a toy loan domain pass the contract; a broken domain fails it. |
 | 32 | Methodology fixes: training-split recourse stats, consistent fairness rule, OOD median, configured interval percentiles | `scripts/train_hr.py`, `app/ml/training.py`, `app/ml/fairness.py` | Artefact records `domain_stats_source == "training split"`; small groups are excluded from the ratio for every attribute. |
+
+| 33 | Baselines re-implemented on the same evidence | `app/baselines.py` | `tests/test_phase2_baselines.py`: every baseline runs; loop budgets match the papers (B3/Musicco two revisions, critic loop three rounds, Explingo two rewrites). |
+| 34 | One measurement for all systems (VA/SA/RA, fidelity, policy, level, cost) | `app/metrics/measure.py`, `app/metrics/agreement.py` | Verified templates measure error-free with full agreement in every domain; injected faults are caught. |
+| 35 | Comparison and ablation runner with coverage-risk | `eval/run_comparison.py` | End-to-end test with the mock LLM. |
+| 36 | Finance domain (German Credit) | `app/domains/finance/` | `tests/test_phase2_domains.py` (contract, templates, faults, protected withholding, recourse, guardrail, routing). |
+| 37 | Healthcare domain (Pima diabetes) | `app/domains/health/` | Same suite. |
+| 38 | Routing and guardrail across domains, with held-out sets | `eval/run_routing_guardrail.py`, `eval/data/guardrail_heldout_*.json`, `routing_cases.json` | No misrouting on the mixed set; held-out sets have no false refusals (after one disclosed fix). |
+| 39 | Domain-transfer effort | `scripts/transfer_effort.py` | Finance 12 and healthcare 18 lines changed in shared code, both verifier bugs the new domains exposed (`docs/PHASE2.md`). |
 
 ## Known limits to state in the paper
 

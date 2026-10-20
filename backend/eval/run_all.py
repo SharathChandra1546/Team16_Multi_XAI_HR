@@ -34,15 +34,27 @@ def main() -> int:
     ap.add_argument("--quick", action="store_true")
     a = ap.parse_args()
     n_faults, n_llm, n_phase1 = (8, 3, 3) if a.quick else (40, 10, 30)
-    step("Model and fairness tables", ["eval/export_tables.py"])
-    step("Fault injection on template bases (deterministic checks)", ["eval/run_faults.py", "--n", str(n_faults)])
+    n_cmp = 3 if a.quick else 30
+    from app.domains.registry import default_registry
+
+    domains = ",".join(default_registry().names())
+    step("Model and fairness tables (every trained domain)", ["eval/export_tables.py", "--all"])
+    step("Routing and guardrail (dev and held-out sets)", ["eval/run_routing_guardrail.py"])
+    step("Fault injection on template bases (deterministic checks)",
+         ["eval/run_faults.py", "--n", str(n_faults), "--domains", domains])
     if settings.llm_provider == "mock":
         print("\nLLM_PROVIDER=mock: skipping the LLM experiments. Set a provider and key in backend/.env to run them.")
         return 0
-    step("Fault injection on LLM-written bases with the LLM reviewer baseline",
-         ["eval/run_faults.py", "--n", str(n_llm), "--base", "llm", "--reviewer"])
-    step("Phase I (raw LLM errors, pipeline outcomes, levels, reviewer agreement)",
-         ["eval/run_phase1.py", "--n", str(n_phase1), "--reviewer"])
+    step("Fault injection: LLM-written faults on LLM-written bases, with the LLM reviewer",
+         ["eval/run_faults.py", "--n", str(n_llm), "--base", "llm", "--faults", "both", "--reviewer", "--domains", domains])
+    for d in domains.split(","):
+        step(f"Phase I on {d} (raw LLM errors, pipeline outcomes, levels, reviewer agreement)",
+             ["eval/run_phase1.py", "--n", str(n_phase1), "--reviewer", "--domain", d])
+    step("Baselines vs this framework (all domains, all levels, LLM extractor)",
+         ["eval/run_comparison.py", "--preset", "baselines", "--n", str(n_cmp), "--domains", domains,
+          "--intents", "explain,recourse", "--judge"])
+    step("Ablations (all domains)",
+         ["eval/run_comparison.py", "--preset", "ablations", "--n", str(n_cmp), "--domains", domains, "--judge"])
     print("\nResults are in backend/results/.")
     return 0
 

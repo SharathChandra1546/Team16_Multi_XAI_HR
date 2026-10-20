@@ -69,6 +69,23 @@ optional LLM agents (planner, critic, reviewer) that can advise but never overri
 profile agent, switches for every component (with shadow-mode checks for ablations), and a domain plug-in contract
 with no domain vocabulary left in generic modules. See `docs/PHASE1.md` for the full list, file locations and tests.
 
+## Phase 2: baselines, ablations and three domains
+
+Phase 2 added eight re-implemented baselines (direct SHAP-to-LLM, Musicco et al. B1–B4 and full pipeline, Explingo,
+He & Martens critic loop), a comparison and ablation runner that measures every system's shown text the same way
+(value/sign/rank agreement, fidelity and policy errors, cost, coverage-risk), and two new domains built to HR's
+standard: finance (Statlog German Credit) and healthcare (Pima Indians Diabetes). See `docs/PHASE2.md`.
+
+```bash
+cd backend
+python scripts/train_domain.py --domain finance        # needs data/german.data (or --standin)
+python scripts/train_domain.py --domain health         # needs data/diabetes.csv (or --standin)
+python eval/run_comparison.py --preset baselines --domains hr,finance,health --n 30 --judge
+python eval/run_comparison.py --preset ablations --domains hr,finance,health --n 30 --judge
+python eval/run_routing_guardrail.py
+python eval/run_all.py                                 # everything
+```
+
 ## Quick start (one step)
 
 You need Python 3.10 or newer. Node.js is only needed for a public deployment build.

@@ -151,3 +151,15 @@ def test_routing_by_instance(name):
     x = _xs(d, 1)[0]
     res = Router(_REG).route("Why is this case flagged?", _raw(d, x), None)
     assert res.domain == name, (name, res)
+
+
+def test_mixed_domain_routing_never_misroutes():
+    """Questions without a domain or case details: never sent to the wrong domain; vague ones ask to clarify."""
+    r = Router(_REG)
+    cases = [c for c in json.loads((DATA / "routing_cases.json").read_text())["cases"]
+             if c["domain"] is None or _REG.has(c["domain"])]
+    wrong = [(c["query"], c["domain"], r.route(c["query"], None, None).domain) for c in cases]
+    wrong = [w for w in wrong if w[2] is not None and w[2] != w[1]]
+    assert not wrong, wrong
+    vague = [c["query"] for c in cases if c["domain"] is None]
+    assert all(r.route(q, None, None).domain is None for q in vague)
