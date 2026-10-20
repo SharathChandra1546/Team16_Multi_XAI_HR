@@ -1,0 +1,19 @@
+# secrets
+.env
+backend/.env
+frontend/.env
+frontend/.env.local
+# data and generated artefacts
+backend/data/*.csv
+backend/models/
+backend/results/
+backend/*.sqlite3
+backend/llm_cache.sqlite3
+# build
+frontend/node_modules/
+frontend/dist/
+frontend/public/robots.txt
+frontend/public/sitemap.xml
+__pycache__/
+.venv/
+.pytest_cache/

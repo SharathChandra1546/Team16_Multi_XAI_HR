@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Attrition Risk Explainer">
+  <rect width="64" height="64" rx="12" fill="#0b6e69"/>
+  <rect x="14" y="16" width="30" height="7" rx="2" fill="#ffffff"/>
+  <rect x="14" y="29" width="20" height="7" rx="2" fill="#ffffff" opacity="0.85"/>
+  <rect x="14" y="42" width="12" height="7" rx="2" fill="#ffffff" opacity="0.7"/>
+  <path d="M44 41l4 4 8-9" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

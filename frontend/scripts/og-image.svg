@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f7f7f4"/>
+  <rect x="0" y="0" width="1200" height="12" fill="#0b6e69"/>
+  <g transform="translate(80,110)">
+    <rect width="64" height="64" rx="12" fill="#0b6e69"/>
+    <rect x="14" y="16" width="30" height="7" rx="2" fill="#fff"/>
+    <rect x="14" y="29" width="20" height="7" rx="2" fill="#fff" opacity="0.85"/>
+    <rect x="14" y="42" width="12" height="7" rx="2" fill="#fff" opacity="0.7"/>
+    <path d="M44 41l4 4 8-9" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="80" y="260" font-family="DejaVu Sans, Arial, sans-serif" font-size="58" font-weight="700" fill="#1b1f24">Attrition Risk Explainer</text>
+  <text x="80" y="330" font-family="DejaVu Sans, Arial, sans-serif" font-size="30" fill="#3f4652">Risk estimates for HR managers, explained at three levels,</text>
+  <text x="80" y="372" font-family="DejaVu Sans, Arial, sans-serif" font-size="30" fill="#3f4652">with every sentence checked against the model's evidence.</text>
+  <g transform="translate(80,440)" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" fill="#3f4652">
+    <text x="0" y="22">Factors that raise the estimate</text>
+    <rect x="420" y="2" width="300" height="24" rx="4" fill="#e34948"/>
+    <text x="0" y="72">Factors that lower the estimate</text>
+    <rect x="420" y="52" width="190" height="24" rx="4" fill="#2a78d6"/>
+    <text x="0" y="122">Decisions stay with people</text>
+    <path d="M424 112l8 8 14-16" fill="none" stroke="#0b6e69" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

@@ -1,0 +1,23 @@
+.ev { list-style: none; margin: 0; padding: 0; }
+.ev li { display: grid; grid-template-columns: minmax(140px, 1.1fr) minmax(0, 1.6fr) 84px; gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--grid); }
+.ev li:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+.ev .name { font-weight: 600; font-size: 0.92rem; }
+.ev .val { display: block; color: var(--muted); font-size: 0.82rem; font-weight: 400; }
+.ev .track { display: grid; grid-template-columns: 1fr 1fr; height: 22px; }
+.ev .half { position: relative; }
+.ev .half.neg { border-right: 1px solid var(--muted); }
+.ev .bar { position: absolute; top: 4px; height: 14px; max-height: 24px; }
+.ev .neg .bar { right: 2px; background: var(--down); border-radius: 4px 0 0 4px; }
+.ev .pos .bar { left: 2px; background: var(--up); border-radius: 0 4px 4px 0; }
+.ev .bar.withheld { background: repeating-linear-gradient(45deg, var(--withheld) 0 3px, transparent 3px 6px); border: 1px solid var(--withheld); }
+.ev .num { text-align: right; font-size: 0.85rem; color: var(--text); }
+.ev li.is-withheld .name, .ev li.is-withheld .num { color: var(--muted); }
+@media (max-width: 560px) {
+  .ev li { grid-template-columns: minmax(0, 1fr) 72px; }
+  .ev .track { grid-column: 1 / -1; grid-row: 2; }
+}
+.hbars { list-style: none; margin: 0; padding: 0; }
+.hbars li { display: grid; grid-template-columns: minmax(120px, 1fr) minmax(0, 1.4fr) 64px; gap: 10px; align-items: center; padding: 5px 0; border-bottom: 1px solid var(--grid); font-size: 0.9rem; }
+.hbars .bar { height: 14px; background: var(--down); border-radius: 0 4px 4px 0; min-width: 2px; }
+.hbars .num { text-align: right; }
+@media (max-width: 560px) { .hbars li { grid-template-columns: minmax(0, 1fr) 64px; } .hbars .track { grid-column: 1 / -1; grid-row: 2; } }

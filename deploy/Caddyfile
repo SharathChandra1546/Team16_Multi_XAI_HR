@@ -1,0 +1,6 @@
+# Caddy obtains and renews HTTPS certificates automatically and redirects HTTP to HTTPS.
+# Replace the domain, point its DNS A/AAAA record at this server, then: sudo caddy run --config deploy/Caddyfile
+attrition.your-domain.edu {
+	encode gzip zstd
+	reverse_proxy 127.0.0.1:8000
+}

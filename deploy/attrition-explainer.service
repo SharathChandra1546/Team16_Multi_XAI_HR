@@ -1,0 +1,17 @@
+# systemd unit: copy to /etc/systemd/system/, adjust paths and user, then
+#   sudo systemctl daemon-reload && sudo systemctl enable --now attrition-explainer
+[Unit]
+Description=Attrition Risk Explainer API and site
+After=network.target
+
+[Service]
+User=www-data
+WorkingDirectory=/opt/attrition-explainer/backend
+EnvironmentFile=/opt/attrition-explainer/backend/.env
+Environment=STATIC_DIR=/opt/attrition-explainer/frontend/dist
+Environment=FORCE_HTTPS=1
+ExecStart=/opt/attrition-explainer/backend/.venv/bin/uvicorn app.api:app --host 127.0.0.1 --port 8000 --proxy-headers --forwarded-allow-ips=127.0.0.1
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
