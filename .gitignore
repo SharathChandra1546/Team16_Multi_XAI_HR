@@ -5,6 +5,7 @@ frontend/.env
 frontend/.env.local
 # data and generated artefacts
 backend/data/*.csv
+backend/data/*.data
 backend/models/
 backend/results/
 backend/*.sqlite3
@@ -17,3 +18,4 @@ frontend/public/sitemap.xml
 __pycache__/
 .venv/
 .pytest_cache/
+annotation/

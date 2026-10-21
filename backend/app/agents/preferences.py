@@ -19,6 +19,7 @@ import datetime as dt
 import re
 from typing import Any
 
+from ..domains.base import DomainLanguage
 from ..llm.client import BaseLLM
 
 MAX_NOTES = 8  # keep the rendered block short enough to stay cheap in every prompt
@@ -69,12 +70,13 @@ def rule_based_note(query: str) -> dict[str, str] | None:
     return None
 
 
-def llm_note(query: str, explanation_text: str, llm: BaseLLM) -> dict[str, str] | None:
+def llm_note(query: str, explanation_text: str, llm: BaseLLM, language: DomainLanguage | None = None) -> dict[str, str] | None:
     """Ask the LLM to turn one follow-up turn into a single short, descriptive preference note, if any is implied."""
+    lang = language or DomainLanguage()
     system = (
-        "You read one follow-up question an HR manager asked about an attrition-risk explanation, and decide whether "
-        "it reveals a lasting PREFERENCE about how future explanations should be written for this person (not a fact "
-        "about the employee). Topics: " + "; ".join(f"{k} ({v})" for k, v in TOPICS.items()) + ". "
+        f"You read one follow-up question {lang.reader} asked about a {lang.risk_name} explanation, and decide whether "
+        "it reveals a lasting PREFERENCE about how future explanations should be written for this reader (not a fact "
+        f"about {lang.subject}). Topics: " + "; ".join(f"{k} ({v})" for k, v in TOPICS.items()) + ". "
         "If the question is just a one-off factual question with no preference signal, return null. "
         'Otherwise return JSON: {"topic": "<one of the topic slugs>", "text": "<one short, descriptive sentence, '
         "starting with the topic name capitalised, e.g. 'Detail level: prefers concise, plain-language answers.'>\"}. "
@@ -91,10 +93,11 @@ def llm_note(query: str, explanation_text: str, llm: BaseLLM) -> dict[str, str] 
     return {"topic": topic, "text": str(text)[:200]}
 
 
-def extract_preference(query: str, explanation_text: str, llm: BaseLLM | None) -> dict[str, str] | None:
+def extract_preference(query: str, explanation_text: str, llm: BaseLLM | None,
+                       language: DomainLanguage | None = None) -> dict[str, str] | None:
     """One preference note (topic + descriptive text) from a follow-up turn, or None if it implies nothing durable."""
     if llm is not None:
-        note = llm_note(query, explanation_text, llm)
+        note = llm_note(query, explanation_text, llm, language)
         if note is not None:
             return note
     return rule_based_note(query)

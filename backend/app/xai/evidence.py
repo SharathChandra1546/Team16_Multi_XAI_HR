@@ -5,6 +5,7 @@ import uuid
 
 import numpy as np
 
+from ..config import settings
 from ..domains.base import DomainAgent
 from ..recourse import find_recourse
 from ..schemas import EvidenceItem, EvidencePackage, PredictionResult
@@ -12,7 +13,7 @@ from .lime_local import lime_weights
 from .shapley import shapley
 from .validator import validate_package
 
-N_PERM = 32
+N_PERM = 32  # default; SHAP_PERMUTATIONS overrides it (more permutations = more stable attributions)
 N_BACKGROUND = 25
 
 
@@ -39,8 +40,9 @@ def build_package(
     bg = rt.background.values[:N_BACKGROUND].astype(float)
     pred = rt.predict(instance)
 
-    phi, base, fx, method = shapley(rt.proba_array, x, bg, n_perm=N_PERM, seed=seed)
-    phi2, _, _, _ = shapley(rt.proba_array, x, bg, n_perm=N_PERM, seed=seed + 101)  # stability re-run
+    n_perm = settings.shap_permutations or N_PERM
+    phi, base, fx, method = shapley(rt.proba_array, x, bg, n_perm=n_perm, seed=seed)
+    phi2, _, _, _ = shapley(rt.proba_array, x, bg, n_perm=n_perm, seed=seed + 101)  # stability re-run
     cat_idx = [i for i, f in enumerate(feats) if domain.spec(f) and domain.spec(f).categorical]
     lime_w, lime_method = lime_weights(rt.proba_array, x, bg, cat_idx, feats, seed=seed)
 
@@ -106,10 +108,8 @@ def build_package(
         assumptions=[f"{domain.spec(f).display if domain.spec(f) else f}: {domain.readable(f, instance[f])}"
                      for f in feats if f in assumed],
     )
-    if getattr(domain, "data_source", "") == "synthetic_standin":
-        pkg.limitations.append("The model was trained on synthetic stand-in data for software testing.")
-    elif getattr(domain, "data_source", "") == "ibm_kaggle":
-        pkg.limitations.append("The model was trained on IBM's fictional HR sample dataset.")
+    if domain.data_note():
+        pkg.limitations.append(domain.data_note())
     if any(it.withheld for it in items):
         pkg.limitations.append(domain.policy.withheld_note)
     disagree = [it.display_name for it in pkg.visible[:5] if it.methods_agree is False]

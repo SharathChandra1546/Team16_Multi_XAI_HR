@@ -169,6 +169,7 @@ def fit_ood(X: pd.DataFrame, seed: int) -> dict:
     return {
         "iso": iso,
         "score_threshold": float(np.percentile(scores, 1)),
+        "score_median": float(np.median(scores)),  # used by the escalation score (app/escalation.py)
         "ranges": {c: [float(X[c].min()), float(X[c].max())] for c in X.columns},
     }
 
@@ -262,8 +263,11 @@ def train_and_validate(
 
     # 6) OOD detector + escalation rate on the test split
     ood = fit_ood(Xtr, cfg.seed)
+    from ..config import settings  # the same interval percentiles the runtime uses for escalation
+
     ens_te = np.array([proba(m, Xte) for m in ensemble])
-    lo_te, hi_te = np.percentile(ens_te, 10, axis=0), np.percentile(ens_te, 90, axis=0)
+    lo_te = np.percentile(ens_te, settings.interval_low_pct, axis=0)
+    hi_te = np.percentile(ens_te, settings.interval_high_pct, axis=0)
     uncertain = np.array([band_of(a, t, high_min) != band_of(b, t, high_min) for a, b in zip(lo_te, hi_te)])
     ood_flag = ood["iso"].score_samples(Xte.values) < ood["score_threshold"]
 
@@ -314,7 +318,7 @@ def train_and_validate(
         "reliability_oof_all": reliability(y.values, p_oof_all, cfg.reliability_bins),
         "uncertainty": {
             "ensemble_size": len(ensemble),
-            "interval": "10th-90th percentile of the bootstrap ensemble",
+            "interval": f"{settings.interval_low_pct:g}th-{settings.interval_high_pct:g}th percentile of the bootstrap ensemble",
             "band_uncertain_rate_test": float(uncertain.mean()),
             "ood_rate_test": float(ood_flag.mean()),
             "escalation_rate_test": float((uncertain | ood_flag).mean()),
@@ -324,4 +328,5 @@ def train_and_validate(
         "train_seconds": round(time.time() - t0, 1),
     })
     artifact["oof_all"] = p_oof_all
+    artifact["train_index"] = list(Xtr.index)  # callers pop this to compute training-split-only statistics
     return artifact, manifest

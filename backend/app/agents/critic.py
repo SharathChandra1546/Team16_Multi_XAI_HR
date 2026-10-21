@@ -4,12 +4,12 @@ Facts are never judged here; the deterministic verifier owns fidelity.
 """
 from __future__ import annotations
 
-import json
 import re
 
 from ..domains.base import DomainAgent
 from ..llm.client import BaseLLM
 from ..schemas import CriticResult, EvidencePackage, ExplanationPlan, GeneratedExplanation, Violation
+from .llm_critic import MIN_SCORE, llm_quality
 from .textutil import flesch_reading_ease, norm, sentences, word_count
 
 READABILITY_MIN = {"novice": 50.0, "intermediate": 30.0, "expert": 0.0}
@@ -53,12 +53,22 @@ def check_disclosure(final_text: str, domain: DomainAgent) -> Violation | None:
     return None
 
 
-def critique(
-    pkg: EvidencePackage, plan: ExplanationPlan, gen: GeneratedExplanation, domain: DomainAgent,
-    llm: BaseLLM | None = None, question: str = "",
-) -> CriticResult:
-    text = gen.explanation or ""
-    v = rule_violations(text, domain, pkg)
+# Figures a reader without "include_numbers" may not see: contributions ("percentage points", "pp", signed
+# numbers like +3.2) and bare decimals such as a raw probability (0.32). Percentages (the risk estimate, recourse
+# before/after) are allowed at every level; wrong ones are the verifier's job (unsupported_number), not this rule's.
+_LEVEL_NUMBERS = re.compile(
+    r"\bpercentage points?\b|\bpp\b|(?<![\w.])[+\u2212-]\d+(?:\.\d+)?(?![\w%]|\.\d)|(?<![\w.+\u2212-])\d+\.\d+(?![\w%]|\.\d)",
+    re.I,
+)
+
+
+def level_violations(text: str, plan: ExplanationPlan, value_labels: list[str] | None = None) -> tuple[list[Violation], float, int]:
+    """Checkable constraints of the reader level: terminology, word budget, numbers, readability.
+
+    `value_labels` are spans exempt from the numbers check: the factors' own readable values (e.g. "23.5") and
+    fixed system sentences (limitations, the no-recourse note), which are the same at every level.
+    """
+    v: list[Violation] = []
     low = text.lower()
     for term in plan.banned_terms:
         if re.search(rf"\b{re.escape(term)}\b", low):
@@ -68,26 +78,38 @@ def critique(
     if wc > plan.max_words * WORD_SLACK:
         v.append(Violation(code="word_budget", severity="critical",
                            message=f"{wc} words; the {plan.level} budget is {plan.max_words}."))
+    if not plan.include_numbers:
+        scrubbed = text
+        for lab in sorted({lab for lab in (value_labels or []) if lab}, key=len, reverse=True):
+            scrubbed = scrubbed.replace(lab, " ")
+        for m in _LEVEL_NUMBERS.finditer(scrubbed):
+            v.append(Violation(code="level_numbers", severity="critical", span=m.group(0),
+                               message=f"Detailed figures are not shown at the {plan.level} level; give the risk "
+                                       "percentage and directions only."))
     fre = flesch_reading_ease(text)
-    if fre < READABILITY_MIN[plan.level]:
+    floor = plan.min_reading_ease if plan.min_reading_ease else READABILITY_MIN.get(plan.level, 0.0)
+    if fre < floor:
         v.append(Violation(code="readability", severity="minor",
-                           message=f"Reading ease {fre} is below {READABILITY_MIN[plan.level]} for {plan.level}."))
+                           message=f"Reading ease {fre} is below {floor} for {plan.level}."))
+    return v, fre, wc
+
+
+def critique(
+    pkg: EvidencePackage, plan: ExplanationPlan, gen: GeneratedExplanation, domain: DomainAgent,
+    llm: BaseLLM | None = None, question: str = "",
+) -> CriticResult:
+    text = gen.explanation or ""
+    v = rule_violations(text, domain, pkg)
+    lv, fre, wc = level_violations(text, plan, [it.value_label for it in pkg.items] +
+                                   [c.to_label for r in pkg.recourse for c in r.changes] +
+                                   [c.from_label for r in pkg.recourse for c in r.changes] +
+                                   [pkg.recourse_note, *pkg.limitations])
+    v += lv
     scores: dict[str, float] = {}
     feedback = ""
     if llm is not None and gen.source == "llm":
-        system = (
-            "You review explanations written for an HR manager about an attrition model. Score each from 1 to 5: "
-            "clarity, level_fit (suits the stated reader level), relevance (answers the question). Do not judge facts. "
-            'Return JSON {"clarity": n, "level_fit": n, "relevance": n, "feedback": "one sentence"}.'
-        )
-        user = json.dumps({"level": plan.level, "question": question, "explanation": text})
-        try:
-            out = llm.json("critic", system, user, {"level": plan.level, "text": text})
-            scores = {k: float(out.get(k, 0)) for k in ("clarity", "level_fit", "relevance")}
-            feedback = str(out.get("feedback", ""))[:300]
-            if min(scores.values()) < 3:
-                v.append(Violation(code="quality_low", severity="critical", message=f"Quality scores {scores}. {feedback}"))
-        except Exception as e:  # critic LLM failure must not block a verified explanation
-            feedback = f"LLM critic unavailable: {type(e).__name__}"
+        scores, feedback, err = llm_quality(llm, plan.level, question, text, domain.language)
+        if scores and min(scores.values()) < MIN_SCORE:
+            v.append(Violation(code="quality_low", severity="critical", message=f"Quality scores {scores}. {feedback}"))
     approved = not any(x.severity == "critical" for x in v)
     return CriticResult(approved=approved, violations=v, scores=scores, readability=fre, word_count=wc, feedback=feedback)

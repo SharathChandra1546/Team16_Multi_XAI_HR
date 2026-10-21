@@ -9,16 +9,19 @@ LEVELS = {
         "banned_terms": ["shap", "shapley", "lime", "attribution", "log-odds", "calibrated", "calibration",
                          "feature", "features", "probability", "percentile", "coefficient", "threshold"],
         "style": "Plain everyday words, short sentences, no statistics terms. Say 'chance' not 'probability'.",
+        "min_reading_ease": 50.0,
     },
     "intermediate": {
         "top_k": 5, "max_words": 160, "include_numbers": True, "allow_column_names": False,
         "banned_terms": ["shap", "shapley", "lime", "log-odds"],
-        "style": "Clear professional language for an HR manager. Percentages are fine; avoid method names.",
+        "style": "Clear professional language for a manager in this field. Percentages are fine; avoid method names.",
+        "min_reading_ease": 30.0,
     },
     "expert": {
         "top_k": 8, "max_words": 260, "include_numbers": True, "allow_column_names": True,
         "banned_terms": [],
         "style": "Precise and quantitative. Report contributions in percentage points and name the method if useful.",
+        "min_reading_ease": 0.0,
     },
 }
 
@@ -47,4 +50,5 @@ def make_plan(pkg: EvidencePackage, level: str, intent: str, extra: list[str] | 
         banned_terms=cfg["banned_terms"],
         style=cfg["style"],
         extra_instructions=list(extra or []),
+        min_reading_ease=cfg["min_reading_ease"],
     )

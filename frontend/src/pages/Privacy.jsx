@@ -2,14 +2,14 @@ import { CONTACT_EMAIL, OPERATOR, POLICY_DATE, SITE_NAME } from "../site.js";
 import { useMeta } from "../seo.js";
 
 export default function Privacy() {
-  useMeta("Privacy policy", `How ${SITE_NAME} collects, uses and stores data, including employee details, questions, feedback and analytics.`);
+  useMeta("Privacy policy", `How ${SITE_NAME} collects, uses and stores data, including the details you enter about employees, credit applicants or patients, questions, feedback and analytics.`);
   return (
     <article className="prose">
       <h1>Privacy policy</h1>
       <p className="muted">Effective {POLICY_DATE}.</p>
       <p>
-        {SITE_NAME} is a research prototype operated by {OPERATOR}. It estimates employee attrition risk and explains the
-        estimate. This policy explains what data it handles and why. {CONTACT_EMAIL ? <>Contact: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</> : "Contact the project team that runs this copy."}
+        {SITE_NAME} is a research prototype operated by {OPERATOR}. It estimates employee attrition risk, credit risk and diabetes risk, and explains
+        each estimate. This policy explains what data it handles and why. {CONTACT_EMAIL ? <>Contact: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</> : "Contact the project team that runs this copy."}
       </p>
 
       <h2>What we collect</h2>
@@ -55,7 +55,7 @@ export default function Privacy() {
       <ul>
         <li>Decline analytics, or clear this site's storage in your browser to remove the random ID.</li>
         <li>Ask us to delete records linked to your browser ID or a trace ID{CONTACT_EMAIL ? ` by writing to ${CONTACT_EMAIL}` : ""}.</li>
-        <li>Only enter employee data you are authorised to use. The model was built on IBM's fictional sample dataset.</li>
+        <li>Only enter data about employees, applicants or patients that you are authorised to use. The models were built on public research datasets (IBM's fictional HR sample, the Statlog German Credit data and the Pima Indians Diabetes data).</li>
       </ul>
 
       <h2>Changes</h2>

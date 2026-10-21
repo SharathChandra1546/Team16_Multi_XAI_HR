@@ -142,7 +142,12 @@ def main() -> int:
         print(f"\nTraining {variant} model ({len(feats)} features)")
         cfg = TrainConfig(features=feats, nominal=[c for c in NOMINAL_ALL if c in feats])
         art, man = train_and_validate(Xall, y, cfg, fast=args.fast)
-        art["domain_stats"] = hr_domain_stats(Xall)
+        train_idx = art.pop("train_index")
+        # recourse bounds (income ranges per level, valid role/department pairs, training max) come from the
+        # training split only, so nothing about the held-out test rows leaks into recourse
+        art["domain_stats"] = hr_domain_stats(Xall.loc[train_idx])
+        art["domain_stats_source"] = "training split"
+        man["domain_stats_source"] = "training split"
         art["version"] = f"hr-{variant}-{stamp}-{digest}"
         art["data_source"] = info["source"]
         oof[variant] = art.pop("oof_all")

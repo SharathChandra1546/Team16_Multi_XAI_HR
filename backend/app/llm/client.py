@@ -39,6 +39,41 @@ class BaseLLM:
     def id(self) -> str:
         return f"{self.name}:{self.model}"
 
+    # ---------------------------------------------------------------- usage accounting (for cost comparisons)
+    def _usage(self) -> dict:
+        if not hasattr(self, "_usage_counters"):
+            self._usage_counters = {"calls": 0, "cached_calls": 0, "prompt_tokens": 0, "completion_tokens": 0,
+                                    "estimated": False, "by_task": {}}
+        return self._usage_counters
+
+    def record_usage(self, task: str, prompt_tokens: int, completion_tokens: int, cached: bool = False,
+                     estimated: bool = False) -> None:
+        u = self._usage()
+        u["calls"] += 1
+        u["cached_calls"] += int(cached)
+        u["prompt_tokens"] += int(prompt_tokens)
+        u["completion_tokens"] += int(completion_tokens)
+        u["estimated"] = u["estimated"] or estimated
+        t = u["by_task"].setdefault(task, {"calls": 0, "prompt_tokens": 0, "completion_tokens": 0})
+        t["calls"] += 1
+        t["prompt_tokens"] += int(prompt_tokens)
+        t["completion_tokens"] += int(completion_tokens)
+
+    def usage_snapshot(self) -> dict:
+        import copy
+
+        return copy.deepcopy(self._usage())
+
+
+def estimate_tokens(text: str) -> int:
+    """Rough token estimate (about 4 characters per token) for mock runs and cache hits."""
+    return max(1, len(text) // 4)
+
+
+def usage_delta(before: dict, after: dict) -> dict:
+    keys = ("calls", "cached_calls", "prompt_tokens", "completion_tokens")
+    return {k: after.get(k, 0) - before.get(k, 0) for k in keys} | {"estimated": after.get("estimated", False)}
+
 
 class _Cache:
     """Tiny sqlite response cache: identical prompts at temperature 0 are reused (saves free-tier quota)."""
@@ -103,6 +138,8 @@ class OpenAICompatLLM(BaseLLM):
         if self.cache and self.temperature == 0:
             hit = self.cache.get(key)
             if hit:
+                # a cache hit costs nothing now, but the comparison reports what the call would have cost
+                self.record_usage(task, estimate_tokens(system + user), estimate_tokens(hit), cached=True, estimated=True)
                 return json.loads(hit)
 
         last_err: Exception | None = None
@@ -117,8 +154,14 @@ class OpenAICompatLLM(BaseLLM):
                 if r.status_code == 429 or r.status_code >= 500:
                     raise LLMError(f"HTTP {r.status_code}: {r.text[:200]}")
                 r.raise_for_status()
-                content = r.json()["choices"][0]["message"]["content"]
+                body_json = r.json()
+                content = body_json["choices"][0]["message"]["content"]
                 data = _parse_json(content)
+                usage = body_json.get("usage") or {}
+                if usage.get("prompt_tokens") is not None:
+                    self.record_usage(task, usage.get("prompt_tokens", 0), usage.get("completion_tokens", 0))
+                else:
+                    self.record_usage(task, estimate_tokens(system + user), estimate_tokens(content), estimated=True)
                 if self.cache and self.temperature == 0:
                     self.cache.put(key, json.dumps(data))
                 return data

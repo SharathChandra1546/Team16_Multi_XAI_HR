@@ -8,8 +8,8 @@
     <rect x="14" y="42" width="12" height="7" rx="2" fill="#fff" opacity="0.7"/>
     <path d="M44 41l4 4 8-9" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
-  <text x="80" y="260" font-family="DejaVu Sans, Arial, sans-serif" font-size="58" font-weight="700" fill="#1b1f24">Attrition Risk Explainer</text>
-  <text x="80" y="330" font-family="DejaVu Sans, Arial, sans-serif" font-size="30" fill="#3f4652">Risk estimates for HR managers, explained at three levels,</text>
+  <text x="80" y="260" font-family="DejaVu Sans, Arial, sans-serif" font-size="58" font-weight="700" fill="#1b1f24">Risk Explainer</text>
+  <text x="80" y="330" font-family="DejaVu Sans, Arial, sans-serif" font-size="30" fill="#3f4652">Risk estimates for HR, credit and healthcare, explained at three levels,</text>
   <text x="80" y="372" font-family="DejaVu Sans, Arial, sans-serif" font-size="30" fill="#3f4652">with every sentence checked against the model's evidence.</text>
   <g transform="translate(80,440)" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" fill="#3f4652">
     <text x="0" y="22">Factors that raise the estimate</text>

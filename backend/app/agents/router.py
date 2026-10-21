@@ -8,25 +8,49 @@ from __future__ import annotations
 
 import re
 
+from ..domains.base import DomainLanguage
 from ..domains.registry import DomainRegistry
 from ..llm.client import BaseLLM
 from ..schemas import RoutingResult
 
-_RECOURSE = [
-    r"\b(?:lower|reduce|decrease|bring down|cut|improve|mitigate|minimi[sz]e)\b.{0,40}\b(?:risk|chance|likelihood|probability|estimate|attrition|turnover)\b",
-    r"\bwhat (?:can|could|would|should|might) (?:we|i|management|hr|the company) (?:do|change|try|offer)\b",
-    r"\bhow (?:can|could|do|would|might) (?:we|i) (?:keep|retain|help|support)\b",
-    r"\bwhat would (?:help|change|make a difference|lower|reduce)\b",
-    r"\b(?:recourse|what[- ]if|retention (?:options|levers|actions|ideas)|levers?)\b",
-    r"\b(?:would|could|does|do|will) (?:a |an )?(?:promotion|raise|promoting|training|less overtime|reducing|removing|changing|hybrid|remote)\b.{0,60}\b(?:risk|chance|estimate|help|lower|reduce)\b",
-    r"\bif (?:we|they|the employee|i)\b.{0,60}\b(?:risk|chance|estimate)\b",
-    r"\b(?:would|could|will)\b.{0,40}\b(?:change|lower|reduce|affect|help)\b.{0,30}\b(?:risk|estimate|band)\b",
-]
+_ACTORS = ["we", "i", "management", "the company", "the organi[sz]ation", "the team"]
+_LEVERS = ["reducing", "removing", "changing", "increasing", "lowering", "raising", "adding"]
+
+
+def recourse_patterns(lang: DomainLanguage) -> list[str]:
+    """Recourse-question patterns, built from the domain's language (outcome words, actors, levers)."""
+    risk_words = "|".join(["risk", "chance", "likelihood", "probability", "estimate", *lang.outcome_terms])
+    actors = "|".join(_ACTORS + [re.escape(a) for a in lang.actor_terms])
+    levers = "|".join(_LEVERS + [re.escape(t) for t in lang.lever_terms])
+    subj = "|".join(["we", "they", "i", re.escape(lang.subject)])
+    return [
+        rf"\b(?:lower|reduce|decrease|bring down|cut|improve|mitigate|minimi[sz]e)\b.{{0,40}}\b(?:{risk_words})\b",
+        rf"\bwhat (?:can|could|would|should|might) (?:{actors}) (?:do|change|try|offer)\b",
+        r"\bhow (?:can|could|do|would|might) (?:we|i) (?:keep|retain|help|support)\b",
+        r"\bwhat would (?:help|change|make a difference|lower|reduce)\b",
+        r"\b(?:recourse|what[- ]if|retention (?:options|levers|actions|ideas)|levers?)\b",
+        rf"\b(?:would|could|does|do|will) (?:a |an )?(?:{levers})\b.{{0,60}}\b(?:risk|chance|estimate|help|lower|reduce)\b",
+        rf"\bif (?:{subj})\b.{{0,60}}\b(?:risk|chance|estimate)\b",
+        r"\b(?:would|could|will)\b.{0,40}\b(?:change|lower|reduce|affect|help)\b.{0,30}\b(?:risk|estimate|band)\b",
+    ]
+
+
 _CONCEPT = [
     r"\bwhat (?:does|do)\b.{0,60}\b(?:mean|stand for|refer to|measure)\b",
     r"\b(?:define|definition of|meaning of|what is meant by|explain the term|how is .{1,40} measured)\b",
 ]
-_INSTANCE_WORDS = re.compile(r"\b(?:this|their|his|her|why|flagged|employee's)\b", re.I)
+
+
+def instance_words(lang: DomainLanguage) -> re.Pattern:
+    poss = re.escape(lang.subject_possessive.split()[-1]) if lang.subject_possessive else "person's"
+    return re.compile(rf"\b(?:this|their|his|her|why|flagged|{poss})\b", re.I)
+
+
+# Words every domain uses ("risk", "estimate", "band"...). They never count as evidence for a particular domain, so a
+# vague question asks for clarification instead of going to whichever domain happens to list them as keywords.
+GENERIC_ROUTING_TERMS = {"risk", "risks", "estimate", "estimates", "estimated", "factor", "factors", "band", "bands",
+                         "flagged", "model", "score", "chance", "probability", "case", "explain", "why", "high", "low",
+                         "medium", "lower", "raise", "change"}
 
 
 def _any(patterns: list[str], text: str) -> bool:
@@ -56,16 +80,20 @@ class Router:
                 return f"decision_request ({d.name}: decision framing)"
         return None
 
-    def guard_llm(self, query: str, llm: BaseLLM) -> str | None:
-        system = (
-            "You are a safety classifier for an HR analytics tool that only estimates and explains attrition risk. "
-            "Decide whether the user is asking the tool to make, recommend or rank an employment decision about people "
-            "(for example firing, dismissing, laying off, demoting, promoting, disciplining, cutting pay, choosing who "
-            "to keep or let go). Questions about what would lower the model's risk estimate are NOT decision requests. "
-            'Return JSON: {"decision_request": true|false, "reason": "short reason"}.'
+    def guard_prompt(self) -> str:
+        """LLM guard instructions, built from every registered domain's language (no domain is hard-coded)."""
+        scopes = "; ".join(f"{d.title} ({d.language.risk_name} for {d.language.reader})" for d in self.registry.list())
+        decisions = "; ".join(f"{d.language.decision_kind} such as {d.language.decision_examples}" for d in self.registry.list())
+        return (
+            f"You are a safety classifier for an analytics tool that only estimates and explains model risk estimates: {scopes}. "
+            f"Decide whether the user is asking the tool to make, recommend or rank a decision about people ({decisions}, "
+            "or choosing who to keep, approve or reject). Questions about what would lower the model's risk estimate are NOT "
+            'decision requests. Return JSON: {"decision_request": true|false, "reason": "short reason"}.'
         )
+
+    def guard_llm(self, query: str, llm: BaseLLM) -> str | None:
         try:
-            out = llm.json("guard", system, f"User request: {query!r}", {"query": query})
+            out = llm.json("guard", self.guard_prompt(), f"User request: {query!r}", {"query": query})
         except Exception:
             return None  # layer 1 already ran; LLM failure must not block legitimate use
         return "decision_request (LLM classifier)" if out.get("decision_request") is True else None
@@ -86,7 +114,8 @@ class Router:
             q = normalise(query)
             scored = []
             for d in self.registry.list():
-                hits = sum(1 for k in d.routing_keywords if re.search(rf"\b{re.escape(k)}\b", q))
+                hits = sum(1 for k in d.routing_keywords
+                           if k not in GENERIC_ROUTING_TERMS and re.search(rf"\b{re.escape(k)}\b", q))
                 overlap = 0.0
                 if instance:
                     names = {f.name for f in d.features}
@@ -102,10 +131,10 @@ class Router:
         # intent
         agent = self.registry.get(dom)
         if _any(_CONCEPT, query) or (re.match(r"^\s*what(?: is|'s| are)\b", query, re.I)
-                                     and not _INSTANCE_WORDS.search(query) and agent.concept_lookup(query)):
+                                     and not instance_words(agent.language).search(query) and agent.concept_lookup(query)):
             term = agent.concept_lookup(query)
             if term:
                 return RoutingResult(domain=dom, confidence=conf, intent="concept", concept_term=term)
-        if _any(_RECOURSE, query):
+        if _any(recourse_patterns(agent.language), query):
             return RoutingResult(domain=dom, confidence=conf, intent="recourse")
         return RoutingResult(domain=dom, confidence=conf, intent="explain")

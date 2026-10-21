@@ -5,11 +5,13 @@ import Field from "../components/Field.jsx";
 import { ErrorText, Loading } from "../components/ui.jsx";
 import { validateField } from "../form.js";
 import { navigate } from "../router.jsx";
+import { useDomain } from "../domain.jsx";
 import { useMeta } from "../seo.js";
 
 // Conversational intake: asks for the most influential missing field first; skipped fields become flagged assumptions.
 export default function Intake() {
   useMeta("Guided intake", "Answer one question at a time, starting with the details that influence the estimate most. Skipped details are filled with typical values and flagged.");
+  const { domain } = useDomain();
   const { setDraft } = useDraft();
   const [answers, setAnswers] = useState({});
   const [skipped, setSkipped] = useState([]);
@@ -23,7 +25,7 @@ export default function Intake() {
   const ask = async (a, s, finish = false) => {
     setError(null);
     try {
-      const res = await api("/intake", { method: "POST", body: { domain: "hr", instance: a, skipped: s, finish } });
+      const res = await api("/intake", { method: "POST", body: { domain: domain.name, instance: a, skipped: s, finish } });
       if (res.complete) setDone(res);
       else {
         setStep(res);

@@ -30,15 +30,15 @@ from app.agents.planner import make_plan  # noqa: E402
 from app.agents.textutil import flesch_reading_ease, word_count  # noqa: E402
 from app.agents.verifier import verify  # noqa: E402
 from app.config import settings  # noqa: E402
-from app.llm.client import get_judge  # noqa: E402
+from app.agents.reviewer import get_reviewer  # noqa: E402
 from app.schemas import ExplanationRequest  # noqa: E402
 from app.service import Service  # noqa: E402
 from app.xai.evidence import build_package  # noqa: E402
-from eval.run_faults import REVIEW_PROMPT, reviewer_flags  # noqa: E402
+from eval.run_faults import reviewer_flags  # noqa: E402
 
 RESULTS = Path(__file__).resolve().parents[1] / "results"
 LEVELS = ["novice", "intermediate", "expert"]
-QUESTIONS = {"explain": "Why is this employee flagged as likely to leave?", "recourse": "What would lower their risk?"}
+QUESTIONS = {"explain": None, "recourse": "What would lower their risk?"}  # None: the domain's default question
 
 
 def main() -> int:
@@ -50,7 +50,7 @@ def main() -> int:
     svc = Service()
     d = svc.registry.get(args.domain)
     rt = d.runtime("main")
-    judge = get_judge() if args.reviewer else None
+    judge = get_reviewer() if args.reviewer else None
     prompt = svc.store.active_prompt("generator")
     xs = [{f: float(r[f]) for f in rt.features} for _, r in rt.examples.head(args.n).iterrows()]
 
@@ -60,11 +60,18 @@ def main() -> int:
     attempts, latency = [], []
     level_stats = defaultdict(lambda: {"words": [], "reading_ease": [], "terminology_violations": 0})
     agree = Counter()
+    n_packages = stability_warn = agreement_warn = 0
+    shown_policy = shown_fidelity = 0
+    escalation_scores = []
     for x in xs:
         raw_inst = {f: (d.readable(f, v) if d.spec(f).categorical else v) for f, v in x.items()}
         for intent, q in QUESTIONS.items():
+            q = q or d.language.default_question
             for level in LEVELS:
                 pkg = build_package(d, x, level, intent)
+                n_packages += 1
+                stability_warn += any(c.name == "stability" and not c.passed for c in pkg.checks)
+                agreement_warn += any(c.name == "method_agreement" and not c.passed for c in pkg.checks)
                 plan = make_plan(pkg, level, intent)
                 if pkg.prediction.band_uncertain or pkg.prediction.out_of_distribution:
                     status["escalated (no generation)"] += 1
@@ -85,6 +92,11 @@ def main() -> int:
                 latency.append((time.perf_counter() - t0) * 1000)
                 status[resp.status] += 1
                 attempts.append(resp.attempts)
+                if resp.policy_report:
+                    shown_policy += resp.policy_report.get("shown_policy_violations", 0)
+                    shown_fidelity += resp.policy_report.get("shown_fidelity_violations", 0)
+                if resp.prediction is not None and resp.prediction.escalation:
+                    escalation_scores.append(resp.prediction.escalation["score"])
                 if resp.explanation:
                     t = resp.explanation.explanation
                     level_stats[level]["words"].append(word_count(t))
@@ -106,6 +118,11 @@ def main() -> int:
                        "mean_reading_ease": statistics.mean(v["reading_ease"]) if v["reading_ease"] else None,
                        "terminology_violations": v["terminology_violations"]} for k, v in level_stats.items()},
         "reviewer_vs_checks": {f"{a}/{b}": n for (a, b), n in agree.items()} if judge else None,
+        "evidence_warnings": {"n_packages": n_packages,
+                              "stability_warning_rate": stability_warn / max(1, n_packages),
+                              "method_agreement_warning_rate": agreement_warn / max(1, n_packages)},
+        "shown_violations": {"policy": shown_policy, "fidelity": shown_fidelity},
+        "escalation_scores": escalation_scores,
     }
     RESULTS.mkdir(exist_ok=True)
     stamp = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -126,6 +143,13 @@ def main() -> int:
         v = res["levels"].get(k)
         if v and v["mean_words"] is not None:
             md.append(f"| {k} | {v['mean_words']:.0f} | {v['mean_reading_ease']:.0f} | {v['terminology_violations']} |")
+    ew = res["evidence_warnings"]
+    md += ["", "## Evidence warnings", "",
+           f"Shapley stability warnings: {ew['stability_warning_rate']:.1%} of {ew['n_packages']} packages; "
+           f"Shapley/LIME direction disagreement warnings: {ew['method_agreement_warning_rate']:.1%}. "
+           "Raise SHAP_PERMUTATIONS if the stability rate is high.", "",
+           f"Violations in shown text: policy {res['shown_violations']['policy']}, "
+           f"fidelity {res['shown_violations']['fidelity']} (should be 0 with all gates on)."]
     if judge:
         md += ["", "## LLM reviewer vs deterministic checks", "", f"{res['reviewer_vs_checks']}"]
     text = "\n".join(md) + "\n"

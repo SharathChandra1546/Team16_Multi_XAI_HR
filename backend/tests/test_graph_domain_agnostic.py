@@ -5,7 +5,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from app.domains.base import Action, Actionability, DomainAgent, DomainPolicy, FeatureSpec, TextRule
+from app.domains.base import (Action, Actionability, DomainAgent, DomainLanguage, DomainPolicy, FeatureSpec, TextRule,
+                              validate_domain)
 from app.domains.registry import DomainRegistry
 from app.ml.runtime import ModelRuntime
 from app.ml.training import TrainConfig, train_and_validate
@@ -13,13 +14,51 @@ from app.schemas import ExplanationRequest, GlossaryEntry
 
 APP = Path(__file__).resolve().parents[1] / "app"
 GENERIC = ["graph.py", "recourse.py", "agents/verifier.py", "agents/critic.py", "agents/router.py", "agents/planner.py",
-           "agents/generator.py", "agents/fallback.py", "xai/evidence.py", "xai/validator.py", "service.py"]
+           "agents/generator.py", "agents/fallback.py", "agents/repair.py", "agents/preferences.py",
+           "agents/llm_critic.py", "agents/llm_planner.py", "agents/reviewer.py", "agents/profile_agent.py",
+           "agents/registry.py", "xai/evidence.py", "xai/validator.py", "service.py", "faults.py", "faults_llm.py",
+           "intake_extract.py", "escalation.py", "provenance.py", "policy_report.py", "pipeline.py",
+           "metrics/fidelity.py"]
+# Domain vocabulary that must not appear in generic code (identifiers, wording, prompts, patterns).
+DOMAIN_WORDS = re.compile(
+    r"['\"]hr['\"]|HrAgent|OverTime|Attrition|\battrition\b|\bturnover\b|\bemployees?\b|\bHR manager\b|"
+    r"\bresign\w*|\bTravel_\w+|\bdismiss\w*", re.I)
+
+
+def _code_only(src: str) -> str:
+    """Drop the legacy gen-v1 prompt (kept verbatim only to recognise and migrate old databases)."""
+    return re.sub(r'GENERATOR_V1 = """.*?"""', "", src, flags=re.S)
 
 
 def test_no_domain_specific_code_in_generic_modules():
     for f in GENERIC:
-        src = (APP / f).read_text()
-        assert not re.search(r"['\"]hr['\"]|HrAgent|OverTime|Attrition", src), f
+        src = _code_only((APP / f).read_text())
+        m = DOMAIN_WORDS.search(src)
+        assert m is None, f"{f}: domain word {m.group(0)!r}"
+
+
+def test_prompts_have_no_domain_words_outside_legacy_seed():
+    src = _code_only((APP / "llm" / "prompts.py").read_text())
+    src = src.replace("gen-v1 was written for the HR domain only.", "")
+    assert DOMAIN_WORDS.search(src) is None
+
+
+def test_domain_contract(hr):
+    assert validate_domain(hr) == []
+    toy = ToyDomain()
+    assert validate_domain(toy) == [], validate_domain(toy)
+
+    class Broken(DomainAgent):
+        name = "broken"
+        features = [FeatureSpec("a", "A", "A.", "numeric", "G-A")]
+        glossary = {}
+        policy = DomainPolicy(sensitive=["zzz"], actionability={}, disclosure="", high_risk_notice="x",
+                              escalation_uncertain="x", escalation_ood="x", refusal_message="x", guard_patterns=[],
+                              critic_rules=[])
+
+    problems = validate_domain(Broken(), check_runtime=False)
+    assert any("glossary" in p for p in problems) and any("zzz" in p for p in problems)
+    assert any("disclosure" in p for p in problems) and any("language" in p for p in problems)
 
 
 class ToyDomain(DomainAgent):
@@ -42,6 +81,14 @@ class ToyDomain(DomainAgent):
         high_risk_notice="High estimate: review required.", escalation_uncertain="Uncertain {low} {high} {band_a} {band_b}",
         escalation_ood="Unusual ({reasons})", refusal_message="Decision requests are refused.",
         guard_patterns=[r"\bdeny (?:the )?loan\b"], critic_rules=[TextRule("decision_wording", [r"\bdeny\b"], "decision")],
+        language=DomainLanguage(subject="the borrower", subject_indefinite="a borrower", subject_plural="borrowers",
+                                subject_possessive="the borrower's", reader="a loan officer", outcome_verb="defaults",
+                                outcome_gerund="defaulting", risk_name="default risk",
+                                model_description="a loan-default model", decision_kind="a credit decision",
+                                decision_examples="approving or denying a loan",
+                                protected_description="age, gender or nationality",
+                                outcome_terms=["default", "defaults"], subject_terms=["borrowers", "the borrower"],
+                                outcome_verbs=["default", "repay"]),
     )
 
     def __init__(self):

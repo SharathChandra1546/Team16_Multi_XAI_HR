@@ -1,6 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { loadAnalytics } from "./analytics.js";
 import ConsentBanner from "./components/ConsentBanner.jsx";
+import DomainPicker from "./components/DomainPicker.jsx";
+import { ErrorText, Loading } from "./components/ui.jsx";
+import { DomainProvider, useDomain } from "./domain.jsx";
 import { Link, usePath } from "./router.jsx";
 import { SITE_NAME } from "./site.js";
 import Admin from "./pages/Admin.jsx";
@@ -39,10 +42,20 @@ const ROUTES = {
 };
 
 export default function App() {
+  return (
+    <DomainProvider>
+      <Shell />
+    </DomainProvider>
+  );
+}
+
+function Shell() {
   const path = usePath();
   const [draft, setDraft] = useState(null);
   const [showConsent, setShowConsent] = useState(false);
+  const { domain, error: domainError } = useDomain();
   useEffect(() => loadAnalytics(), []);
+  useEffect(() => setDraft(null), [domain?.name]);
   const Page = ROUTES[path] || NotFound;
   return (
     <DraftContext.Provider value={{ draft, setDraft }}>
@@ -62,11 +75,12 @@ export default function App() {
               ))}
             </ul>
           </nav>
+          <DomainPicker />
         </div>
       </header>
       <main id="main" tabIndex={-1}>
         <div className="container">
-          <Page />
+          {domainError ? <ErrorText error={domainError} /> : !domain ? <Loading /> : <Page key={domain.name} />}
         </div>
       </main>
       <footer className="site">

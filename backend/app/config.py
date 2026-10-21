@@ -49,6 +49,14 @@ class Settings:
     # A second, independent model used as LLM-reviewer baseline / narrative extractor in eval.
     judge_provider: str = field(default_factory=lambda: os.getenv("JUDGE_PROVIDER", "") or os.getenv("LLM_PROVIDER") or "mock")
     judge_model: str | None = field(default_factory=lambda: os.getenv("JUDGE_MODEL") or None)
+    # Reviewer agent (advisory): should be a different model family from the generator. Falls back to the judge.
+    reviewer_provider: str = field(default_factory=lambda: os.getenv("REVIEWER_PROVIDER", ""))
+    reviewer_model: str | None = field(default_factory=lambda: os.getenv("REVIEWER_MODEL") or None)
+    # Fault generator for detector-independent fault injection (eval/run_faults.py --faults llm). Falls back to judge.
+    fault_provider: str = field(default_factory=lambda: os.getenv("FAULT_PROVIDER", ""))
+    fault_model: str | None = field(default_factory=lambda: os.getenv("FAULT_MODEL") or None)
+    # Shapley permutations per explanation (more = more stable attributions, slower)
+    shap_permutations: int = field(default_factory=lambda: int(os.getenv("SHAP_PERMUTATIONS") or "32"))
     temperature: float = field(default_factory=lambda: float(os.getenv("LLM_TEMPERATURE") or "0"))
     db_path: str = field(default_factory=lambda: os.getenv("DB_PATH") or str(BACKEND_DIR / "mxai.sqlite3"))
     max_attempts: int = field(default_factory=lambda: int(os.getenv("MAX_ATTEMPTS") or "3"))

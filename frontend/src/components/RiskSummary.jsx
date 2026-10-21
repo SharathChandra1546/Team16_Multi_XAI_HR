@@ -1,7 +1,9 @@
+import { useDomain } from "../domain.jsx";
 import { BandBadge, pct } from "./ui.jsx";
 
 // Hero figure + band track with the bootstrap range.
 export default function RiskSummary({ prediction }) {
+  const { domain } = useDomain();
   const p = prediction.probability;
   const [lo, hi] = prediction.interval;
   const t = prediction.threshold;
@@ -9,7 +11,7 @@ export default function RiskSummary({ prediction }) {
   const clamp = (v) => Math.min(100, Math.max(0, v * 100));
   return (
     <div>
-      <p className="small muted" style={{ marginBottom: 4 }}>Model estimate of attrition risk</p>
+      <p className="small muted" style={{ marginBottom: 4 }}>Model estimate of {domain.ui.risk_noun}</p>
       <div style={{ display: "flex", alignItems: "baseline", gap: 12, flexWrap: "wrap" }}>
         <span className="risk-figure num">{pct(p)}</span>
         <BandBadge band={prediction.band} />

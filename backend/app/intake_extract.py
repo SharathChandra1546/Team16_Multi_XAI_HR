@@ -63,7 +63,7 @@ def llm_extract(domain: DomainAgent, text: str, llm: BaseLLM) -> dict[str, str]:
                "options": list(f.labels.values()) if f.categorical else None}
               for f in domain.features]
     system = (
-        "Extract employee details from the text for these fields. Only use values stated or clearly implied in the "
+        f"Extract details about {domain.language.subject} from the text for these fields. Only use values stated or clearly implied in the "
         "text; never guess or invent a value. For a categorical field, use one of its listed options (or null). "
         "For a numeric field, use a plain number (or null). "
         f"Fields: {fields}. Return JSON: {{\"<field name>\": <value or null>, ...}} for every field."

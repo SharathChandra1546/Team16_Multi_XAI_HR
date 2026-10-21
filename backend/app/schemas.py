@@ -20,7 +20,7 @@ ModelVariant = Literal["main", "audit"]
 # ---------------------------------------------------------------- requests
 class ExplanationRequest(BaseModel):
     user_id: str = Field(default="anonymous", max_length=64)
-    query: str = Field(default="Why is this employee flagged?", max_length=1000)
+    query: str = Field(default="Why is this case flagged?", max_length=1000)
     domain: str | None = Field(default=None, max_length=32)
     instance: dict[str, Any] | None = None
     level: Level | None = None
@@ -114,6 +114,8 @@ class PredictionResult(BaseModel):
     ood_reasons: list[str] = Field(default_factory=list)
     model_version: str
     model_variant: ModelVariant = "main"
+    # escalation score and decision for this case (app/escalation.py); logged for every case, escalated or not
+    escalation: dict[str, Any] | None = None
 
 
 class EvidenceItem(BaseModel):
@@ -155,6 +157,8 @@ class RecourseOption(BaseModel):
     band_after: Band
     assumptions: list[str] = Field(default_factory=list)
     cost: float = 0.0
+    risk_drop: float = 0.0  # probability_before - probability_after
+    rechecked: bool = False  # re-applied and re-predicted independently of the search (recourse.recheck_option)
 
 
 class ValidationCheck(BaseModel):
@@ -211,6 +215,8 @@ class ExplanationPlan(BaseModel):
     banned_terms: list[str]
     style: str
     extra_instructions: list[str] = Field(default_factory=list)
+    order: list[str] = Field(default_factory=list)  # discussion order chosen by the LLM planner (empty = rank order)
+    min_reading_ease: float = 0.0  # Flesch reading-ease floor for this level (minor violation below it)
 
 
 class Claim(BaseModel):
@@ -246,6 +252,7 @@ class VerificationResult(BaseModel):
     fidelity: dict[str, Any] = Field(default_factory=dict)  # full FidelityReport (score, weighted_score, counts)
     violations: list[Violation] = Field(default_factory=list)
     n_claims: int = 0
+    gated: bool = True  # False when the verifier ran in shadow mode (switched off for an ablation)
 
 
 class CriticResult(BaseModel):
@@ -255,11 +262,13 @@ class CriticResult(BaseModel):
     readability: float | None = None
     word_count: int = 0
     feedback: str = ""
+    gated_approved: bool | None = None  # approval counting only the categories whose switches are on
 
 
 class ExplanationResponse(BaseModel):
     trace_id: str
-    status: Literal["verified", "fallback", "escalated", "refused", "concept", "clarify", "withheld", "error"]
+    # "unverified" only occurs in ablation runs where a checking gate is switched off and the shown text failed it
+    status: Literal["verified", "fallback", "escalated", "refused", "concept", "clarify", "withheld", "error", "unverified"]
     domain: str | None = None
     level: Level | None = None
     intent: str | None = None
@@ -278,6 +287,11 @@ class ExplanationResponse(BaseModel):
     latency_ms: float = 0.0
     parent_trace_id: str | None = None  # set on a follow-up turn: the trace_id of the explanation it followed
     preferences_applied: list[str] = Field(default_factory=list)  # preference notes injected into this prompt
+    level_source: str = ""  # why this level was chosen (profile agent)
+    review: dict[str, Any] | None = None  # advisory reviewer verdict (never changes status)
+    policy_report: dict[str, Any] | None = None  # violations by category: first attempt, all attempts, shown text
+    provenance: list[dict[str, Any]] = Field(default_factory=list)  # sentence -> evidence ids
+    pipeline: dict[str, Any] = Field(default_factory=dict)  # switches in effect for this request
 
 
 # ---------------------------------------------------------------- audit records
@@ -303,6 +317,8 @@ class WorkflowTraceRecord(BaseModel):
     response: dict[str, Any] = Field(default_factory=dict)
     latency_ms: float = 0.0
     parent_trace_id: str | None = None
+    policy_report: dict[str, Any] = Field(default_factory=dict)
+    escalation: dict[str, Any] = Field(default_factory=dict)
 
 
 class FeedbackSignalRecord(BaseModel):

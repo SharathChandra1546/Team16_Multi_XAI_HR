@@ -5,10 +5,48 @@ domain refuses decision requests and requires human review of every estimate.
 """
 from __future__ import annotations
 
-from ..base import Actionability, DomainPolicy, TextRule
+from ..base import Actionability, DomainLanguage, DomainPolicy, TextRule
 from .spec import PROTECTED
 
 A = Actionability
+
+LANGUAGE = DomainLanguage(
+    subject="the employee",
+    subject_indefinite="an employee",
+    subject_plural="employees",
+    subject_possessive="the employee's",
+    reader="an HR manager",
+    outcome_verb="leaves",
+    outcome_gerund="leaving",
+    risk_name="attrition risk",
+    model_description="an attrition-risk model",
+    decision_kind="an employment decision",
+    decision_examples="firing, dismissing, laying off, demoting, promoting, disciplining or cutting pay",
+    protected_description="age, gender, marital or family status",
+    character_examples='"lazy", "disloyal", "their fault"',
+    outcome_terms=["attrition", "turnover", "resignations?", "departures?", "leaving", "quitting"],
+    subject_terms=["them", "employees", "people", "staff", "the employee", "him", "her"],
+    outcome_verbs=["leave", "quit", "resign", "stay", "unhappy"],
+    actor_terms=["hr"],
+    lever_terms=["promotion", "raise", "promoting", "training", "less overtime", "hybrid", "remote"],
+    missing_instance_message="Provide the employee's details to explain a risk estimate.",
+    batch_question="Why is this employee's risk estimated this way?",
+    default_question="Why is this employee flagged?",
+    chat_more_details="Could you tell me a bit more about the employee?",
+    reference_column="EmployeeNumber",
+    fault_sentences={
+        "causal_claim": "Working conditions like these cause attrition.",
+        "decision_wording": "They should be dismissed.",
+        "protected_inference": "As a younger employee, they may be more mobile.",
+        "blame_wording": "The employee seems lazy.",
+        "prediction_as_fact": "The employee will leave.",
+        "raw_code": "Profile code: Travel_Rarely.",
+    },
+    data_notes={
+        "synthetic_standin": "The model was trained on synthetic stand-in data for software testing.",
+        "ibm_kaggle": "The model was trained on IBM's fictional HR sample dataset.",
+    },
+)
 
 ACTIONABILITY: dict[str, Actionability] = {
     # levers an organisation can change
@@ -162,4 +200,5 @@ POLICY = DomainPolicy(
     guard_frames=GUARD_FRAMES,
     causal_extra=[r"\bburn(?:s|ed)?\s+(?:them|him|her|employees|people)\s+out\b"],
     min_risk_drop=0.05,
+    language=LANGUAGE,
 )

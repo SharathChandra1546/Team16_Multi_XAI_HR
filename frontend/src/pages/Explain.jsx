@@ -8,13 +8,16 @@ import { ErrorText, Loading } from "../components/ui.jsx";
 import WhatIf from "../components/WhatIf.jsx";
 import { groupFeatures, toInstance, validateField } from "../form.js";
 import { Link } from "../router.jsx";
+import { useDomain } from "../domain.jsx";
 import { useMeta } from "../seo.js";
 
-const QUESTIONS = ["Why is this employee flagged as likely to leave?", "What would lower their risk?", "What are the main factors behind this estimate?"];
 const LEVELS = [["novice", "Novice", "Short, plain words"], ["intermediate", "Intermediate", "Percentages and strengths"], ["expert", "Expert", "Contributions in points"]];
 
 export default function Explain() {
-  useMeta("Explain a risk estimate", "Enter an employee's HR details, choose a level, and get a verified explanation of the model's attrition risk estimate.");
+  const { domain } = useDomain();
+  const ui = domain.ui;
+  const QUESTIONS = ui.questions;
+  useMeta("Explain a risk estimate", `Enter the ${ui.unit}'s details, choose a level, and get a verified explanation of the model's ${ui.risk_noun} estimate.`);
   const { draft, setDraft } = useDraft();
   const [schema, setSchema] = useState(null);
   const [config, setConfig] = useState(null);
@@ -33,9 +36,9 @@ export default function Explain() {
   const resultRef = useRef(null);
 
   useEffect(() => {
-    api("/domains/hr/schema").then(setSchema).catch(setLoadError);
+    api(`/domains/${domain.name}/schema`).then(setSchema).catch(setLoadError);
     api("/config").then(setConfig).catch(() => {});
-    api("/domains/hr/examples").then(setExamples).catch(() => {});
+    api(`/domains/${domain.name}/examples`).then(setExamples).catch(() => {});
   }, []);
   useEffect(() => {
     if (draft) {
@@ -89,7 +92,7 @@ export default function Explain() {
       document.getElementById(first === "query" ? "q" : `f-${first}`)?.focus();
       return;
     }
-    run({ user_id: userId(), query, domain: "hr", instance: toInstance(schema.features, values), level,
+    run({ user_id: userId(), query, domain: domain.name, instance: toInstance(schema.features, values), level,
       consent_cloud: consent, assumed_fields: assumed, website });
   };
   const refine = (action) => run({ trace_id: result.trace_id, user_id: userId(), action, consent_cloud: consent }, "/refine");
@@ -101,12 +104,12 @@ export default function Explain() {
     <>
       <h1>Explain a risk estimate</h1>
       <p className="muted" style={{ maxWidth: 760 }}>
-        Enter the employee's details or start from a held-out example. Prefer to answer one question at a time?
+        Enter the {ui.unit}'s details or start from a held-out example. Prefer to answer one question at a time?
         Use the <Link to="/intake">guided intake</Link> or the <Link to="/chat-intake">chat intake</Link> (it can also read a PDF).
       </p>
-      <DataSourceNote source={config?.domains?.[0]?.data_source} />
+      <DataSourceNote source={domain.data_source} ui={ui} />
       <div className="grid-2" style={{ marginTop: 16 }}>
-        <form onSubmit={submit} noValidate aria-label="Employee details and question">
+        <form onSubmit={submit} noValidate aria-label={`${ui.unit} details and question`}>
           {examples.length > 0 && (
             <div className="field" style={{ marginBottom: 16 }}>
               <label htmlFor="example">Start from a held-out example</label>

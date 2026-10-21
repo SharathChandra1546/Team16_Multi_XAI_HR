@@ -7,7 +7,9 @@ import sqlite3
 import threading
 from typing import Any
 
-from .llm.prompts import DEFAULT_PROMPTS
+import re
+
+from .llm.prompts import DEFAULT_PROMPTS, LEGACY_PROMPTS
 from .schemas import FeedbackSignalRecord, UserProfile, WorkflowTraceRecord
 
 SCHEMA = """
@@ -40,6 +42,24 @@ class Store:
         if not self.prompts("generator"):
             for p in DEFAULT_PROMPTS:
                 self._insert_prompt(p["name"], p["version"], p["template"], p["guidance"], "active", "seed prompt")
+        self._migrate_legacy_seed()
+
+    def _migrate_legacy_seed(self) -> None:
+        """An unmodified HR-only gen-v1 seed is replaced by the domain-neutral seed (guidance is kept).
+
+        A gen-v1 whose template was edited, or any later approved version, is left alone: approved prompts
+        are only ever changed by an administrator.
+        """
+        active = self.active_prompt("generator")
+        seed = DEFAULT_PROMPTS[0]
+        if active.get("version") not in LEGACY_PROMPTS or active.get("template") != LEGACY_PROMPTS[active["version"]]:
+            return
+        if any(p["version"] == seed["version"] for p in self.prompts("generator")):
+            return
+        self._insert_prompt("generator", seed["version"], seed["template"], active.get("guidance", []), "candidate",
+                            "domain-neutral replacement for the HR-only gen-v1 seed")
+        new = next(p for p in self.prompts("generator") if p["version"] == seed["version"])
+        self.approve(new["id"], "migration")
 
     def _exec(self, sql: str, args: tuple = ()) -> list[sqlite3.Row]:
         with self._lock:
@@ -93,8 +113,8 @@ class Store:
         return rows[-1] if rows else {}
 
     def add_candidate(self, name: str, template: str, guidance: list[str], notes: str) -> dict:
-        n = len(self.prompts(name)) + 1
-        version = f"gen-v{n}"
+        nums = [int(m.group(1)) for p in self.prompts(name) if (m := re.fullmatch(r"gen-v(\d+)", p["version"]))]
+        version = f"gen-v{max(nums, default=0) + 1}"
         self._insert_prompt(name, version, template, guidance, "candidate", notes)
         return next(p for p in self.prompts(name) if p["version"] == version)
 
