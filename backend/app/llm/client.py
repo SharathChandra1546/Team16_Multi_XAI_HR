@@ -95,16 +95,26 @@ class _Cache:
 
 
 def _parse_json(text: str) -> dict:
-    text = text.strip()
+    # some open models (Gemma 4) put their reasoning in <thought> blocks before the answer
+    text = re.sub(r"<(thought|think)>.*?</\1>", "", text.strip(), flags=re.S | re.I).strip()
     fence = re.search(r"```(?:json)?\s*(\{.*\})\s*```", text, re.S)
     if fence:
         text = fence.group(1)
     try:
         return json.loads(text)
     except json.JSONDecodeError:
-        start, end = text.find("{"), text.rfind("}")
-        if start >= 0 and end > start:
-            return json.loads(text[start : end + 1])
+        # take the LAST complete JSON object in the text (the answer follows any reasoning or examples)
+        dec, best = json.JSONDecoder(), None
+        for i, ch in enumerate(text):
+            if ch == "{":
+                try:
+                    obj, end = dec.raw_decode(text, i)
+                except json.JSONDecodeError:
+                    continue
+                if isinstance(obj, dict) and (best is None or end > best[1]):
+                    best = (obj, end)
+        if best is not None:
+            return best[0]
         raise
 
 
@@ -128,12 +138,13 @@ class OpenAICompatLLM(BaseLLM):
         body = {
             "model": self.model,
             "temperature": self.temperature,
-            "response_format": {"type": "json_object"},
             "messages": [
                 {"role": "system", "content": system + "\nRespond with a single valid JSON object only."},
                 {"role": "user", "content": user},
             ],
         }
+        if not self.model.startswith("gemma"):  # Gemma on the Gemini API rejects JSON mode (HTTP 500)
+            body["response_format"] = {"type": "json_object"}
         key = hashlib.sha256(json.dumps(body, sort_keys=True).encode()).hexdigest()
         if self.cache and self.temperature == 0:
             hit = self.cache.get(key)

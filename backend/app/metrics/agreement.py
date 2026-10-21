@@ -103,6 +103,15 @@ def _value_in(window: str, feat: str, domain: DomainAgent) -> str | None:
     return nums[0] if nums else None
 
 
+def _without_labels(window: str, feat: str, domain: DomainAgent) -> str:
+    spec = domain.spec(feat)
+    labels = sorted({str(v) for v in (getattr(spec, "labels", None) or {}).values()}, key=len, reverse=True)
+    for lab in labels:
+        if lab:
+            window = re.sub(re.escape(lab), " ", window, flags=re.I)
+    return window
+
+
 def _direction_in(window: str) -> str | None:
     up, down = bool(UP_CUES.search(window)), bool(DOWN_CUES.search(window))
     if up and not down:
@@ -144,7 +153,8 @@ def extract_mentions(text: str, pkg: EvidencePackage, domain: DomainAgent) -> li
                 m = Mention(feature=feat, in_evidence=feat in visible, order=len(out) + 1)
                 out[feat] = m
             m.value = m.value or _value_in(window, feat, domain)
-            m.direction = m.direction or _direction_in(window)
+            # a value label can contain a cue word ("less than 1 year"): read the direction without it
+            m.direction = m.direction or _direction_in(_without_labels(window, feat, domain))
             m.stated_rank = m.stated_rank or _rank_in(prefix + " " + window)
     return list(out.values())
 

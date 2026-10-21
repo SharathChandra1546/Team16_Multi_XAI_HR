@@ -243,3 +243,32 @@ def test_raw_code_with_several_underscores_is_caught(registry):
     g = build_template(pkg, plan, fin)
     g.explanation += " Plans were other_installment_plans=A141."
     assert "raw_code_leak" in {v.code for v in verify(pkg, plan, g, fin).violations}
+
+
+def test_llm_direction_phrasing_and_label_cue_words_in_measurement(registry):
+    """First real Gemini run: "Being in employment for less than 1 year also moves the estimate up." was scored as a
+    sign error by the measurement ("less" read as lowers; "moves ... up" not a cue)."""
+    from app.agents.verifier import DOWN_CUES, UP_CUES
+
+    assert UP_CUES.search("moves the estimate up") and DOWN_CUES.search("strongly moves the estimate down")
+    assert UP_CUES.search("drives the model's estimate up") and not DOWN_CUES.search("drives the model's estimate up")
+    fin = registry.get("finance")
+    rt = fin.runtime("main")
+    x = {f: float(rt.examples.iloc[0][f]) for f in rt.features}
+    pkg = build_package(fin, x, "novice", "explain")
+    emp = next((it for it in pkg.visible if "less than" in it.value_label.lower()), None)
+    if emp is None:
+        import pytest
+        pytest.skip("first finance example has no 'less than' label among visible factors")
+    ms = extract_mentions(f"Having {emp.display_name.lower()} of {emp.value_label} moves the estimate up.", pkg, fin)
+    m = next(m for m in ms if m.feature == emp.feature)
+    assert m.direction == "increases"
+
+
+def test_parse_json_handles_reasoning_text():
+    """Gemma 4 on the Gemini API writes <thought> blocks before the answer and rejects JSON mode."""
+    from app.llm.client import _parse_json
+
+    assert _parse_json('<thought>try {"a": 1}</thought>\n{"fruit": "apple"}') == {"fruit": "apple"}
+    assert _parse_json('first {"x": 1} then {"fruit": "pear", "c": {"d": 2}}') == {"fruit": "pear", "c": {"d": 2}}
+    assert _parse_json('```json\n{"k": 2}\n```') == {"k": 2}

@@ -56,8 +56,8 @@ def causal_patterns(domain: DomainAgent) -> list[str]:
     return pats + list(domain.policy.causal_extra)
 
 
-UP_CUES = re.compile(r"\b(?:rais(?:e|es|ed|ing)|increas(?:e|es|ed|ing)|higher|push(?:es|ed|ing)?\s+(?:it\s+|the estimate\s+|risk\s+)?up|add(?:s|ed)? to)\b|(?<![\w.])\+\s?\d", re.I)
-DOWN_CUES = re.compile(r"\b(?:lower(?:s|ed|ing)?|reduc(?:e|es|ed|ing)|decreas(?:e|es|ed|ing)|less|pull(?:s|ed|ing)?\s+(?:it\s+|the estimate\s+|risk\s+)?down|offset(?:s)?)\b|(?<![\w.])[-−]\s?\d", re.I)
+UP_CUES = re.compile(r"\b(?:rais(?:e|es|ed|ing)|increas(?:e|es|ed|ing)|higher|(?:push|pull|mov|driv|bring|brought|nudg|shift)\w*\s+(?:[\w']+\s+){0,3}?up|add(?:s|ed)? to)\b|(?<![\w.])\+\s?\d", re.I)
+DOWN_CUES = re.compile(r"\b(?:lower(?:s|ed|ing)?|reduc(?:e|es|ed|ing)|decreas(?:e|es|ed|ing)|less|(?:push|pull|mov|driv|bring|brought|nudg|shift)\w*\s+(?:[\w']+\s+){0,3}?down|offset(?:s)?)\b|(?<![\w.])[-−]\s?\d", re.I)
 TOP_CUES = re.compile(r"\b(?:most important|largest|biggest|main|top|strongest|primary|leading)\s+(?:factor|driver|reason|contribution|contributor)\b", re.I)
 SECOND_CUES = re.compile(r"\b(second|third|fourth|fifth)[- ](?:largest|biggest|most important|strongest|main|"
                          r"leading|greatest)\b", re.I)
