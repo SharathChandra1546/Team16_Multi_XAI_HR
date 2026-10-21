@@ -17,7 +17,7 @@ BACKEND_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = BACKEND_DIR / "data"
 MODELS_DIR = BACKEND_DIR / "models"
 
-# OpenAI-compatible endpoints. Gemini, Groq, OpenAI and Ollama all speak this protocol.
+# OpenAI-compatible endpoints. Gemini, Groq, Cerebras, OpenAI and Ollama all speak this protocol.
 PROVIDERS = {
     "gemini": {
         "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
@@ -28,6 +28,11 @@ PROVIDERS = {
         "base_url": "https://api.groq.com/openai/v1",
         "key_env": "GROQ_API_KEY",
         "default_model": "openai/gpt-oss-120b",  # production on Groq; llama-3.3-70b not served to new keys (Oct 2026)
+    },
+    "cerebras": {
+        "base_url": "https://api.cerebras.ai/v1",
+        "key_env": "CEREBRAS_API_KEY",
+        "default_model": "qwen-3.8-27b",  # also serves gpt-oss-120b; check the model list in the Cerebras console
     },
     "openai": {
         "base_url": "https://api.openai.com/v1",
