@@ -6,6 +6,7 @@ cross-validated and held-out metrics (with confidence intervals).
 """
 from __future__ import annotations
 
+import dataclasses
 import math
 import time
 from dataclasses import dataclass, field
@@ -249,6 +250,19 @@ def train_and_validate(
     test_metrics = metrics_at(yte.values, p_te, t, cfg)
     test_ci = bootstrap_ci(yte.values, p_te, t, cfg, seed=cfg.seed)
 
+    # cost-ratio sensitivity: the same model and folds, with the threshold re-chosen for other FN:FP ratios on the
+    # training-split out-of-fold predictions, then evaluated once on the held-out split. Shows how much the flag rate
+    # and the headline numbers depend on the assumed cost ratio.
+    sensitivity = []
+    for ratio in (1.0, 2.0, 3.0, 5.0, 10.0, 20.0):
+        cfg_r = dataclasses.replace(cfg, cost_fn=ratio * cfg.cost_fp)
+        t_r, _ = choose_threshold(ytr.values, p_oof_tr, cfg_r)
+        m_r = metrics_at(yte.values, p_te, t_r, cfg_r)
+        sensitivity.append({"fn_to_fp": ratio, "threshold": float(t_r), "flag_rate": m_r["flag_rate"],
+                            "recall": m_r["recall"], "precision": m_r["precision"],
+                            "cost_per_case": m_r["cost_per_employee"], "cost_flag_nobody": m_r["cost_flag_nobody"],
+                            "cost_flag_everyone": m_r["cost_flag_everyone"]})
+
     # 4) out-of-fold predictions on all rows (reliability curve, fairness, aggregate views)
     p_oof_all = oof_proba(best, cfg, X, y, seed=cfg.seed + 1)
 
@@ -324,6 +338,7 @@ def train_and_validate(
             "escalation_rate_test": float((uncertain | ood_flag).mean()),
         },
         "cost_curve": cost_curve,
+        "cost_sensitivity": sensitivity,
         "global_importance": importance,
         "train_seconds": round(time.time() - t0, 1),
     })

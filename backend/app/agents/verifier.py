@@ -86,8 +86,9 @@ def _headline_percent(text: str) -> tuple[float, str] | None:
             continue
         return float(m.group(1)), m.group(1)
     return None
-KEY_VALUE = re.compile(r"\b[A-Za-z]{2,}\s*=\s*[A-Za-z0-9_]+")
-UNDERSCORE = re.compile(r"\b[A-Za-z]+_[A-Za-z]+\b")
+# identifiers may hold several underscores ("other_installment_plans=A141" escaped the one-underscore pattern)
+KEY_VALUE = re.compile(r"\b[A-Za-z][A-Za-z0-9_]+\s*=\s*[A-Za-z0-9_]+")
+UNDERSCORE = re.compile(r"\b[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)+\b")
 CAMEL = re.compile(r"\b[A-Z][a-z]+(?:[A-Z][a-z]+)+\b")
 
 DIR_NORMAL = {
@@ -317,7 +318,11 @@ def _check_claim(pkg, plan, c: Claim, idx, add, item_ids, allowed, gloss, cited,
         add("feature_mismatch", f"Claim names {c.feature} but cites {it.feature}.", idx)
         return
     d = _norm_dir(c.direction)
-    up, down = bool(UP_CUES.search(c.text or "")), bool(DOWN_CUES.search(c.text or ""))
+    # the factor's own value label can contain a cue word ("less than 1 year", "higher education"): not a direction claim
+    cue_text = c.text or ""
+    for lab in {it.value_label, getattr(it, "display_name", None)} - {None, ""}:
+        cue_text = re.sub(re.escape(str(lab)), " ", cue_text, flags=re.I)
+    up, down = bool(UP_CUES.search(cue_text)), bool(DOWN_CUES.search(cue_text))
     text_dir = "increases" if up and not down else "decreases" if down and not up else None
     if (d and d != it.direction) or (text_dir and text_dir != it.direction):
         add("direction_mismatch", f"Direction differs from the evidence ({it.direction}).", idx, it.id)

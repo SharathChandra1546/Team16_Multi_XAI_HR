@@ -208,8 +208,11 @@ def inject(fault: str, gen: GeneratedExplanation, pkg: EvidencePackage, plan: Ex
             for dec in (0, 1):
                 wrong = f"{round(target * 100, dec):.{dec}f}%" if dec else f"{int(round(target * 100))}%"
                 right = f"{round(pr.probability * 100, dec):.{dec}f}%" if dec else f"{int(round(pr.probability * 100))}%"
-                if right in risk.text and wrong != right and abs(target - pr.probability) > 0.01:
-                    _replace_claim_text(g, risk, risk.text.replace(right, wrong, 1))
+                # match the whole number: "1%" must not match inside "2.1%" (real data produced such a case)
+                # ... and must not be the review threshold or another qualified number (19.7% rounds to "20%")
+                whole = re.compile(rf"(?<![\d.]){re.escape(right)}(?!\d)(?<!threshold {re.escape(right)})")
+                if whole.search(risk.text) and wrong != right and abs(target - pr.probability) > 0.01:
+                    _replace_claim_text(g, risk, whole.sub(wrong, risk.text, count=1))
                     return g
         return None
     if fault == "wrong_ordinal":
