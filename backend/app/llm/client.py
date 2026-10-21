@@ -118,7 +118,22 @@ def _parse_json(text: str) -> dict:
         raise
 
 
+def _retry_after(r) -> float | None:
+    """Seconds to wait from a 429 response (Retry-After header or Google's RetryInfo), if given."""
+    h = r.headers.get("retry-after")
+    if h:
+        try:
+            return float(h)
+        except ValueError:
+            pass
+    m = re.search(r'"retryDelay":\s*"(\d+(?:\.\d+)?)s"', r.text or "")
+    return float(m.group(1)) if m else None
+
+
 class OpenAICompatLLM(BaseLLM):
+    # HTTP requests sent per model ("provider:model") in this process, retries included (what a daily quota counts)
+    requests_sent: dict[str, int] = {}
+
     def __init__(self, provider: str, model: str | None = None, temperature: float | None = None):
         if provider not in PROVIDERS:
             raise LLMError(f"Unknown provider '{provider}'. Choose one of {list(PROVIDERS)} or 'mock'.")
@@ -156,13 +171,22 @@ class OpenAICompatLLM(BaseLLM):
         last_err: Exception | None = None
         for attempt in range(4):
             try:
+                OpenAICompatLLM.requests_sent[self.id] = OpenAICompatLLM.requests_sent.get(self.id, 0) + 1
                 r = httpx.post(
                     f"{self.base_url}/chat/completions",
                     headers={"Authorization": f"Bearer {self.api_key}"},
                     json=body,
                     timeout=90,
                 )
-                if r.status_code == 429 or r.status_code >= 500:
+                if r.status_code == 429:
+                    # per-minute limits (Groq free tier: 8K tokens/min) say how long to wait; a daily limit does not
+                    # clear within a run, so fail instead of sleeping for hours
+                    wait = _retry_after(r)
+                    if wait is not None and wait <= 90:
+                        time.sleep(wait + 1)
+                        continue
+                    raise LLMError(f"HTTP 429 (quota): {r.text[:300]}")
+                if r.status_code >= 500:
                     raise LLMError(f"HTTP {r.status_code}: {r.text[:200]}")
                 r.raise_for_status()
                 body_json = r.json()

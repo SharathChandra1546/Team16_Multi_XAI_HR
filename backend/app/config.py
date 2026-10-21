@@ -27,7 +27,7 @@ PROVIDERS = {
     "groq": {
         "base_url": "https://api.groq.com/openai/v1",
         "key_env": "GROQ_API_KEY",
-        "default_model": "llama-3.3-70b-versatile",
+        "default_model": "openai/gpt-oss-120b",  # production on Groq; llama-3.3-70b not served to new keys (Oct 2026)
     },
     "openai": {
         "base_url": "https://api.openai.com/v1",
