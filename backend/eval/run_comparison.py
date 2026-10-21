@@ -97,6 +97,8 @@ def cases_for(d, n: int, offset: int):
 def summarize(records: list[dict]) -> dict:
     by = defaultdict(list)
     for r in records:
+        if str(r.get("status", "")).startswith("llm_failed"):
+            continue  # reported separately; never counted as a system result
         by[(r["domain"], r["system"])].append(r)
     out = {}
     for (dom, sysname), rs in sorted(by.items()):
@@ -220,6 +222,12 @@ def main() -> int:
                   reviewer_llm=reviewer)
     levels, intents = args.levels.split(","), args.intents.split(",")
     records = []
+    llm_failures = 0
+    for client in {id(c): c for c in (llm, reviewer, judge) if c is not None and c.name != "mock"}.values():
+        try:  # fail fast: a dead key, quota or retired model would otherwise yield silent template fallbacks
+            client.json("preflight", "Return the JSON object {\"ok\": true}.", "ping")
+        except Exception as e:  # noqa: BLE001
+            raise SystemExit(f"{client.id} is not usable: {e}")
     for dname in args.domains.split(","):
         d = reg.get(dname)
         rt = d.runtime("main")
@@ -239,6 +247,10 @@ def main() -> int:
                             o = {"text": r.text, "status": "shown" if r.text.strip() else "empty", "attempts": r.rounds,
                                  "usage": r.usage, "accepted": r.accepted}
                         lat = (time.perf_counter() - t0) * 1000
+                        if llm.name != "mock" and not (o["usage"] or {}).get("calls"):
+                            # no LLM call succeeded (quota, network, retired model): the text is a template or empty
+                            o["status"] = f"llm_failed:{o['status']}"
+                            llm_failures += 1
                         m = measure_text(o["text"], pkg, plan, d, judge)
                         records.append({"domain": dname, "system": s, "case": cid, "level": level, "intent": intent,
                                         "status": o["status"], "attempts": o["attempts"], "accepted": o["accepted"],
@@ -247,6 +259,10 @@ def main() -> int:
                                         "text": o["text"], "m": m})
                 print(f"{dname} case {cid} done", flush=True)
     data_sources = {n: getattr(reg.get(n), "data_source", "unknown") for n in args.domains.split(",")}
+    if llm_failures:
+        print(f"WARNING: {llm_failures} of {len(records)} outputs had no successful LLM call (quota, network or model "
+              "error). They are marked llm_failed:* and excluded from the tables. Do not report this run.",
+              file=sys.stderr, flush=True)
     res = {"created": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "llm": llm.id,
            "reviewer": reviewer.id, "judge": judge.id if judge else None, "systems": systems,
            "domains": args.domains.split(","), "n": args.n, "levels": levels, "intents": intents,

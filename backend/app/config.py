@@ -22,7 +22,7 @@ PROVIDERS = {
     "gemini": {
         "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
         "key_env": "GEMINI_API_KEY",
-        "default_model": "gemini-2.5-flash",
+        "default_model": "gemini-3.8-flash",  # 2.5-flash is closed to new API users (Oct 2026)
     },
     "groq": {
         "base_url": "https://api.groq.com/openai/v1",
