@@ -163,3 +163,36 @@ def test_mixed_domain_routing_never_misroutes():
     assert not wrong, wrong
     vague = [c["query"] for c in cases if c["domain"] is None]
     assert all(r.route(q, None, None).domain is None for q in vague)
+
+
+@pytest.mark.parametrize("name", DOMAINS)
+def test_ui_card_has_everything_the_web_app_needs(name):
+    """The frontend holds no domain wording; every domain must supply it (see DomainAgent.ui_card)."""
+    d = _dom(name)
+    ui = d.ui_card()
+    for key in ("reader", "unit", "unit_plural", "risk_noun", "outcome_label", "questions", "headline", "lead",
+                "chat_greeting", "batch_hint", "limits", "fairness_labels", "reliability_axis", "dataset_notes",
+                "decision_examples"):
+        assert ui.get(key), (name, key)
+    assert len(ui["questions"]) >= 2 and len(ui["limits"]) >= 2
+    assert "synthetic_standin" in ui["dataset_notes"]
+    assert d.data_source in ui["dataset_notes"] or d.data_source == "synthetic_standin"
+    attrs = {a for a in (d.manifest.get("fairness", {}).get("main", {}) or {})}
+    assert attrs <= set(ui["fairness_labels"]), (name, attrs - set(ui["fairness_labels"]))
+    group = ui.get("overview_group")
+    assert group is None or group in d.manifest.get("aggregate", {}), (name, group)
+    text = " ".join([ui["headline"], ui["lead"], ui["chat_greeting"], ui["batch_hint"], *ui["limits"], *ui["questions"]])
+    assert "—" not in text and "–" not in text, "no dashes as punctuation in on-screen text"
+
+
+def test_domains_endpoint_lists_every_ready_domain_with_its_ui():
+    import os
+    import tempfile
+
+    from app.service import Service
+    from app.store import Store
+
+    svc = Service(registry=_REG, store=Store(os.path.join(tempfile.mkdtemp(), "t.sqlite3")))
+    cards = svc.domain_cards()
+    assert {c["name"] for c in cards} == set(DOMAINS)
+    assert all(c["ready"] and c["ui"]["unit"] for c in cards)

@@ -115,3 +115,42 @@ def test_comparison_runner_end_to_end():
                          cwd=backend, env=env, capture_output=True, text=True, timeout=900)
     assert out.returncode == 0, out.stderr[-2000:]
     assert "| ours:full |" in out.stdout and "Coverage-risk" in out.stdout and "Do not report them" in out.stdout
+
+
+def test_rule_critic_flags_wrong_value_sign_and_unsupported_factor(registry, hr, instances):
+    """He & Martens' rule-based critic: code compares the extracted claims with the card and writes the fix."""
+    from app.baselines import rule_feedback
+    from app.metrics.agreement import Mention
+    import app.metrics.agreement as ag
+
+    pkg, plan = _case(hr, instances[0])
+    top = pkg.visible[0]
+    flipped = "decreases" if top.direction == "increases" else "increases"
+
+    class Stub:
+        name = "stub"
+
+        def json(self, *a, **k):
+            return {}
+
+    real = ag.llm_extract_mentions
+    ag.llm_extract_mentions = lambda *a, **k: [
+        Mention(top.feature, True, value="999999", direction=flipped, stated_rank=None, order=1),
+        Mention("NotAFeature", False, order=2)]
+    try:
+        issues = rule_feedback("x", pkg, hr, Stub())
+    finally:
+        ag.llm_extract_mentions = real
+    assert any("not" in i and top.value_label in i for i in issues)
+    assert any(top.direction in i for i in issues)
+    assert any(i.startswith("Remove") for i in issues)
+
+
+def test_rule_critic_runs_and_respects_budget(registry, hr, instances):
+    from app.llm import mock
+
+    mock.DOMAIN_RESOLVER = registry.get
+    llm = get_llm("mock")
+    pkg, plan = _case(hr, instances[0])
+    r = run_baseline("critic_rule", pkg, plan, hr, llm, llm)
+    assert r.text.strip() and 1 <= r.rounds <= 4

@@ -103,7 +103,7 @@ async def config(request: Request):
 
 @handle
 async def domains(request: Request):
-    return JSONResponse([{"name": d.name, "title": d.title, "description": d.description} for d in service().registry.list()])
+    return JSONResponse(service().domain_cards())
 
 
 @handle

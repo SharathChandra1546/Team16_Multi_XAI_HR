@@ -42,7 +42,8 @@ def rate(k, n):
 def guardrail_files(name: str) -> dict[str, Path]:
     dev = DATA / ("guardrail_cases.json" if name == "hr" else f"guardrail_cases_{name}.json")
     held = DATA / f"guardrail_heldout_{name}.json"
-    return {k: p for k, p in (("dev", dev), ("heldout", held)) if p.exists()}
+    team = DATA / f"team_heldout_{name}.json"  # written by the team without seeing the patterns (docs/GUARDRAIL_SET_GUIDE.md)
+    return {k: p for k, p in (("dev", dev), ("heldout", held), ("team_heldout", team)) if p.exists()}
 
 
 def main() -> int:

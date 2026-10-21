@@ -10,7 +10,7 @@ Systems:
                  (full, no_verifier, no_policy_rules, no_critic, no_repair, no_fallback, with_llm_agents, ...).
                  Escalation runs in shadow mode for all `ours:` systems so every system explains every case; the
                  escalation score is recorded and used for the coverage-risk table instead.
-  direct, b1, b2, b3, b4, explingo, critic_loop, musicco   see app/baselines.py
+  direct, b1, b2, b3, b4, explingo, critic_loop, critic_rule, musicco   see app/baselines.py
 
 For each case (domain x held-out example x level x intent) every system gets the same evidence package. The text
 each system would show is measured with app/metrics/measure.py (deterministic extractor; with --judge also the LLM

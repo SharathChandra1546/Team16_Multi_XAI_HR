@@ -3,7 +3,7 @@ import { Link } from "../router.jsx";
 import { useMeta } from "../seo.js";
 
 export default function Terms() {
-  useMeta("Terms and conditions", `The terms for using ${SITE_NAME}, a research prototype that estimates and explains employee attrition risk.`);
+  useMeta("Terms and conditions", `The terms for using ${SITE_NAME}, a research prototype that estimates and explains employee attrition, credit and diabetes risk.`);
   return (
     <article className="prose">
       <h1>Terms and conditions</h1>
@@ -15,9 +15,9 @@ export default function Terms() {
 
       <h2>What the service is</h2>
       <p>
-        The service gives model-based estimates of employee attrition risk and explanations of those estimates. The model
-        was trained on IBM's fictional HR Analytics sample dataset. Estimates describe patterns in that data. They are not
-        facts about any person and they are not professional HR, legal or financial advice.
+        The service gives model-based estimates of employee attrition risk, credit risk and diabetes risk, and explanations of
+        those estimates. The models were trained on public research datasets. Estimates describe patterns in that data. They
+        are not facts about any person and they are not professional HR, legal, financial or medical advice.
       </p>
 
       <h2>No automated decisions</h2>

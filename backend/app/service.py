@@ -61,6 +61,11 @@ class Service:
                 "admin_enabled": bool(settings.admin_token), "agents": describe(),
                 "pipeline": self.pipeline.as_dict()}
 
+    def domain_cards(self) -> list[dict]:
+        """Registered domains with the wording the web app needs (selector, labels, example questions)."""
+        return [{"name": d.name, "title": d.title, "description": d.description, "ready": d.ready,
+                 "data_source": getattr(d, "data_source", "unknown"), "ui": d.ui_card()} for d in self.registry.list()]
+
     # ---------------------------------------------------------------- explanations
     def _use_llm(self, consent: bool) -> bool:
         cloud = settings.llm_is_cloud and self.llm.name != "mock"

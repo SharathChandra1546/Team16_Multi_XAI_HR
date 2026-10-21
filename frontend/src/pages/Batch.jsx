@@ -2,12 +2,15 @@ import { useState } from "react";
 import { api, userId } from "../api.js";
 import ResultView from "../components/ResultView.jsx";
 import { BandBadge, ErrorText, Notice, pct } from "../components/ui.jsx";
+import { useDomain } from "../domain.jsx";
 import { useMeta } from "../seo.js";
 
 const MAX = 2_000_000;
 
 export default function Batch() {
-  useMeta("Batch review", "Upload a CSV of employee records to get risk estimates for a cohort. Explanations are generated per row on request, and rows that fail verification are withheld.");
+  const { domain } = useDomain();
+  const ui = domain.ui;
+  useMeta("Batch review", `Upload a CSV of ${ui.unit} records to get risk estimates for a cohort. Explanations are generated per row on request, and rows that fail verification are withheld.`);
   const [file, setFile] = useState(null);
   const [fileError, setFileError] = useState("");
   const [website, setWebsite] = useState("");
@@ -29,7 +32,7 @@ export default function Batch() {
     form.append("file", file);
     form.append("website", website);
     try {
-      setRes(await api("/domains/hr/batch", { method: "POST", form }));
+      setRes(await api(`/domains/${domain.name}/batch`, { method: "POST", form }));
       setOpen({});
     } catch (err) {
       setError(err);
@@ -50,7 +53,7 @@ export default function Batch() {
     <>
       <h1>Batch review</h1>
       <p className="muted" style={{ maxWidth: 760 }}>
-        Upload a CSV with the IBM HR column names (for example OverTime, MonthlyIncome, JobRole). Up to 2,000 rows.
+        {ui.batch_hint}
         Use this for cohort review. Each estimate still needs human review, and the ranking is not a list of people to act on.
       </p>
       <form className="card" onSubmit={upload} noValidate style={{ maxWidth: 640 }}>
@@ -58,7 +61,7 @@ export default function Batch() {
           <label htmlFor="csv">CSV file</label>
           <input id="csv" type="file" accept=".csv,text/csv" onChange={(e) => setFile(e.target.files[0] || null)}
             aria-invalid={fileError ? "true" : undefined} aria-describedby="csv-hint" />
-          <span className="hint" id="csv-hint">An EmployeeNumber column, if present, is shown as a reference and never sent to the language model.</span>
+          <span className="hint" id="csv-hint">An identifier column, if present, is shown as a reference and never sent to the language model.</span>
           {fileError && <span className="error" role="alert">{fileError}</span>}
         </div>
         <div className="hp" aria-hidden="true">

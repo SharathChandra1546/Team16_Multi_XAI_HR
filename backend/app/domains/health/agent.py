@@ -28,6 +28,32 @@ class HealthAgent(DomainAgent):
     glossary = GLOSSARY
     policy = POLICY
 
+    ui = {
+        "reader": "clinician", "unit": "patient", "unit_plural": "patients", "risk_noun": "diabetes risk",
+        "outcome_label": "Diabetes", "reliability_axis": "Observed diabetes rate",
+        "questions": ["Why is this patient's diabetes risk estimated this way?", "What are the main factors behind this estimate?",
+                      "How would a lower BMI change the estimate?"],
+        "headline": "See why the model rates a patient's diabetes risk, and check every sentence it says.",
+        "lead": ("For clinicians. The tool estimates diabetes risk from routine measurements, explains the estimate at "
+                 "novice, intermediate or expert level, and shows how the estimate responds to modelled changes. Uncertain "
+                 "cases go to clinician review. It does not diagnose, treat or advise."),
+        "chat_greeting": ("Tell me about the patient's measurements in your own words, or attach a PDF. I will ask about "
+                          "anything that's still missing."),
+        "batch_hint": "Upload a CSV with the Pima dataset column names (for example Glucose, BMI, BloodPressure). Up to 2,000 rows.",
+        "csv_example_columns": "Glucose, BMI, BloodPressure",
+        "limits": ["Diagnose, treat, prescribe, refer or prioritise any patient.",
+                   "Replace clinical judgement. A clinician must review every estimate.",
+                   "Generalise beyond its research dataset, which comes from one population."],
+        "fairness_labels": {"age_band": "Age band"},
+        "fairness_note": ("Age is a clinical risk factor and is in the model, and diabetes becomes more common with age, so flag "
+                          "rates are expected to differ between age bands. Compare true and false positive rates between groups "
+                          "instead of relying on the four-fifths rule."),
+        "overview_group": None, "overview_group_label": "",
+        "dataset_notes": {
+            "pima_niddk": "Trained on the Pima Indians Diabetes dataset (768 women aged 21 or older from one population). It may not carry over to other patients.",
+            "synthetic_standin": "the synthetic stand-in file for software testing. Train on the Pima dataset before using it."},
+    }
+
     def __init__(self, models_dir=MODELS_DIR):
         self.models_dir = models_dir
         self._runtimes: dict[str, ModelRuntime] = {}

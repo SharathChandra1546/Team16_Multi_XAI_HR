@@ -31,6 +31,29 @@ class HrAgent(DomainAgent):
     glossary = GLOSSARY
     policy = POLICY
 
+    ui = {
+        "reader": "HR manager", "unit": "employee", "unit_plural": "employees", "risk_noun": "attrition risk",
+        "outcome_label": "Left", "reliability_axis": "Observed attrition rate",
+        "questions": ["Why is this employee flagged as likely to leave?", "What would lower their risk?",
+                      "What are the main factors behind this estimate?"],
+        "headline": "See why the model rates an employee's attrition risk, and check every sentence it says.",
+        "lead": ("For HR managers. The tool estimates attrition risk from HR factors, explains the estimate at novice, "
+                 "intermediate or expert level, and lists changes that the model says would lower it. Uncertain cases go to "
+                 "human review. It does not make employment decisions."),
+        "chat_greeting": ("Tell me about the employee in your own words, or attach a PDF with their details. I will ask "
+                          "about anything that's still missing."),
+        "batch_hint": "Upload a CSV with the IBM HR column names (for example OverTime, MonthlyIncome, JobRole). Up to 2,000 rows.",
+        "csv_example_columns": "OverTime, MonthlyIncome, JobRole",
+        "limits": ["Recommend firing, promoting, demoting or disciplining anyone.",
+                   "Use age, gender or marital status in its main model. They are kept only to audit fairness.",
+                   "Present an estimate as a fact. Every explanation says it is an estimate that a person must review."],
+        "fairness_labels": {"gender": "Gender", "age_band": "Age band", "marital_status": "Marital status"},
+        "overview_group": "Department", "overview_group_label": "department",
+        "dataset_notes": {
+            "ibm_kaggle": "Trained on IBM's fictional HR Analytics Employee Attrition dataset (1,470 records).",
+            "synthetic_standin": "the synthetic stand-in file for software testing. Train on the IBM HR dataset before using it."},
+    }
+
     def __init__(self, models_dir=MODELS_DIR):
         self.models_dir = models_dir
         self._runtimes: dict[str, ModelRuntime] = {}

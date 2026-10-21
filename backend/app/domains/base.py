@@ -222,6 +222,8 @@ class DomainAgent:
     routing_keywords: list[str] = []
     positive_label: str = "positive"
     negative_label: str = "negative"
+    # On-screen wording for the web app, so the frontend holds no domain-specific text. See DomainAgent.ui_card().
+    ui: dict[str, Any] = {}
     features: list[FeatureSpec] = []
     glossary: dict[str, GlossaryEntry] = {}
     policy: DomainPolicy
@@ -246,6 +248,23 @@ class DomainAgent:
         return filled
 
     # ---- helpers shared by all domains
+    def ui_card(self) -> dict[str, Any]:
+        """Wording and options the web app needs for this domain, with generic fallbacks derived from the language."""
+        lang = self.policy.language
+        base = {
+            "reader": lang.reader, "unit": lang.subject_indefinite.removeprefix("a ").removeprefix("an "),
+            "unit_plural": lang.subject_plural, "risk_noun": lang.risk_name,
+            "outcome_label": self.positive_label.capitalize(),
+            "questions": [lang.default_question],
+            "headline": f"See why the model rates {lang.subject_possessive} {lang.risk_name}, and check every sentence it says.",
+            "lead": lang.model_description, "chat_greeting": f"Tell me about {lang.subject} in your own words, or attach a PDF.",
+            "batch_hint": "Upload a CSV with this domain's column names. Up to 2,000 rows.",
+            "limits": [], "fairness_labels": {}, "fairness_note": "",
+            "decision_examples": lang.decision_examples, "overview_group": None, "csv_example_columns": "",
+            "dataset_notes": {}, "reliability_axis": f"Observed {self.positive_label} rate",
+        }
+        return base | dict(self.ui)
+
     def spec(self, name: str) -> FeatureSpec | None:
         return next((f for f in self.features if f.name == name), None)
 

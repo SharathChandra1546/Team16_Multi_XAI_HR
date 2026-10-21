@@ -20,6 +20,10 @@ Systems (names used by eval/run_comparison.py):
               average is below the threshold.
 - critic_loop He & Martens style (Critic Design): narrator plus a faithfulness critic LLM that lists unfaithful
               statements; the narrator revises until the critic lists none or the round budget is spent.
+- critic_rule He & Martens style (Critic-Rule Design): the same loop, but the critic is rule-based. An LLM extractor
+              reads each factor's value, direction and rank from the draft, code compares them with the card and turns
+              the errors into revision instructions. This is the closest prior design to this framework's verifier
+              (it checks facts, but has no policy rules, level rules, escalation or template fallback).
 - musicco     Musicco et al. full pipeline (XstrAI-style): Framer (LLM plan: feature order, tone, cautions,
               instructions) -> Narrator (card + plan + audience) -> Reviewer (score, revise flag, route to framer /
               narrator / both, instructions), at most two revision rounds. Reviewer may be a different model family.
@@ -285,6 +289,52 @@ def run_critic_loop(pkg, plan, domain, llm, reviewer=None, **_) -> SystemResult:
                         trace=trace)
 
 
+def rule_feedback(text: str, pkg: EvidencePackage, domain: DomainAgent, extractor: BaseLLM) -> list[str]:
+    """Rule-based critic (He & Martens, Critic-Rule): LLM extraction, then code compares with the card."""
+    from .metrics.agreement import _value_ok, llm_extract_mentions
+
+    items = {it.feature: it for it in pkg.visible}
+    mentions = llm_extract_mentions(text, pkg, domain, extractor)
+    issues: list[str] = []
+    for m in mentions:
+        it = items.get(m.feature)
+        spec = domain.spec(m.feature)
+        name = spec.display if spec else m.feature
+        if it is None:
+            issues.append(f"Remove {name}: it is not in the explanation card.")
+            continue
+        if m.value and not _value_ok(m.value, it, domain):
+            issues.append(f"For {name} the card says {it.value_label}, not {m.value}.")
+        if m.direction and m.direction != it.direction:
+            issues.append(f"{name} {it.direction} the estimate in the card, not the opposite.")
+    by_card = [it.feature for it in sorted((items[m.feature] for m in mentions if m.feature in items), key=lambda i: i.rank)]
+    in_text = [m.feature for m in sorted((m for m in mentions if m.feature in items), key=lambda m: m.order)]
+    if by_card != in_text:
+        issues.append("Present the factors in this order: " + ", ".join(domain.spec(f).display for f in by_card) + ".")
+    return issues
+
+
+def run_critic_rule(pkg, plan, domain, llm, reviewer=None, **_) -> SystemResult:
+    extractor = reviewer or llm
+    card = _card(pkg, plan)
+    sys_n = _narrator_system(domain, _audience(domain, plan.level))
+    out = _call(llm, "narrate", sys_n, {"card": card}, pkg, plan, domain, 1)
+    text = _narrative(out)
+    trace, accepted = [{"step": "narrate", "round": 0}], False
+    for rnd in range(1, CRITIC_ROUNDS + 1):
+        issues = rule_feedback(text, pkg, domain, extractor)
+        trace.append({"step": "rule_critic", "round": rnd, "issues": len(issues)})
+        if not issues:
+            accepted = True
+            break
+        out = _call(llm, "narrate", sys_n, {"card": card, "previous": text, "revise": [{"statement": "", "fix": i} for i in issues]},
+                    pkg, plan, domain, rnd + 1)
+        text = _narrative(out) or text
+        trace.append({"step": "narrate", "round": rnd})
+    return SystemResult("critic_rule", text, rounds=sum(1 for t in trace if t["step"] == "narrate"), accepted=accepted,
+                        trace=trace)
+
+
 # ---------------------------------------------------------------- Musicco-style full pipeline
 FRAMER_SYSTEM = (
     "You plan, but do not write, an explanation of a model prediction for a specific reader. From the explanation "
@@ -334,7 +384,7 @@ def run_musicco(pkg, plan, domain, llm, reviewer=None, **_) -> SystemResult:
 
 SYSTEMS: dict[str, Callable[..., SystemResult]] = {
     "direct": run_direct, "b1": run_b1, "b2": run_b2, "b3": run_b3, "b4": run_b4, "explingo": run_explingo,
-    "critic_loop": run_critic_loop, "musicco": run_musicco,
+    "critic_loop": run_critic_loop, "critic_rule": run_critic_rule, "musicco": run_musicco,
 }
 
 

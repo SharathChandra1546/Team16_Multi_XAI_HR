@@ -27,6 +27,29 @@ class FinanceAgent(DomainAgent):
     glossary = GLOSSARY
     policy = POLICY
 
+    ui = {
+        "reader": "credit analyst", "unit": "applicant", "unit_plural": "applicants", "risk_noun": "credit risk",
+        "outcome_label": "Bad credit risk", "reliability_axis": "Observed bad-credit rate",
+        "questions": ["Why is this applicant flagged as a higher credit risk?", "What would lower the risk estimate?",
+                      "What are the main factors behind this estimate?"],
+        "headline": "See why the model rates an applicant's credit risk, and check every sentence it says.",
+        "lead": ("For credit analysts. The tool estimates credit risk from the applicant's loan and account details, explains "
+                 "the estimate at novice, intermediate or expert level, and lists changes that the model says would lower it. "
+                 "Uncertain cases go to human review. It does not approve, decline or price credit."),
+        "chat_greeting": ("Tell me about the applicant in your own words, or attach a PDF with their details. I will ask "
+                          "about anything that's still missing."),
+        "batch_hint": "Upload a CSV with the loan application column names (for example credit_amount, duration, checking_status). Up to 2,000 rows.",
+        "csv_example_columns": "credit_amount, duration, checking_status",
+        "limits": ["Approve, decline or price a loan, or set a credit limit or terms.",
+                   "Use age, sex or foreign-worker status in its main model. They are kept only to audit fairness.",
+                   "Present an estimate as a fact. Every explanation says it is an estimate that a person must review."],
+        "fairness_labels": {"age_band": "Age band", "sex": "Sex", "foreign_worker": "Foreign worker"},
+        "overview_group": "purpose", "overview_group_label": "loan purpose",
+        "dataset_notes": {
+            "uci_statlog": "Trained on the Statlog German Credit dataset (1,000 applicants from the 1970s and 1980s, amounts in Deutsche Mark).",
+            "synthetic_standin": "the synthetic stand-in file for software testing. Train on the German Credit data before using it."},
+    }
+
     def __init__(self, models_dir=MODELS_DIR):
         self.models_dir = models_dir
         self._runtimes: dict[str, ModelRuntime] = {}

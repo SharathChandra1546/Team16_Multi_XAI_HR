@@ -86,6 +86,9 @@ header.site { background: var(--surface); border-bottom: 1px solid var(--border)
 header.site .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 60px; flex-wrap: wrap; }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--text); text-decoration: none; }
 .brand img { width: 28px; height: 28px; }
+.domain-picker { display: flex; align-items: center; gap: 8px; }
+.domain-picker label { font-size: 0.9rem; color: var(--muted); }
+.domain-picker select { width: auto; min-width: 11rem; padding: 6px 10px; }
 nav.main ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0; padding: 0; }
 nav.main a { color: var(--text); text-decoration: none; padding: 6px 0; border-bottom: 2px solid transparent; }
 nav.main a[aria-current="page"] { border-bottom-color: var(--accent); font-weight: 600; }

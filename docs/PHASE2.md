@@ -15,7 +15,8 @@ All systems receive the same evidence package for a case (same model output, Sha
 | `b3` | Musicco et al. B3: B1 + reviewer (1–5 score, accept/revise, comment) | LLM | 2 revisions |
 | `b4` | Musicco et al. B4: B3 + format verifier (numbers present, no list/JSON, ≥2 sentences) | LLM + format rules | 2 revisions |
 | `explingo` | Zytek et al.: narrator with 3 few-shot exemplars + grader (accuracy, completeness, fluency; conciseness formula) | LLM | 2 rewrites |
-| `critic_loop` | He & Martens Critic Design: narrator + faithfulness critic | LLM | 3 rounds |
+| `critic_loop` | He & Martens Critic Design: narrator + LLM faithfulness critic | LLM | 3 rounds |
+| `critic_rule` | He & Martens Critic-Rule Design: LLM extractor, then code compares with the card and writes the fixes. The closest prior design to our verifier | LLM extractor + code | 3 rounds |
 | `musicco` | Musicco et al. full pipeline: Framer → Narrator → routing Reviewer | LLM | 2 revision rounds |
 
 These are re-implementations from the papers' descriptions, not the authors' code. State this in the paper. In

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { api } from "../api.js";
+import { useDomain } from "../domain.jsx";
 import { BandBadge, ErrorText, pct } from "./ui.jsx";
 
 const fmt = (v, unit) => {
@@ -11,6 +12,7 @@ const fmt = (v, unit) => {
 
 // Sliders limited to actionable factors; the estimate updates live (debounced) from the server.
 export default function WhatIf({ sliders, instance }) {
+  const { domain } = useDomain();
   const [changes, setChanges] = useState({});
   const [out, setOut] = useState(null);
   const [error, setError] = useState(null);
@@ -22,7 +24,7 @@ export default function WhatIf({ sliders, instance }) {
     timer.current = setTimeout(async () => {
       const my = ++seq.current;
       try {
-        const res = await api("/whatif", { method: "POST", body: { domain: "hr", instance, changes } });
+        const res = await api("/whatif", { method: "POST", body: { domain: domain.name, instance, changes } });
         if (my === seq.current) { setOut(res); setError(null); }
       } catch (e) {
         if (my === seq.current) setError(e);

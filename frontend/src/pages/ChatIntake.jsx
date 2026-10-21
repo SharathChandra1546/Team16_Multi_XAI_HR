@@ -3,14 +3,15 @@ import { api, userId } from "../api.js";
 import { useDraft } from "../App.jsx";
 import { ErrorText } from "../components/ui.jsx";
 import { navigate } from "../router.jsx";
+import { useDomain } from "../domain.jsx";
 import { useMeta } from "../seo.js";
 
-const GREETING = "Tell me about the employee in your own words, or attach a PDF with their details. I will ask about anything that's still missing.";
-
 export default function ChatIntake() {
-  useMeta("Chat intake", "Describe the employee or upload a PDF; missing details are asked for in chat.");
+  const { domain } = useDomain();
+  const ui = domain.ui;
+  useMeta("Chat intake", `Describe the ${ui.unit} or upload a PDF; missing details are asked for in chat.`);
   const { setDraft } = useDraft();
-  const [log, setLog] = useState([{ from: "bot", text: GREETING }]);
+  const [log, setLog] = useState([{ from: "bot", text: ui.chat_greeting }]);
   const [instance, setInstance] = useState({});
   const [skipped, setSkipped] = useState([]);
   const [input, setInput] = useState("");
@@ -42,7 +43,7 @@ export default function ChatIntake() {
     try {
       const res = await api("/intake/chat", {
         method: "POST",
-        body: { domain: "hr", instance, skipped, message: text, consent_cloud: consent },
+        body: { domain: domain.name, instance, skipped, message: text, consent_cloud: consent },
       });
       if (res.reply) say("bot", res.reply);
       applyResult(res);
@@ -57,11 +58,11 @@ export default function ChatIntake() {
     // ask the server what field is current by resending with no message; the server already tracks order from `instance`
     setBusy(true);
     try {
-      const probe = await api("/intake/chat", { method: "POST", body: { domain: "hr", instance, skipped, message: "" } });
+      const probe = await api("/intake/chat", { method: "POST", body: { domain: domain.name, instance, skipped, message: "" } });
       const field = probe.next?.[0]?.name;
       const nextSkipped = field ? [...skipped, field] : skipped;
       setSkipped(nextSkipped);
-      const res = await api("/intake/chat", { method: "POST", body: { domain: "hr", instance, skipped: nextSkipped, message: "" } });
+      const res = await api("/intake/chat", { method: "POST", body: { domain: domain.name, instance, skipped: nextSkipped, message: "" } });
       say("bot", "Skipped. " + (res.reply || ""));
       applyResult(res);
     } catch (e) {
@@ -74,7 +75,7 @@ export default function ChatIntake() {
   const finishWithTypical = async () => {
     setBusy(true);
     try {
-      const res = await api("/intake/chat", { method: "POST", body: { domain: "hr", instance, skipped, message: "", finish: true } });
+      const res = await api("/intake/chat", { method: "POST", body: { domain: domain.name, instance, skipped, message: "", finish: true } });
       applyResult(res, "Using typical values for anything not covered.");
     } catch (e) {
       setError(e);
@@ -92,12 +93,12 @@ export default function ChatIntake() {
       const form = new FormData();
       form.append("file", file);
       form.append("consent_cloud", consent ? "true" : "false");
-      const res = await api("/domains/hr/intake/pdf", { method: "POST", form });
+      const res = await api(`/domains/${domain.name}/intake/pdf`, { method: "POST", form });
       const found = Object.fromEntries((res.found || []).map((f) => [f.feature, f.value]));
       // feed the PDF's readable values in as one chat message so the same extraction/validation path fills them
       const sentence = (res.found || []).map((f) => `${f.display_name}: ${f.value}`).join(", ");
       if (sentence) {
-        const res2 = await api("/intake/chat", { method: "POST", body: { domain: "hr", instance, skipped, message: sentence, consent_cloud: consent } });
+        const res2 = await api("/intake/chat", { method: "POST", body: { domain: domain.name, instance, skipped, message: sentence, consent_cloud: consent } });
         say("bot", `From the PDF, I found ${res.found.length} field${res.found.length === 1 ? "" : "s"}${Object.keys(found).length ? ": " + Object.values(found).join(", ") : ""}.`);
         applyResult(res2, res2.reply);
       } else {
@@ -122,7 +123,7 @@ export default function ChatIntake() {
   return (
     <div className="prose">
       <h1>Chat intake</h1>
-      <p className="muted">Describe the employee, or attach a PDF. Missing details that matter most to the estimate are asked about one at a time.</p>
+      <p className="muted">Describe the {ui.unit}, or attach a PDF. Missing details that matter most to the estimate are asked about one at a time.</p>
       <div className="card">
         <div className="chat-log" aria-live="polite">
           {log.map((m, i) => <div key={i} className={`chat-msg ${m.from}`}>{m.text}</div>)}
