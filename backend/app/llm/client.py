@@ -95,20 +95,45 @@ class _Cache:
 
 
 def _parse_json(text: str) -> dict:
-    text = text.strip()
+    # some open models (Gemma 4) put their reasoning in <thought> blocks before the answer
+    text = re.sub(r"<(thought|think)>.*?</\1>", "", text.strip(), flags=re.S | re.I).strip()
     fence = re.search(r"```(?:json)?\s*(\{.*\})\s*```", text, re.S)
     if fence:
         text = fence.group(1)
     try:
         return json.loads(text)
     except json.JSONDecodeError:
-        start, end = text.find("{"), text.rfind("}")
-        if start >= 0 and end > start:
-            return json.loads(text[start : end + 1])
+        # take the LAST complete JSON object in the text (the answer follows any reasoning or examples)
+        dec, best = json.JSONDecoder(), None
+        for i, ch in enumerate(text):
+            if ch == "{":
+                try:
+                    obj, end = dec.raw_decode(text, i)
+                except json.JSONDecodeError:
+                    continue
+                if isinstance(obj, dict) and (best is None or end > best[1]):
+                    best = (obj, end)
+        if best is not None:
+            return best[0]
         raise
 
 
+def _retry_after(r) -> float | None:
+    """Seconds to wait from a 429 response (Retry-After header or Google's RetryInfo), if given."""
+    h = r.headers.get("retry-after")
+    if h:
+        try:
+            return float(h)
+        except ValueError:
+            pass
+    m = re.search(r'"retryDelay":\s*"(\d+(?:\.\d+)?)s"', r.text or "")
+    return float(m.group(1)) if m else None
+
+
 class OpenAICompatLLM(BaseLLM):
+    # HTTP requests sent per model ("provider:model") in this process, retries included (what a daily quota counts)
+    requests_sent: dict[str, int] = {}
+
     def __init__(self, provider: str, model: str | None = None, temperature: float | None = None):
         if provider not in PROVIDERS:
             raise LLMError(f"Unknown provider '{provider}'. Choose one of {list(PROVIDERS)} or 'mock'.")
@@ -128,12 +153,13 @@ class OpenAICompatLLM(BaseLLM):
         body = {
             "model": self.model,
             "temperature": self.temperature,
-            "response_format": {"type": "json_object"},
             "messages": [
                 {"role": "system", "content": system + "\nRespond with a single valid JSON object only."},
                 {"role": "user", "content": user},
             ],
         }
+        if not self.model.startswith("gemma"):  # Gemma on the Gemini API rejects JSON mode (HTTP 500)
+            body["response_format"] = {"type": "json_object"}
         key = hashlib.sha256(json.dumps(body, sort_keys=True).encode()).hexdigest()
         if self.cache and self.temperature == 0:
             hit = self.cache.get(key)
@@ -145,13 +171,22 @@ class OpenAICompatLLM(BaseLLM):
         last_err: Exception | None = None
         for attempt in range(4):
             try:
+                OpenAICompatLLM.requests_sent[self.id] = OpenAICompatLLM.requests_sent.get(self.id, 0) + 1
                 r = httpx.post(
                     f"{self.base_url}/chat/completions",
                     headers={"Authorization": f"Bearer {self.api_key}"},
                     json=body,
                     timeout=90,
                 )
-                if r.status_code == 429 or r.status_code >= 500:
+                if r.status_code == 429:
+                    # per-minute limits (Groq free tier: 8K tokens/min) say how long to wait; a daily limit does not
+                    # clear within a run, so fail instead of sleeping for hours
+                    wait = _retry_after(r)
+                    if wait is not None and wait <= 90:
+                        time.sleep(wait + 1)
+                        continue
+                    raise LLMError(f"HTTP 429 (quota): {r.text[:300]}")
+                if r.status_code >= 500:
                     raise LLMError(f"HTTP {r.status_code}: {r.text[:200]}")
                 r.raise_for_status()
                 body_json = r.json()

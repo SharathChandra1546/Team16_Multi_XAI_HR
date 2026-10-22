@@ -56,13 +56,32 @@ def _alias_index(domain: DomainAgent) -> list[tuple[str, str]]:
     return sorted(pairs, key=lambda p: -len(p[0]))
 
 
-def _find(sentence: str, aliases: list[tuple[str, str]]) -> list[tuple[int, int, str]]:
+def _label_spans(sentence: str, domain: DomainAgent) -> list[tuple[int, int, str]]:
+    """Spans of categorical value labels (longest first), so a factor name inside another factor's label is not read
+    as a mention ("Credit history (existing credits repaid duly so far)" is about credit history only)."""
+    low = sentence.lower()
+    labels = [(lab.lower(), f.name) for f in domain.features if f.categorical for lab in f.labels.values()]
+    taken: list[tuple[int, int]] = []
+    spans = []
+    for lab, feat in sorted(labels, key=lambda p: -len(p[0])):
+        for m in re.finditer(rf"(?<!\w){re.escape(lab)}(?!\w)", low):
+            if any(m.start() < e and m.end() > s for s, e in taken):
+                continue
+            taken.append((m.start(), m.end()))
+            spans.append((m.start(), m.end(), feat))
+    return spans
+
+
+def _find(sentence: str, aliases: list[tuple[str, str]], spans: list[tuple[int, int, str]] | None = None) -> list[tuple[int, int, str]]:
     low = sentence.lower()
     taken: list[tuple[int, int]] = []
     hits = []
     for alias, feat in aliases:
         for m in re.finditer(rf"\b{re.escape(alias)}\b", low):
             if any(m.start() < e and m.end() > s for s, e in taken):
+                continue
+            # a factor name that sits inside ANOTHER factor's value label is part of that label, not a mention
+            if any(s <= m.start() and m.end() <= e and f != feat for s, e, f in (spans or [])):
                 continue
             taken.append((m.start(), m.end()))
             hits.append((m.start(), m.end(), feat))
@@ -82,6 +101,15 @@ def _value_in(window: str, feat: str, domain: DomainAgent) -> str | None:
     nums = [raw for _, raw, s, e in extract_numbers(window) if not window[e:e + 1] == "%"
             and "percentage point" not in window[e:e + 20].lower()]
     return nums[0] if nums else None
+
+
+def _without_labels(window: str, feat: str, domain: DomainAgent) -> str:
+    spec = domain.spec(feat)
+    labels = sorted({str(v) for v in (getattr(spec, "labels", None) or {}).values()}, key=len, reverse=True)
+    for lab in labels:
+        if lab:
+            window = re.sub(re.escape(lab), " ", window, flags=re.I)
+    return window
 
 
 def _direction_in(window: str) -> str | None:
@@ -112,9 +140,11 @@ def extract_mentions(text: str, pkg: EvidencePackage, domain: DomainAgent) -> li
     visible = {it.feature for it in pkg.visible}
     out: dict[str, Mention] = {}
     for sent in sentences(text or ""):
-        hits = _find(sent, aliases)
+        hits = _find(sent, aliases, _label_spans(sent, domain))
         for i, (s, e, feat) in enumerate(hits):
-            end = hits[i + 1][0] if i + 1 < len(hits) else len(sent)
+            # the window ends at the next DIFFERENT factor: a value label can contain the factor's own name
+            # ("Overtime (works overtime)"), and cutting at the repeated name would hide the value
+            end = next((h[0] for h in hits[i + 1:] if h[2] != feat), len(sent))
             window = sent[s:end]
             # a direction/rank phrase often comes before the name ("The largest factor was overtime")
             prefix = sent[hits[i - 1][1] if i else 0:s]
@@ -123,7 +153,8 @@ def extract_mentions(text: str, pkg: EvidencePackage, domain: DomainAgent) -> li
                 m = Mention(feature=feat, in_evidence=feat in visible, order=len(out) + 1)
                 out[feat] = m
             m.value = m.value or _value_in(window, feat, domain)
-            m.direction = m.direction or _direction_in(window)
+            # a value label can contain a cue word ("less than 1 year"): read the direction without it
+            m.direction = m.direction or _direction_in(_without_labels(window, feat, domain))
             m.stated_rank = m.stated_rank or _rank_in(prefix + " " + window)
     return list(out.values())
 

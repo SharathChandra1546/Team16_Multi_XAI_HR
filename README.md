@@ -86,18 +86,42 @@ python eval/run_routing_guardrail.py
 python eval/run_all.py                                 # everything
 ```
 
-## Quick start (one step)
+## Quick start
 
-You need Python 3.10 or newer. Node.js is only needed for a public deployment build.
+You need Python 3.10 or newer (3.12 recommended; on Windows tick "Add python.exe to PATH" when installing). Node.js is only needed for a public deployment build.
 
-1. **Optional, for real results:** download the dataset from Kaggle ([IBM HR Analytics Employee Attrition & Performance](https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset)). Save `WA_Fn-UseC_-HR-Employee-Attrition.csv` in `backend/data/`.
-2. **Run the setup script:**
-   - Windows: double-click `setup_and_run.bat`
-   - macOS/Linux: `./setup_and_run.sh`
+### Windows
 
-   It creates a virtual environment, installs the requirements, and trains the model on the IBM CSV if it is present. Without the CSV, it trains on the synthetic stand-in, and the site shows a test-data warning. It then runs the tests and opens the site at http://localhost:8000. The site is a prebuilt bundle in `frontend/dist-local`, so Node.js is not needed to run it locally.
-3. **Optional, to use a real language model:** edit `backend/.env`. Set `LLM_PROVIDER` and your key (see below), then run the setup script again.
-4. **Experiments for the paper:** `run_experiments.bat` (Windows) or `./run_experiments.sh`. Add `--quick` for a short check run.
+| Double-click | What it does | When |
+|---|---|---|
+| `setup.bat` | Creates `backend\.venv`, installs packages (only when `requirements.txt` changes), creates `backend\.env`, trains the HR, finance and health models, runs a quick offline check, and offers to set up a language model | Once, and again after pulling new code or adding datasets |
+| `start.bat` | Starts the app and opens http://localhost:8000 (runs setup first if needed). `start.bat 8080` uses another port. Stop with Ctrl+C. | Every time you want to use the app |
+| `configure_llm.bat` | Choose the language model (mock, Gemini, Groq, Cerebras, OpenAI, Ollama), paste the API key (hidden input, saved only in `backend\.env`, which git ignores) and send one test request | When switching models or keys; restart the app afterwards |
+| `setup_and_run.bat` | `setup.bat` then `start.bat` | Old one-step entry point |
+
+`setup.bat --test` also runs the full test suite (about 40 minutes).
+
+### macOS / Linux
+
+`./setup_and_run.sh` (same steps; `--config` to choose the model and key, `--test` to run the test suite).
+
+### Real datasets
+
+Without them the app trains on synthetic stand-ins and shows a test-data warning. Put these files in `backend/data/` and run setup again; only the changed domains are retrained:
+
+| Domain | File | Source |
+|---|---|---|
+| HR attrition | `WA_Fn-UseC_-HR-Employee-Attrition.csv` | [Kaggle: IBM HR Analytics](https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset) |
+| Credit risk | `german.data` | [UCI: Statlog German Credit](https://archive.ics.uci.edu/dataset/144/statlog+german+credit+data) |
+| Diabetes | `diabetes.csv` | [Kaggle: Pima Indians Diabetes](https://www.kaggle.com/datasets/mathchi/diabetes-data-set) |
+
+### Language model
+
+The default is the offline **mock** model: no key and no internet, good for clicking through every screen. A real model gives free-form text but uses your API quota (free tiers are small; see `docs/PHASE3_RUNBOOK.md`). With a cloud model, **tick the consent box on the Explain page**; without it the app does not send the case to the cloud and shows the deterministic template text instead.
+
+### Experiments for the paper
+
+`run_experiments.bat` (Windows) or `./run_experiments.sh`. Add `--quick` for a short check run.
 
 ### Measured run times (build sandbox, 2-core Linux)
 

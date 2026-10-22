@@ -56,8 +56,8 @@ def causal_patterns(domain: DomainAgent) -> list[str]:
     return pats + list(domain.policy.causal_extra)
 
 
-UP_CUES = re.compile(r"\b(?:rais(?:e|es|ed|ing)|increas(?:e|es|ed|ing)|higher|push(?:es|ed|ing)?\s+(?:it\s+|the estimate\s+|risk\s+)?up|add(?:s|ed)? to)\b|(?<![\w.])\+\s?\d", re.I)
-DOWN_CUES = re.compile(r"\b(?:lower(?:s|ed|ing)?|reduc(?:e|es|ed|ing)|decreas(?:e|es|ed|ing)|less|pull(?:s|ed|ing)?\s+(?:it\s+|the estimate\s+|risk\s+)?down|offset(?:s)?)\b|(?<![\w.])[-−]\s?\d", re.I)
+UP_CUES = re.compile(r"\b(?:rais(?:e|es|ed|ing)|increas(?:e|es|ed|ing)|higher|(?:push|pull|mov|driv|bring|brought|nudg|shift)\w*\s+(?:[\w']+\s+){0,3}?up|add(?:s|ed)? to)\b|(?<![\w.])\+\s?\d", re.I)
+DOWN_CUES = re.compile(r"\b(?:lower(?:s|ed|ing)?|reduc(?:e|es|ed|ing)|decreas(?:e|es|ed|ing)|less|(?:push|pull|mov|driv|bring|brought|nudg|shift)\w*\s+(?:[\w']+\s+){0,3}?down|offset(?:s)?)\b|(?<![\w.])[-−]\s?\d", re.I)
 TOP_CUES = re.compile(r"\b(?:most important|largest|biggest|main|top|strongest|primary|leading)\s+(?:factor|driver|reason|contribution|contributor)\b", re.I)
 SECOND_CUES = re.compile(r"\b(second|third|fourth|fifth)[- ](?:largest|biggest|most important|strongest|main|"
                          r"leading|greatest)\b", re.I)
@@ -86,8 +86,9 @@ def _headline_percent(text: str) -> tuple[float, str] | None:
             continue
         return float(m.group(1)), m.group(1)
     return None
-KEY_VALUE = re.compile(r"\b[A-Za-z]{2,}\s*=\s*[A-Za-z0-9_]+")
-UNDERSCORE = re.compile(r"\b[A-Za-z]+_[A-Za-z]+\b")
+# identifiers may hold several underscores ("other_installment_plans=A141" escaped the one-underscore pattern)
+KEY_VALUE = re.compile(r"\b[A-Za-z][A-Za-z0-9_]+\s*=\s*[A-Za-z0-9_]+")
+UNDERSCORE = re.compile(r"\b[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)+\b")
 CAMEL = re.compile(r"\b[A-Z][a-z]+(?:[A-Z][a-z]+)+\b")
 
 DIR_NORMAL = {
@@ -317,7 +318,11 @@ def _check_claim(pkg, plan, c: Claim, idx, add, item_ids, allowed, gloss, cited,
         add("feature_mismatch", f"Claim names {c.feature} but cites {it.feature}.", idx)
         return
     d = _norm_dir(c.direction)
-    up, down = bool(UP_CUES.search(c.text or "")), bool(DOWN_CUES.search(c.text or ""))
+    # the factor's own value label can contain a cue word ("less than 1 year", "higher education"): not a direction claim
+    cue_text = c.text or ""
+    for lab in {it.value_label, getattr(it, "display_name", None)} - {None, ""}:
+        cue_text = re.sub(re.escape(str(lab)), " ", cue_text, flags=re.I)
+    up, down = bool(UP_CUES.search(cue_text)), bool(DOWN_CUES.search(cue_text))
     text_dir = "increases" if up and not down else "decreases" if down and not up else None
     if (d and d != it.direction) or (text_dir and text_dir != it.direction):
         add("direction_mismatch", f"Direction differs from the evidence ({it.direction}).", idx, it.id)
