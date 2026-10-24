@@ -10,7 +10,8 @@ the shared evidence package. Per text it reports:
 - text checks shared with the verifier: unsupported numbers, causal wording, raw codes;
 - policy checks: the domain's wording rules (decision, protected attributes, blame, certainty);
 - level checks: banned terms, word budget, level_numbers, reading ease;
-- error_free: no value/sign/rank error, no unsupported mention, no unsupported number, no causal wording, no raw
+- error_free_llm (primary when a judge model is given): the same, with the LLM extractor's agreement;
+- error_free: no value/sign error, no explicitly stated wrong rank (mention order only lowers RA), no unsupported mention, no unsupported number, no causal wording, no raw
   code, and no policy violation.
 
 Bias to state in the paper: the text and policy checks are the same deterministic rules this framework's pipeline
@@ -57,13 +58,21 @@ def measure_text(text: str, pkg: EvidencePackage, plan: ExplanationPlan, domain:
     if plan.intent == "recourse":
         keep = ("n_mentions", "unsupported_mentions")
         det = {k: (det[k] if k in keep else (0 if k.endswith("_errors") else None)) for k in det}
-        llm_ag = {k: (llm_ag[k] if k in keep else None) for k in llm_ag} if llm_ag else None
+        llm_ag = ({k: (llm_ag[k] if k in keep else (0 if k.endswith("_errors") else None)) for k in llm_ag}
+                  if llm_ag else None)
     tc = text_checks(body, pkg, domain)
     pol = [v.model_dump() for v in rule_violations(body, domain, pkg)]
     lv, fre, wc = level_violations(body, plan, [it.value_label for it in pkg.items] + [pkg.recourse_note, *pkg.limitations])
-    fidelity_errors = (det["value_errors"] + det["sign_errors"] + det["rank_errors"] + len(det["unsupported_mentions"])
+    fidelity_errors = (det["value_errors"] + det["sign_errors"] + det.get("stated_rank_errors", 0) + len(det["unsupported_mentions"])
                        + len(tc["unsupported_numbers"]) + len(tc["causal_wording"]) + len(tc["raw_codes"]))
+    text_errors = len(tc["unsupported_numbers"]) + len(tc["causal_wording"]) + len(tc["raw_codes"])
+    fid_llm = (llm_ag["value_errors"] + llm_ag["sign_errors"] + llm_ag.get("stated_rank_errors", 0)
+               + len(llm_ag["unsupported_mentions"]) + text_errors) if llm_ag else None
     return {
+        # primary when an independent judge model is used: the LLM extractor reads paraphrases the rule-based
+        # extractor misses, so the deterministic figure (error_free) is reported as a secondary, stricter measure
+        "fidelity_errors_llm": fid_llm,
+        "error_free_llm": (fid_llm == 0 and not pol) if llm_ag else None,
         "words": word_count(body), "sentences": len(sentences(body)), "reading_ease": fre,
         "agreement_det": {k: v for k, v in det.items() if k != "mentions"},
         "agreement_llm": ({k: v for k, v in llm_ag.items() if k != "mentions"} if llm_ag else None),

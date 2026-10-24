@@ -110,6 +110,8 @@ def allowed_numbers(pkg: EvidencePackage, domain: DomainAgent) -> list[float]:
     pr = pkg.prediction
     for v in (pr.probability, *pr.interval, pr.threshold, pkg.base_value):
         nums.append(v * 100)
+    # derived: how far the estimate is from the average ("30 points above the average of 27%")
+    nums.append(abs(pr.probability - pkg.base_value) * 100)
     nums += [domain.policy.min_risk_drop * 100, 50.0]
     try:
         rt = domain.runtime(pr.model_variant)

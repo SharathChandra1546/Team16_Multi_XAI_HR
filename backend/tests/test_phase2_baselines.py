@@ -272,3 +272,38 @@ def test_parse_json_handles_reasoning_text():
     assert _parse_json('<thought>try {"a": 1}</thought>\n{"fruit": "apple"}') == {"fruit": "apple"}
     assert _parse_json('first {"x": 1} then {"fruit": "pear", "c": {"d": 2}}') == {"fruit": "pear", "c": {"d": 2}}
     assert _parse_json('```json\n{"k": 2}\n```') == {"k": 2}
+
+
+def test_measurement_fairness_fixes(registry):
+    """First real run (Qwen writer): correct baseline texts were marked wrong by the measurement."""
+    from app.metrics.agreement import _category_match
+    from app.agents.verifier import allowed_numbers
+
+    fin = registry.get("finance")
+    emp, oip = fin.spec("employment"), fin.spec("other_installment_plans")
+    assert _category_match("<1 year", emp, "less than 1 year") is True          # paraphrase of the right category
+    assert _category_match("1 to 4 years", emp, "less than 1 year") is False     # a different category
+    assert _category_match("true", oip, "with a bank") is None                   # too vague to judge
+    hea = registry.get("health")
+    from app.agents.critic import rule_violations
+
+    rt = hea.runtime("main")
+    x = {f: float(rt.examples.iloc[0][f]) for f in rt.features}
+    pkg = build_package(hea, x, "novice", "explain")
+    hedged = "The model predicts a 57% chance that this patient has diabetes according to the study's criteria."
+    assert "prediction_as_fact" not in {v.code for v in rule_violations(hedged, hea, pkg)}
+    assert "prediction_as_fact" in {v.code for v in rule_violations("This patient has diabetes.", hea, pkg)}
+    diff = abs(pkg.prediction.probability - pkg.base_value) * 100
+    assert any(abs(n - diff) < 1e-6 for n in allowed_numbers(pkg, hea))
+
+
+def test_mention_order_is_not_a_factual_rank_error(registry, hr, instances):
+    from app.metrics.agreement import Mention, agreement
+
+    pkg, _ = _case(hr, instances[0])
+    a, b = pkg.visible[0], pkg.visible[1]
+    swapped = [Mention(b.feature, True, order=1), Mention(a.feature, True, order=2)]
+    r = agreement(swapped, pkg, hr)
+    assert r["rank_errors"] == 2 and r["stated_rank_errors"] == 0   # lowers RA, not an explicit wrong claim
+    claimed = [Mention(b.feature, True, stated_rank=1, order=1)]
+    assert agreement(claimed, pkg, hr)["stated_rank_errors"] == 1

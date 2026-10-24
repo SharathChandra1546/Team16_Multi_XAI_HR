@@ -105,6 +105,9 @@ PREDICTION_AS_FACT = TextRule(
     code="prediction_as_fact",
     message="States a diagnosis or the predicted outcome as a fact instead of an estimate.",
     patterns=[
+        # "...a 57% chance that this patient has diabetes" is a hedged estimate, not a statement of fact
+        r"(?<!chance that )(?<!chance )(?<!probability that )(?<!likelihood that )(?<!risk that )(?<!whether )"
+        r"(?<!estimates that )(?<!predicts that )(?<!odds that )"
         r"\b(?:the patient|this patient|she|he|they)\s+(?:has|have|is|are)\s+(?:got\s+)?(?:diabetes|diabetic|prediabetic|"
         r"prediabetes)\b",
         r"\b(?:will|is going to|is certain to|is sure to|is bound to)\s+(?:definitely\s+|certainly\s+|probably\s+)?"

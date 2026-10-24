@@ -105,6 +105,9 @@ def summarize(records: list[dict]) -> dict:
         shown = [r for r in rs if not r["m"]["empty"]]
         n = len(rs)
         ef = sum(r["m"]["error_free"] for r in shown)
+        llm_scored = [r for r in shown if r["m"].get("error_free_llm") is not None]
+        ef_llm = sum(r["m"]["error_free_llm"] for r in llm_scored)
+        fid_llm = sum(r["m"]["fidelity_errors_llm"] > 0 for r in llm_scored)
         fid = sum(r["m"]["fidelity_errors"] > 0 for r in shown)
         pol = sum(r["m"]["n_policy_violations"] > 0 for r in shown)
         codes = Counter(c for r in shown for c in r["m"]["policy_violations"])
@@ -128,6 +131,8 @@ def summarize(records: list[dict]) -> dict:
             "domain": dom, "system": sysname, "n_cases": n, "n_shown": len(shown),
             "status": dict(status),
             "error_free": rate(ef, len(shown)),
+            "error_free_llm": rate(ef_llm, len(llm_scored)) if llm_scored else None,
+            "any_fidelity_error_llm": rate(fid_llm, len(llm_scored)) if llm_scored else None,
             "any_fidelity_error": rate(fid, len(shown)),
             "any_policy_violation": rate(pol, len(shown)),
             "policy_codes": dict(codes),
@@ -178,11 +183,11 @@ def to_markdown(res: dict) -> str:
     for dom in res["domains"]:
         rows = [v for v in res["summary"].values() if v["domain"] == dom]
         out += [f"## {dom}", "",
-                "| System | n shown | Error-free | Any fidelity error | Any policy violation | VA | SA | RA | Top-3 cov. | Calls | Tokens |",
-                "|---|---|---|---|---|---|---|---|---|---|---|"]
+                "| System | n shown | Error-free (LLM scorer) | Error-free (rule-based) | Any fidelity error | Any policy violation | VA | SA | RA | Top-3 cov. | Calls | Tokens |",
+                "|---|---|---|---|---|---|---|---|---|---|---|---|"]
         for v in rows:
             a = v["agreement_det"]
-            out.append(f"| {v['system']} | {v['n_shown']}/{v['n_cases']} | {ci(v['error_free'])} | {ci(v['any_fidelity_error'])} | "
+            out.append(f"| {v['system']} | {v['n_shown']}/{v['n_cases']} | {ci(v.get('error_free_llm'))} | {ci(v['error_free'])} | {ci(v['any_fidelity_error'])} | "
                        f"{ci(v['any_policy_violation'])} | {f(a['value'])} | {f(a['sign'])} | {f(a['rank'])} | "
                        f"{f(a['top3_coverage'])} | {f(v['cost']['calls'])} | {f(v['cost']['tokens'])} |")
         if any(v["agreement_llm"] for v in rows):
@@ -280,7 +285,7 @@ def main() -> int:
                                         "usage": o["usage"], "latency_ms": round(lat, 1),
                                         "escalation_score": esc["score"], "would_escalate_rule": esc["rule_decision"],
                                         "text": o["text"], "m": m})
-                print(f"{dname} case {cid} done", flush=True)
+                print(f"{dname} case {cid} level {level} done", flush=True)
     data_sources = {n: getattr(reg.get(n), "data_source", "unknown") for n in args.domains.split(",")}
     if stopped_for_budget:
         print(f"PARTIAL RUN: stopped starting new cases because {stopped_for_budget}. Rerun the same command after "

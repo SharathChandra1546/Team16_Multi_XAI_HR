@@ -194,10 +194,50 @@ def llm_extract_mentions(text: str, pkg: EvidencePackage, domain: DomainAgent, l
     return res
 
 
-def _value_ok(stated: str, it, domain: DomainAgent) -> bool:
+_SYMBOLS = [("<=", " at most "), (">=", " at least "), ("≤", " at most "), ("≥", " at least "), ("<", " less than "),
+            (">", " more than "), ("&", " and "), ("+", " or more ")]
+_STOP = {"a", "an", "the", "of", "in", "for", "is", "has", "have", "with", "their", "his", "her", "to"}
+
+
+def _tokens(text: str) -> set[str]:
+    t = " " + str(text).lower() + " "
+    for a, b in _SYMBOLS:
+        t = t.replace(a, b)
+    t = re.sub(r"\byears?\b", "year", re.sub(r"\bmonths?\b", "month", t))
+    return {w for w in re.findall(r"[a-z]+|\d+(?:\.\d+)?", t) if w not in _STOP}
+
+
+def _category_match(stated: str, spec, label: str) -> bool | None:
+    """True/False when the stated value clearly names the evidence category / another category; None when it is too
+    vague to tell ("true", "yes"). Paraphrases count: "<1 year" is "less than 1 year"."""
+    if str(stated).strip().lower() == label.strip().lower():
+        return True
+    said = _tokens(stated)
+    if not said:
+        return None
+    labels = {str(v) for v in (getattr(spec, "labels", None) or {}).values()} | {label}
+
+    def score(lab: str) -> float:
+        lt = _tokens(lab)
+        if not lt:
+            return 0.0
+        nums_s, nums_l = {w for w in said if w[0].isdigit()}, {w for w in lt if w[0].isdigit()}
+        if nums_s and nums_l and not nums_s & nums_l:
+            return 0.0  # different numbers name a different category
+        return len(said & lt) / len(said | lt)
+
+    scored = sorted(((score(lab), lab) for lab in labels), reverse=True)
+    best = scored[0][0]
+    if best < 0.34:
+        return None
+    winners = {lab for sc, lab in scored if sc == best}
+    return label in winners
+
+
+def _value_ok(stated: str, it, domain: DomainAgent) -> bool | None:
     spec = domain.spec(it.feature)
     if spec is not None and spec.categorical:
-        return stated.strip().lower() == it.value_label.strip().lower()
+        return _category_match(stated, spec, it.value_label)
     nums = extract_numbers(stated)
     targets = [abs(float(it.value))] + [v for v, *_ in extract_numbers(it.value_label)]
     return bool(nums) and all(any(abs(v - t) <= max(0.5, 0.01 * t) for t in targets) for v, *_ in nums)
@@ -207,17 +247,18 @@ def agreement(mentions: list[Mention], pkg: EvidencePackage, domain: DomainAgent
     """VA, SA, RA over mentioned evidence features, plus coverage of the top factors and unsupported mentions."""
     items = {it.feature: it for it in pkg.visible}
     m_ev = [m for m in mentions if m.in_evidence]
-    va = [(_value_ok(m.value, items[m.feature], domain)) for m in m_ev if m.value]
+    va = [ok for ok in (_value_ok(m.value, items[m.feature], domain) for m in m_ev if m.value) if ok is not None]
     sa = [(m.direction == items[m.feature].direction) for m in m_ev if m.direction]
     # rank: compare the narrative's position (stated rank, else mention order among evidence mentions) with the
     # feature's position among the mentioned features in the evidence ranking
     by_card = sorted(m_ev, key=lambda m: items[m.feature].rank)
     card_pos = {m.feature: i + 1 for i, m in enumerate(by_card)}
-    ra = []
+    ra, stated_wrong = [], 0
     for i, m in enumerate(sorted(m_ev, key=lambda m: m.order), start=1):
         narr = m.stated_rank if m.stated_rank else i
         target = items[m.feature].rank if m.stated_rank else card_pos[m.feature]
         ra.append(narr == target)
+        stated_wrong += bool(m.stated_rank) and narr != target
     top = [it.feature for it in pkg.visible[:3]]
     mentioned = {m.feature for m in mentions}
 
@@ -233,5 +274,8 @@ def agreement(mentions: list[Mention], pkg: EvidencePackage, domain: DomainAgent
         "unsupported_mentions": sorted(m.feature for m in mentions if not m.in_evidence),
         "value_errors": sum(1 for x in va if not x), "sign_errors": sum(1 for x in sa if not x),
         "rank_errors": sum(1 for x in ra if not x),
+        # an explicit wrong rank claim ("the second largest factor", "the main factor"); mention order alone is not a
+        # claim, so it lowers RA but is not counted as a factual error
+        "stated_rank_errors": stated_wrong,
         "mentions": [asdict(m) for m in mentions],
     }

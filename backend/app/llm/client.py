@@ -118,6 +118,20 @@ def _parse_json(text: str) -> dict:
         raise
 
 
+def _reasoning_effort(provider: str, model: str) -> str | None:
+    """Reasoning setting for models that think before answering. LLM_REASONING_EFFORT overrides (empty = default).
+    Qwen 3 on Groq: thinking makes a request too large for the free 8K-tokens-per-minute limit, so it is off.
+    gpt-oss: 'low' keeps extraction and review calls short."""
+    if "LLM_REASONING_EFFORT" in os.environ:
+        return os.environ["LLM_REASONING_EFFORT"] or None
+    m = (model or "").lower()
+    if provider in ("groq", "cerebras") and "qwen" in m:
+        return "none"
+    if "gpt-oss" in m:
+        return "low"
+    return None
+
+
 def _retry_after(r) -> float | None:
     """Seconds to wait from a 429 response (Retry-After header or Google's RetryInfo), if given."""
     h = r.headers.get("retry-after")
@@ -160,6 +174,9 @@ class OpenAICompatLLM(BaseLLM):
         }
         if not self.model.startswith("gemma"):  # Gemma on the Gemini API rejects JSON mode (HTTP 500)
             body["response_format"] = {"type": "json_object"}
+        effort = _reasoning_effort(self.name, self.model)
+        if effort:
+            body["reasoning_effort"] = effort
         key = hashlib.sha256(json.dumps(body, sort_keys=True).encode()).hexdigest()
         if self.cache and self.temperature == 0:
             hit = self.cache.get(key)
