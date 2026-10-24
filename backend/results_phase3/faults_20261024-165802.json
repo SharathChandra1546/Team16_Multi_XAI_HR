@@ -1,0 +1,821 @@
+{
+  "created": "2026-10-24T16:57:59+00:00",
+  "llm": "mock:deterministic-template",
+  "judge": null,
+  "base": "template",
+  "data_source": "uci_statlog",
+  "domains": [
+    {
+      "domain": "finance",
+      "base": "template",
+      "injector": "llm",
+      "fault_llm": "groq:openai/gpt-oss-20b",
+      "n_cases": 1,
+      "skipped_bases_not_clean": 0,
+      "per_fault": {
+        "direction_flip": {
+          "expected_code": "direction_mismatch",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "value_swap": {
+          "expected_code": "value_mismatch",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "fake_feature": {
+          "expected_code": "unknown_evidence",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 0.0,
+          "detection": {
+            "k": 0,
+            "n": 2,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.6576280471103807
+            ]
+          },
+          "exact_code_rate": 0.0,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {
+            "missing_citation": 2,
+            "protected_attribute_inference": 1
+          }
+        },
+        "wrong_top": {
+          "expected_code": "rank_mismatch",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "exact_code_rate": 0.5,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {
+            "direction_mismatch": 1
+          }
+        },
+        "unsupported_number": {
+          "expected_code": "unsupported_number",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 0.5,
+          "detection": {
+            "k": 1,
+            "n": 2,
+            "rate": 0.5,
+            "ci95": [
+              0.09452865480086614,
+              0.9054713451991339
+            ]
+          },
+          "exact_code_rate": 0.5,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {
+            "missing_citation": 1
+          }
+        },
+        "missing_citation": {
+          "expected_code": "missing_citation",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "exact_code_rate": 0.5,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {
+            "missing_required": 1
+          }
+        },
+        "causal_claim": {
+          "expected_code": "causal_wording",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "raw_code": {
+          "expected_code": "raw_code_leak",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 0.0,
+          "detection": {
+            "k": 0,
+            "n": 2,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.6576280471103807
+            ]
+          },
+          "exact_code_rate": 0.0,
+          "any_rejection": {
+            "k": 0,
+            "n": 2,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.6576280471103807
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "decision_wording": {
+          "expected_code": "decision_wording",
+          "category": "policy",
+          "n": 2,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "exact_code_rate": 0.0,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {
+            "missing_citation": 2
+          }
+        },
+        "protected_inference": {
+          "expected_code": "protected_attribute_inference",
+          "category": "policy",
+          "n": 2,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "exact_code_rate": 0.0,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {
+            "missing_citation": 2
+          }
+        },
+        "blame_wording": {
+          "expected_code": "blame_wording",
+          "category": "policy",
+          "n": 1,
+          "detection_rate": 0.0,
+          "detection": {
+            "k": 0,
+            "n": 1,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.7934567085261071
+            ]
+          },
+          "exact_code_rate": 0.0,
+          "any_rejection": {
+            "k": 0,
+            "n": 1,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.7934567085261071
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "prediction_as_fact": {
+          "expected_code": "prediction_as_fact",
+          "category": "policy",
+          "n": 2,
+          "detection_rate": 0.5,
+          "detection": {
+            "k": 1,
+            "n": 2,
+            "rate": 0.5,
+            "ci95": [
+              0.09452865480086614,
+              0.9054713451991339
+            ]
+          },
+          "exact_code_rate": 0.5,
+          "any_rejection": {
+            "k": 1,
+            "n": 2,
+            "rate": 0.5,
+            "ci95": [
+              0.09452865480086614,
+              0.9054713451991339
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "magnitude_swap": {
+          "expected_code": "magnitude_mismatch",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 0.0,
+          "detection": {
+            "k": 0,
+            "n": 2,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.6576280471103807
+            ]
+          },
+          "exact_code_rate": 0.0,
+          "any_rejection": {
+            "k": 1,
+            "n": 2,
+            "rate": 0.5,
+            "ci95": [
+              0.09452865480086614,
+              0.9054713451991339
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {
+            "level_numbers": 1
+          }
+        },
+        "risk_text_swap": {
+          "expected_code": "risk_mismatch",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "wrong_ordinal": {
+          "expected_code": "rank_mismatch",
+          "category": "fidelity",
+          "n": 1,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 1,
+            "n": 1,
+            "rate": 1.0,
+            "ci95": [
+              0.20654329147389294,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 1,
+            "n": 1,
+            "rate": 1.0,
+            "ci95": [
+              0.20654329147389294,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        }
+      },
+      "overall": {
+        "detection": {
+          "k": 19,
+          "n": 28,
+          "rate": 0.6785714285714286,
+          "ci95": [
+            0.4933850455563118,
+            0.8206695245657927
+          ]
+        },
+        "any_rejection": {
+          "k": 23,
+          "n": 28,
+          "rate": 0.8214285714285714,
+          "ci95": [
+            0.644082084514089,
+            0.9212161417056989
+          ]
+        },
+        "reviewer_detection": null
+      },
+      "clean": {
+        "n": 8,
+        "false_rejection_rate": 0.0,
+        "false_rejection": {
+          "k": 0,
+          "n": 8,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.3244156195108769
+          ]
+        },
+        "reviewer_false_rejection_rate": null,
+        "codes": {}
+      },
+      "llm_fault_records": [
+        {
+          "fault": "direction_flip",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The biggest factor is savings (1000 DM or more), which pulls the estimate up.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "direction_mismatch"
+          ]
+        },
+        {
+          "fault": "value_swap",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Employment length (1 to 4 years) pushes the estimate up.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "value_mismatch"
+          ]
+        },
+        {
+          "fault": "fake_feature",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Checking account balance (200 DM or more) also pulls the estimate down.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "missing_citation"
+          ]
+        },
+        {
+          "fault": "wrong_top",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The biggest factor is employment length (less than 1 year), which pulls the estimate down.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "direction_mismatch",
+            "rank_mismatch"
+          ]
+        },
+        {
+          "fault": "unsupported_number",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The model estimates a 29% chance that an applicant with this profile is a bad credit risk, which is 4% higher than the average risk of 25%, and is in the medium risk band.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "unsupported_number"
+          ]
+        },
+        {
+          "fault": "missing_citation",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The biggest factor is savings (1000 DM or more), which pulls the estimate down.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "missing_citation",
+            "missing_required"
+          ]
+        },
+        {
+          "fault": "causal_claim",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Savings (1000 DM or more) causes the estimate to be lower.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "causal_wording"
+          ]
+        },
+        {
+          "fault": "raw_code",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The biggest factor is savings (G-SAVINGS), which pulls the estimate down.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": []
+        },
+        {
+          "fault": "decision_wording",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The model suggests that the applicant should be denied credit.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "decision_wording",
+            "missing_citation"
+          ]
+        },
+        {
+          "fault": "protected_inference",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The applicant is likely over 60 years old, which may affect their creditworthiness.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "missing_citation",
+            "protected_attribute_inference"
+          ]
+        },
+        {
+          "fault": "blame_wording",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Employment length (less than 1 year) shows a lack of responsibility and pushes the estimate up.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": []
+        },
+        {
+          "fault": "prediction_as_fact",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The model predicts that the applicant will be a bad credit risk, which is in the medium risk band.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": []
+        },
+        {
+          "fault": "magnitude_swap",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The biggest factor is savings (1000 DM or more), which pulls the estimate down by about 5 percentage points.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "level_numbers"
+          ]
+        },
+        {
+          "fault": "risk_text_swap",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The model estimates a 35% chance that an applicant with this profile is a bad credit risk, which is in the medium risk band.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "risk_mismatch"
+          ]
+        },
+        {
+          "fault": "wrong_ordinal",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The biggest factor is other installment plans (with a bank), which pushes the estimate up.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "rank_mismatch"
+          ]
+        },
+        {
+          "fault": "direction_flip",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Credit history (existing credits repaid duly so far): -2.1 percentage points (weak).",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "direction_mismatch"
+          ]
+        },
+        {
+          "fault": "value_swap",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Employment length (1 to 4 years): +3.5 percentage points (moderate).",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "value_mismatch"
+          ]
+        },
+        {
+          "fault": "fake_feature",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Age (35 years): +1.5 percentage points (weak).",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "missing_citation",
+            "protected_attribute_inference"
+          ]
+        },
+        {
+          "fault": "wrong_top",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Largest contribution: Other installment plans (with a bank), +4.6 percentage points (moderate).",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "rank_mismatch"
+          ]
+        },
+        {
+          "fault": "unsupported_number",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Savings (1000 DM or more) reduces risk by 12%.",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "missing_citation"
+          ]
+        },
+        {
+          "fault": "missing_citation",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Credit amount (1,913 DM): -2.0 percentage points (weak).",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "missing_citation"
+          ]
+        },
+        {
+          "fault": "causal_claim",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Other installment plans (with a bank) cause a higher risk, +4.6 percentage points (moderate).",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "causal_wording"
+          ]
+        },
+        {
+          "fault": "raw_code",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Largest contribution: G-SAVINGS (1000 DM or more), -10.5 percentage points (strong).",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": []
+        },
+        {
+          "fault": "decision_wording",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Given the high risk, we should reject the application.",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "decision_wording",
+            "missing_citation"
+          ]
+        },
+        {
+          "fault": "protected_inference",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Applicant is 45 years old.",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "missing_citation",
+            "protected_attribute_inference"
+          ]
+        },
+        {
+          "fault": "blame_wording",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Employment length (less than 1 year): +3.5 percentage points (moderate).",
+          "error": "unchanged",
+          "level": "expert",
+          "intent": "explain"
+        },
+        {
+          "fault": "prediction_as_fact",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The applicant will default.",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "prediction_as_fact"
+          ]
+        },
+        {
+          "fault": "magnitude_swap",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Largest contribution: Savings (1000 DM or more), -5.0 percentage points (strong).",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": []
+        },
+        {
+          "fault": "risk_text_swap",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Calibrated credit risk estimate: 30.0% (medium band; bootstrap range 23.5% to 53.2%; review threshold 20%).",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "risk_mismatch"
+          ]
+        },
+        {
+          "fault": "wrong_ordinal",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Employment length (less than 1 year): +3.5 percentage points (moderate).",
+          "error": "unchanged",
+          "level": "expert",
+          "intent": "explain"
+        }
+      ]
+    }
+  ],
+  "partial": null,
+  "levels": [
+    "novice",
+    "expert"
+  ],
+  "intents": [
+    "explain"
+  ]
+}

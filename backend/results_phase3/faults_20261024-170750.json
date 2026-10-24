@@ -1,0 +1,67 @@
+{
+  "created": "2026-10-24T17:07:50+00:00",
+  "llm": "mock:deterministic-template",
+  "judge": null,
+  "base": "template",
+  "data_source": "uci_statlog",
+  "domains": [
+    {
+      "domain": "finance",
+      "base": "template",
+      "injector": "llm",
+      "fault_llm": "groq:openai/gpt-oss-20b",
+      "n_cases": 1,
+      "skipped_bases_not_clean": 0,
+      "per_fault": {},
+      "overall": {
+        "detection": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "ci95": [
+            null,
+            null
+          ]
+        },
+        "any_rejection": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "ci95": [
+            null,
+            null
+          ]
+        },
+        "reviewer_detection": null
+      },
+      "clean": {
+        "n": 0,
+        "false_rejection_rate": 0.0,
+        "false_rejection": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "ci95": [
+            null,
+            null
+          ]
+        },
+        "reviewer_false_rejection_rate": null,
+        "codes": {}
+      },
+      "llm_fault_records": []
+    }
+  ],
+  "partial": [
+    "finance: groq:openai/gpt-oss-20b used 185727 tokens (budget groq:openai/gpt-oss-20b=170000)"
+  ],
+  "levels": [
+    "novice",
+    "expert"
+  ],
+  "intents": [
+    "explain"
+  ],
+  "offset": 1,
+  "n": 1
+}

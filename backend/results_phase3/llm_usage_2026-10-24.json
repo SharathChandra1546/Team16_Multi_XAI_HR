@@ -1,0 +1,14 @@
+{
+ "requests": {
+  "groq:qwen/qwen3.8-27b": 108,
+  "groq:openai/gpt-oss-120b": 53,
+  "gemini:gemma-4-26b-a4b-it": 69,
+  "groq:openai/gpt-oss-20b": 127
+ },
+ "tokens": {
+  "groq:qwen/qwen3.8-27b": 86973,
+  "groq:openai/gpt-oss-120b": 41991,
+  "gemini:gemma-4-26b-a4b-it": 88694,
+  "groq:openai/gpt-oss-20b": 185727
+ }
+}

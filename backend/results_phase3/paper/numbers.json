@@ -1,0 +1,1727 @@
+{
+ "generated": "2026-10-24T17:01:54+00:00",
+ "judge": "as stored",
+ "runs": [
+  {
+   "file": "comparison_20261024-161512.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 24
+  },
+  {
+   "file": "comparison_20261024-164748.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261024-164806.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261024-164950.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-165223.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-165326.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-165429.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-165728.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-165847.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-165903.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  }
+ ],
+ "main": {
+  "ours:full": {
+   "pooled": {
+    "n_generated": 6,
+    "n_failed": 0,
+    "n_shown": 6,
+    "n_empty": 0,
+    "status": {
+     "verified": 3,
+     "fallback": 3
+    },
+    "error_free_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "error_free_rule": {
+     "k": 6,
+     "n": 6,
+     "rate": 1.0,
+     "lo": 0.6096569663469354,
+     "hi": 1.0
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 6,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3903430336530645
+    },
+    "va": null,
+    "sa": null,
+    "ra": null,
+    "top3": null,
+    "words": 73.16666666666667,
+    "calls": 4.0,
+    "tokens": 6853.5,
+    "latency_s": 20.718783333333334
+   },
+   "finance": {
+    "n_generated": 4,
+    "n_failed": 0,
+    "n_shown": 4,
+    "n_empty": 0,
+    "status": {
+     "verified": 1,
+     "fallback": 3
+    },
+    "error_free_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "error_free_rule": {
+     "k": 4,
+     "n": 4,
+     "rate": 1.0,
+     "lo": 0.5100999795960008,
+     "hi": 1.0
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 4,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.48990002040399916
+    },
+    "va": null,
+    "sa": null,
+    "ra": null,
+    "top3": null,
+    "words": 72.0,
+    "calls": 4.0,
+    "tokens": 8508.75,
+    "latency_s": 30.75105
+   },
+   "health": {
+    "n_generated": 2,
+    "n_failed": 0,
+    "n_shown": 2,
+    "n_empty": 0,
+    "status": {
+     "verified": 2
+    },
+    "error_free_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "error_free_rule": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 2,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.6576280471103807
+    },
+    "va": null,
+    "sa": null,
+    "ra": null,
+    "top3": null,
+    "words": 75.5,
+    "calls": 4.0,
+    "tokens": 3543.0,
+    "latency_s": 0.65425
+   }
+  },
+  "direct": {
+   "pooled": {
+    "n_generated": 6,
+    "n_failed": 0,
+    "n_shown": 6,
+    "n_empty": 0,
+    "status": {
+     "shown": 6
+    },
+    "error_free_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "error_free_rule": {
+     "k": 3,
+     "n": 6,
+     "rate": 0.5,
+     "lo": 0.1876128068994087,
+     "hi": 0.8123871931005913
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 6,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3903430336530645
+    },
+    "va": null,
+    "sa": null,
+    "ra": null,
+    "top3": null,
+    "words": 78.33333333333333,
+    "calls": 1.0,
+    "tokens": 362.6666666666667,
+    "latency_s": 17.793883333333333
+   },
+   "finance": {
+    "n_generated": 4,
+    "n_failed": 0,
+    "n_shown": 4,
+    "n_empty": 0,
+    "status": {
+     "shown": 4
+    },
+    "error_free_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "error_free_rule": {
+     "k": 2,
+     "n": 4,
+     "rate": 0.5,
+     "lo": 0.15003570882017145,
+     "hi": 0.8499642911798285
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 4,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.48990002040399916
+    },
+    "va": null,
+    "sa": null,
+    "ra": null,
+    "top3": null,
+    "words": 75.25,
+    "calls": 1.0,
+    "tokens": 344.0,
+    "latency_s": 25.887024999999998
+   },
+   "health": {
+    "n_generated": 2,
+    "n_failed": 0,
+    "n_shown": 2,
+    "n_empty": 0,
+    "status": {
+     "shown": 2
+    },
+    "error_free_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "error_free_rule": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09452865480086611,
+     "hi": 0.905471345199134
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 2,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.6576280471103807
+    },
+    "va": null,
+    "sa": null,
+    "ra": null,
+    "top3": null,
+    "words": 84.5,
+    "calls": 1.0,
+    "tokens": 400.0,
+    "latency_s": 1.6076
+   }
+  },
+  "b3": {
+   "pooled": {
+    "n_generated": 6,
+    "n_failed": 0,
+    "n_shown": 6,
+    "n_empty": 0,
+    "status": {
+     "shown": 6
+    },
+    "error_free_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "error_free_rule": {
+     "k": 5,
+     "n": 6,
+     "rate": 0.8333333333333334,
+     "lo": 0.4364905634363539,
+     "hi": 0.9699474141282696
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 6,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3903430336530645
+    },
+    "va": null,
+    "sa": null,
+    "ra": null,
+    "top3": null,
+    "words": 103.83333333333333,
+    "calls": 2.3333333333333335,
+    "tokens": 4090.3333333333335,
+    "latency_s": 7.7138
+   },
+   "finance": {
+    "n_generated": 4,
+    "n_failed": 0,
+    "n_shown": 4,
+    "n_empty": 0,
+    "status": {
+     "shown": 4
+    },
+    "error_free_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "error_free_rule": {
+     "k": 3,
+     "n": 4,
+     "rate": 0.75,
+     "lo": 0.30063605244263664,
+     "hi": 0.9544139373553638
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 4,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.48990002040399916
+    },
+    "va": null,
+    "sa": null,
+    "ra": null,
+    "top3": null,
+    "words": 109.75,
+    "calls": 2.5,
+    "tokens": 5071.25,
+    "latency_s": 11.5704
+   },
+   "health": {
+    "n_generated": 2,
+    "n_failed": 0,
+    "n_shown": 2,
+    "n_empty": 0,
+    "status": {
+     "shown": 2
+    },
+    "error_free_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "error_free_rule": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 2,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.6576280471103807
+    },
+    "va": null,
+    "sa": null,
+    "ra": null,
+    "top3": null,
+    "words": 92.0,
+    "calls": 2.0,
+    "tokens": 2128.5,
+    "latency_s": 0.0006000000000000001
+   }
+  },
+  "explingo": {
+   "pooled": {
+    "n_generated": 6,
+    "n_failed": 0,
+    "n_shown": 6,
+    "n_empty": 0,
+    "status": {
+     "shown": 6
+    },
+    "error_free_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "error_free_rule": {
+     "k": 2,
+     "n": 6,
+     "rate": 0.3333333333333333,
+     "lo": 0.09676933255921684,
+     "hi": 0.7000116786584712
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 6,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3903430336530645
+    },
+    "va": null,
+    "sa": null,
+    "ra": null,
+    "top3": null,
+    "words": 73.0,
+    "calls": 2.5,
+    "tokens": 1887.8333333333333,
+    "latency_s": 37.36936666666667
+   },
+   "finance": {
+    "n_generated": 4,
+    "n_failed": 0,
+    "n_shown": 4,
+    "n_empty": 0,
+    "status": {
+     "shown": 4
+    },
+    "error_free_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "error_free_rule": {
+     "k": 1,
+     "n": 4,
+     "rate": 0.25,
+     "lo": 0.045586062644636216,
+     "hi": 0.6993639475573634
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 4,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.48990002040399916
+    },
+    "va": null,
+    "sa": null,
+    "ra": null,
+    "top3": null,
+    "words": 76.0,
+    "calls": 2.75,
+    "tokens": 2126.0,
+    "latency_s": 55.615225
+   },
+   "health": {
+    "n_generated": 2,
+    "n_failed": 0,
+    "n_shown": 2,
+    "n_empty": 0,
+    "status": {
+     "shown": 2
+    },
+    "error_free_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "error_free_rule": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09452865480086611,
+     "hi": 0.905471345199134
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 2,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.6576280471103807
+    },
+    "va": null,
+    "sa": null,
+    "ra": null,
+    "top3": null,
+    "words": 67.0,
+    "calls": 2.0,
+    "tokens": 1411.5,
+    "latency_s": 0.87765
+   }
+  },
+  "critic_rule": {
+   "pooled": {
+    "n_generated": 6,
+    "n_failed": 0,
+    "n_shown": 6,
+    "n_empty": 0,
+    "status": {
+     "shown": 6
+    },
+    "error_free_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "error_free_rule": {
+     "k": 3,
+     "n": 6,
+     "rate": 0.5,
+     "lo": 0.1876128068994087,
+     "hi": 0.8123871931005913
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 6,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3903430336530645
+    },
+    "va": null,
+    "sa": null,
+    "ra": null,
+    "top3": null,
+    "words": 118.16666666666667,
+    "calls": 4.166666666666667,
+    "tokens": 5379.166666666667,
+    "latency_s": 12.146700000000001
+   },
+   "finance": {
+    "n_generated": 4,
+    "n_failed": 0,
+    "n_shown": 4,
+    "n_empty": 0,
+    "status": {
+     "shown": 4
+    },
+    "error_free_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "error_free_rule": {
+     "k": 2,
+     "n": 4,
+     "rate": 0.5,
+     "lo": 0.15003570882017145,
+     "hi": 0.8499642911798285
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 4,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.48990002040399916
+    },
+    "va": null,
+    "sa": null,
+    "ra": null,
+    "top3": null,
+    "words": 123.75,
+    "calls": 4.25,
+    "tokens": 6339.5,
+    "latency_s": 18.219575
+   },
+   "health": {
+    "n_generated": 2,
+    "n_failed": 0,
+    "n_shown": 2,
+    "n_empty": 0,
+    "status": {
+     "shown": 2
+    },
+    "error_free_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "error_free_rule": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09452865480086611,
+     "hi": 0.905471345199134
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 2,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.6576280471103807
+    },
+    "va": null,
+    "sa": null,
+    "ra": null,
+    "top3": null,
+    "words": 107.0,
+    "calls": 4.0,
+    "tokens": 3458.5,
+    "latency_s": 0.0009500000000000001
+   }
+  },
+  "musicco": {
+   "pooled": {
+    "n_generated": 6,
+    "n_failed": 0,
+    "n_shown": 5,
+    "n_empty": 1,
+    "status": {
+     "shown": 5,
+     "empty": 1
+    },
+    "error_free_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "error_free_rule": {
+     "k": 1,
+     "n": 5,
+     "rate": 0.2,
+     "lo": 0.036223160969787456,
+     "hi": 0.6244717358814612
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "policy_violation": {
+     "k": 1,
+     "n": 5,
+     "rate": 0.2,
+     "lo": 0.036223160969787456,
+     "hi": 0.6244717358814612
+    },
+    "va": null,
+    "sa": null,
+    "ra": null,
+    "top3": null,
+    "words": 137.8,
+    "calls": 3.5,
+    "tokens": 7776.666666666667,
+    "latency_s": 36.2012
+   },
+   "finance": {
+    "n_generated": 4,
+    "n_failed": 0,
+    "n_shown": 3,
+    "n_empty": 1,
+    "status": {
+     "shown": 3,
+     "empty": 1
+    },
+    "error_free_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "error_free_rule": {
+     "k": 1,
+     "n": 3,
+     "rate": 0.3333333333333333,
+     "lo": 0.061490315276160515,
+     "hi": 0.7923450448735121
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 3,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.5615060804490177
+    },
+    "va": null,
+    "sa": null,
+    "ra": null,
+    "top3": null,
+    "words": 146.0,
+    "calls": 3.75,
+    "tokens": 9470.0,
+    "latency_s": 53.77535
+   },
+   "health": {
+    "n_generated": 2,
+    "n_failed": 0,
+    "n_shown": 2,
+    "n_empty": 0,
+    "status": {
+     "shown": 2
+    },
+    "error_free_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "error_free_rule": {
+     "k": 0,
+     "n": 2,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.6576280471103807
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 0,
+     "rate": null,
+     "lo": null,
+     "hi": null
+    },
+    "policy_violation": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09452865480086611,
+     "hi": 0.905471345199134
+    },
+    "va": null,
+    "sa": null,
+    "ra": null,
+    "top3": null,
+    "words": 125.5,
+    "calls": 3.0,
+    "tokens": 4390.0,
+    "latency_s": 1.0529
+   }
+  }
+ },
+ "paired": {
+  "direct": {
+   "pairs": 0,
+   "ours_only": 0,
+   "other_only": 0,
+   "both": 0,
+   "neither": 0,
+   "p_mcnemar": 1.0
+  },
+  "b3": {
+   "pairs": 0,
+   "ours_only": 0,
+   "other_only": 0,
+   "both": 0,
+   "neither": 0,
+   "p_mcnemar": 1.0
+  },
+  "explingo": {
+   "pairs": 0,
+   "ours_only": 0,
+   "other_only": 0,
+   "both": 0,
+   "neither": 0,
+   "p_mcnemar": 1.0
+  },
+  "critic_rule": {
+   "pairs": 0,
+   "ours_only": 0,
+   "other_only": 0,
+   "both": 0,
+   "neither": 0,
+   "p_mcnemar": 1.0
+  },
+  "musicco": {
+   "pairs": 0,
+   "ours_only": 0,
+   "other_only": 0,
+   "both": 0,
+   "neither": 0,
+   "p_mcnemar": 1.0
+  }
+ },
+ "errors": {
+  "ours:full": {
+   "value": 0,
+   "direction": 0,
+   "stated rank": 0,
+   "unsupported factor": 0,
+   "unsupported number": 0,
+   "causal wording": 0,
+   "raw code": 0
+  },
+  "direct": {
+   "value": 0,
+   "direction": 0,
+   "stated rank": 0,
+   "unsupported factor": 0,
+   "unsupported number": 3,
+   "causal wording": 1,
+   "raw code": 0
+  },
+  "b3": {
+   "value": 0,
+   "direction": 0,
+   "stated rank": 0,
+   "unsupported factor": 0,
+   "unsupported number": 0,
+   "causal wording": 1,
+   "raw code": 0
+  },
+  "explingo": {
+   "value": 0,
+   "direction": 0,
+   "stated rank": 0,
+   "unsupported factor": 0,
+   "unsupported number": 4,
+   "causal wording": 0,
+   "raw code": 0
+  },
+  "critic_rule": {
+   "value": 0,
+   "direction": 0,
+   "stated rank": 0,
+   "unsupported factor": 0,
+   "unsupported number": 1,
+   "causal wording": 1,
+   "raw code": 0
+  },
+  "musicco": {
+   "value": 0,
+   "direction": 0,
+   "stated rank": 0,
+   "unsupported factor": 0,
+   "unsupported number": 2,
+   "causal wording": 1,
+   "raw code": 0,
+   "policy: prediction_as_fact": 1
+  }
+ },
+ "ablations": {
+  "ours:full": {
+   "n_generated": 12,
+   "n_failed": 0,
+   "n_shown": 12,
+   "n_empty": 0,
+   "status": {
+    "verified": 10,
+    "fallback": 2
+   },
+   "error_free_llm": {
+    "k": 0,
+    "n": 0,
+    "rate": null,
+    "lo": null,
+    "hi": null
+   },
+   "error_free_rule": {
+    "k": 12,
+    "n": 12,
+    "rate": 1.0,
+    "lo": 0.7574992425007574,
+    "hi": 0.9999999999999998
+   },
+   "fidelity_error_llm": {
+    "k": 0,
+    "n": 0,
+    "rate": null,
+    "lo": null,
+    "hi": null
+   },
+   "policy_violation": {
+    "k": 0,
+    "n": 12,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.2425007574992425
+   },
+   "va": null,
+   "sa": null,
+   "ra": null,
+   "top3": null,
+   "words": 60.333333333333336,
+   "calls": 4.666666666666667,
+   "tokens": 4902.333333333333,
+   "latency_s": 48.858200000000004
+  },
+  "ours:no_verifier": {
+   "n_generated": 12,
+   "n_failed": 0,
+   "n_shown": 12,
+   "n_empty": 0,
+   "status": {
+    "verified": 10,
+    "fallback": 2
+   },
+   "error_free_llm": {
+    "k": 0,
+    "n": 0,
+    "rate": null,
+    "lo": null,
+    "hi": null
+   },
+   "error_free_rule": {
+    "k": 12,
+    "n": 12,
+    "rate": 1.0,
+    "lo": 0.7574992425007574,
+    "hi": 0.9999999999999998
+   },
+   "fidelity_error_llm": {
+    "k": 0,
+    "n": 0,
+    "rate": null,
+    "lo": null,
+    "hi": null
+   },
+   "policy_violation": {
+    "k": 0,
+    "n": 12,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.2425007574992425
+   },
+   "va": null,
+   "sa": null,
+   "ra": null,
+   "top3": null,
+   "words": 60.333333333333336,
+   "calls": 4.666666666666667,
+   "tokens": 4322.75,
+   "latency_s": 5.73975
+  },
+  "ours:no_critic": {
+   "n_generated": 12,
+   "n_failed": 0,
+   "n_shown": 12,
+   "n_empty": 0,
+   "status": {
+    "unverified": 6,
+    "verified": 6
+   },
+   "error_free_llm": {
+    "k": 0,
+    "n": 0,
+    "rate": null,
+    "lo": null,
+    "hi": null
+   },
+   "error_free_rule": {
+    "k": 12,
+    "n": 12,
+    "rate": 1.0,
+    "lo": 0.7574992425007574,
+    "hi": 0.9999999999999998
+   },
+   "fidelity_error_llm": {
+    "k": 0,
+    "n": 0,
+    "rate": null,
+    "lo": null,
+    "hi": null
+   },
+   "policy_violation": {
+    "k": 0,
+    "n": 12,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.2425007574992425
+   },
+   "va": null,
+   "sa": null,
+   "ra": null,
+   "top3": null,
+   "words": 48.916666666666664,
+   "calls": 2.0,
+   "tokens": 2263.1666666666665,
+   "latency_s": 3.9236416666666663
+  },
+  "ours:no_repair": {
+   "n_generated": 12,
+   "n_failed": 0,
+   "n_shown": 12,
+   "n_empty": 0,
+   "status": {
+    "fallback": 8,
+    "verified": 4
+   },
+   "error_free_llm": {
+    "k": 0,
+    "n": 0,
+    "rate": null,
+    "lo": null,
+    "hi": null
+   },
+   "error_free_rule": {
+    "k": 12,
+    "n": 12,
+    "rate": 1.0,
+    "lo": 0.7574992425007574,
+    "hi": 0.9999999999999998
+   },
+   "fidelity_error_llm": {
+    "k": 0,
+    "n": 0,
+    "rate": null,
+    "lo": null,
+    "hi": null
+   },
+   "policy_violation": {
+    "k": 0,
+    "n": 12,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.2425007574992425
+   },
+   "va": null,
+   "sa": null,
+   "ra": null,
+   "top3": null,
+   "words": 74.41666666666667,
+   "calls": 5.666666666666667,
+   "tokens": 5198.916666666667,
+   "latency_s": 6.05875
+  },
+  "ours:no_policy_rules": {
+   "n_generated": 12,
+   "n_failed": 0,
+   "n_shown": 12,
+   "n_empty": 0,
+   "status": {
+    "verified": 10,
+    "fallback": 2
+   },
+   "error_free_llm": {
+    "k": 0,
+    "n": 0,
+    "rate": null,
+    "lo": null,
+    "hi": null
+   },
+   "error_free_rule": {
+    "k": 12,
+    "n": 12,
+    "rate": 1.0,
+    "lo": 0.7574992425007574,
+    "hi": 0.9999999999999998
+   },
+   "fidelity_error_llm": {
+    "k": 0,
+    "n": 0,
+    "rate": null,
+    "lo": null,
+    "hi": null
+   },
+   "policy_violation": {
+    "k": 0,
+    "n": 12,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.2425007574992425
+   },
+   "va": null,
+   "sa": null,
+   "ra": null,
+   "top3": null,
+   "words": 60.333333333333336,
+   "calls": 4.666666666666667,
+   "tokens": 4322.75,
+   "latency_s": 1.9206416666666666
+  }
+ },
+ "faults": {
+  "llm": {
+   "files": [
+    "faults_20261024-165802.json"
+   ],
+   "chunks": 1,
+   "per_fault": {
+    "direction_flip": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "value_swap": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "fake_feature": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "wrong_top": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "unsupported_number": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "missing_citation": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "causal_claim": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "raw_code": {
+     "k": 0,
+     "n": 2,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.6576280471103807
+    },
+    "decision_wording": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "protected_inference": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "blame_wording": {
+     "k": 0,
+     "n": 1,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.7934567085261071
+    },
+    "prediction_as_fact": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09452865480086611,
+     "hi": 0.905471345199134
+    },
+    "magnitude_swap": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09452865480086611,
+     "hi": 0.905471345199134
+    },
+    "risk_text_swap": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "wrong_ordinal": {
+     "k": 1,
+     "n": 1,
+     "rate": 1.0,
+     "lo": 0.20654329147389294,
+     "hi": 1.0
+    }
+   },
+   "overall": {
+    "k": 23,
+    "n": 28,
+    "rate": 0.8214285714285714,
+    "lo": 0.644082084514089,
+    "hi": 0.9212161417056989
+   },
+   "per_fault_exact": {
+    "direction_flip": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "value_swap": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "fake_feature": {
+     "k": 0,
+     "n": 2,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.6576280471103807
+    },
+    "wrong_top": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "unsupported_number": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09452865480086611,
+     "hi": 0.905471345199134
+    },
+    "missing_citation": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "causal_claim": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "raw_code": {
+     "k": 0,
+     "n": 2,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.6576280471103807
+    },
+    "decision_wording": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "protected_inference": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "blame_wording": {
+     "k": 0,
+     "n": 1,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.7934567085261071
+    },
+    "prediction_as_fact": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09452865480086611,
+     "hi": 0.905471345199134
+    },
+    "magnitude_swap": {
+     "k": 0,
+     "n": 2,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.6576280471103807
+    },
+    "risk_text_swap": {
+     "k": 2,
+     "n": 2,
+     "rate": 1.0,
+     "lo": 0.3423719528896193,
+     "hi": 1.0
+    },
+    "wrong_ordinal": {
+     "k": 1,
+     "n": 1,
+     "rate": 1.0,
+     "lo": 0.20654329147389294,
+     "hi": 1.0
+    }
+   },
+   "overall_exact": {
+    "k": 19,
+    "n": 28,
+    "rate": 0.6785714285714286,
+    "lo": 0.4933850455563118,
+    "hi": 0.8206695245657927
+   },
+   "clean_false_rejection": {
+    "k": 0,
+    "n": 8,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.3244156195108769
+   },
+   "domains": [
+    "finance"
+   ]
+  },
+  "template": {
+   "files": [
+    "faults_20261021-150111.json"
+   ],
+   "chunks": 3,
+   "per_fault": {
+    "direction_flip": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "value_swap": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "fake_feature": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "wrong_top": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "unsupported_number": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "missing_citation": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "causal_claim": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "raw_code": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "decision_wording": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "protected_inference": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "blame_wording": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "prediction_as_fact": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "risk_text_swap": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "wrong_ordinal": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "magnitude_swap": {
+     "k": 180,
+     "n": 180,
+     "rate": 1.0,
+     "lo": 0.9791037501849419,
+     "hi": 1.0
+    }
+   },
+   "overall": {
+    "k": 6390,
+    "n": 6390,
+    "rate": 1.0,
+    "lo": 0.9993991718531158,
+    "hi": 1.0000000000000002
+   },
+   "per_fault_exact": {
+    "direction_flip": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "value_swap": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "fake_feature": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "wrong_top": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "unsupported_number": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "missing_citation": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "causal_claim": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "raw_code": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "decision_wording": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "protected_inference": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "blame_wording": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "prediction_as_fact": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "risk_text_swap": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "wrong_ordinal": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "magnitude_swap": {
+     "k": 180,
+     "n": 180,
+     "rate": 1.0,
+     "lo": 0.9791037501849419,
+     "hi": 1.0
+    }
+   },
+   "overall_exact": {
+    "k": 6390,
+    "n": 6390,
+    "rate": 1.0,
+    "lo": 0.9993991718531158,
+    "hi": 1.0000000000000002
+   },
+   "clean_false_rejection": {
+    "k": 0,
+    "n": 2135,
+    "rate": 0.0,
+    "lo": -1.0822548234785372e-19,
+    "hi": 0.0017961124376858952
+   },
+   "domains": [
+    "finance",
+    "health",
+    "hr"
+   ]
+  }
+ }
+}

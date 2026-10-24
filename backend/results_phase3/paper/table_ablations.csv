@@ -1,0 +1,6 @@
+Variant,Texts,Error-free,Any fidelity error,Policy viol.,Template fallback,Withheld/escalated,Calls
+Full pipeline,12,n/a,n/a,"0% [0, 24]",17%,0%,4.7
+-- claim verifier,12,n/a,n/a,"0% [0, 24]",17%,0%,4.7
+-- critic,12,n/a,n/a,"0% [0, 24]",0%,0%,2.0
+-- repair loop,12,n/a,n/a,"0% [0, 24]",67%,0%,5.7
+-- policy rules,12,n/a,n/a,"0% [0, 24]",17%,0%,4.7
