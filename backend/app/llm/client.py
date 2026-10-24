@@ -149,6 +149,8 @@ class OpenAICompatLLM(BaseLLM):
     requests_sent: dict[str, int] = {}
     # tokens used per model in this process (prompt + completion, cached answers excluded)
     tokens_used: dict[str, int] = {}
+    # models whose provider said the DAILY quota is used up (Groq: "tokens per day (TPD)"); runs stop on these
+    daily_exhausted: dict[str, str] = {}
 
     def __init__(self, provider: str, model: str | None = None, temperature: float | None = None):
         if provider not in PROVIDERS:
@@ -200,6 +202,9 @@ class OpenAICompatLLM(BaseLLM):
                 if r.status_code == 429:
                     # per-minute limits (Groq free tier: 8K tokens/min) say how long to wait; a daily limit does not
                     # clear within a run, so fail instead of sleeping for hours
+                    if re.search(r"per day|PerDay|\(TPD\)|\(RPD\)", r.text or ""):
+                        OpenAICompatLLM.daily_exhausted[self.id] = r.text[:200]
+                        raise LLMError(f"HTTP 429 (daily quota used up): {r.text[:300]}")
                     wait = _retry_after(r)
                     if wait is not None and wait <= 90:
                         time.sleep(wait + 1)
@@ -224,6 +229,8 @@ class OpenAICompatLLM(BaseLLM):
                 return data
             except Exception as e:  # retry with backoff (free tiers rate-limit)
                 last_err = e
+                if self.id in OpenAICompatLLM.daily_exhausted:
+                    break  # retrying cannot help until the provider's daily window frees up
                 time.sleep(2 ** attempt * 2)
         raise LLMError(f"{self.id} failed for task '{task}': {last_err}")
 
@@ -297,6 +304,9 @@ def parse_budget(spec: str) -> dict[str, int]:
 def over_budget(request_budget: dict[str, int], token_budget: dict[str, int], only: set[str] | None = None) -> str | None:
     """First model (provider:model, or a provider key) that reached its request or token budget today.
     `only`: the model ids this run actually uses; other models' budgets do not stop it."""
+    for mid, why in OpenAICompatLLM.daily_exhausted.items():
+        if only is None or mid in only:
+            return f"{mid}: provider reports the daily quota used up"
     for counts, budget, unit in ((OpenAICompatLLM.requests_sent, request_budget, "requests"),
                                  (OpenAICompatLLM.tokens_used, token_budget, "tokens")):
         for mid, n in counts.items():

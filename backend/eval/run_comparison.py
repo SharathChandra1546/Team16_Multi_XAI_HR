@@ -291,6 +291,9 @@ def main() -> int:
                                         "escalation_score": esc["score"], "would_escalate_rule": esc["rule_decision"],
                                         "text": o["text"], "m": m})
                 print(f"{dname} case {cid} level {level} done", flush=True)
+            # a provider can refuse mid-case (daily quota): report it so the driver stops instead of moving on
+            if budget or tok_budget:
+                stopped_for_budget = stopped_for_budget or over_budget()
     data_sources = {n: getattr(reg.get(n), "data_source", "unknown") for n in args.domains.split(",")}
     if budget or tok_budget:
         save_daily_usage()
