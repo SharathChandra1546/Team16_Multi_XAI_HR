@@ -94,7 +94,7 @@ def fig_faults(num):
         whisker(ax, i, r, INK, size=4)
     ax.set_yticks(range(len(items)))
     ax.set_yticklabels([f.replace("_", " ") for f, _ in items])
-    style(ax, "Faults detected by the verifier (%), 95% CI")
+    style(ax, "Injected faults blocked by the verifier (%), 95% CI")
     fig.tight_layout()
     save(fig, "fig_faults_llm")
 

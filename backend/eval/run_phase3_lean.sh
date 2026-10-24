@@ -24,9 +24,18 @@ case "$mode" in
     SYSTEMS=ours:full,ours:no_verifier,ours:no_critic,ours:no_repair,ours:no_policy_rules ;;
   faults)
     export LLM_PROVIDER=mock FAULT_PROVIDER=groq FAULT_MODEL=openai/gpt-oss-20b
-    python eval/run_faults.py --faults llm --domains finance,health --n "$CASES" --levels "$LEVELS" \
-      --intents explain --token-budget "$TOKENS"
-    exit $? ;;
+    for k in $(seq 0 $((CASES - 1))); do
+      for dom in finance health; do
+        err=$(mktemp)
+        python eval/run_faults.py --faults llm --domains "$dom" --n 1 --offset "$k" --levels "$LEVELS" \
+          --intents explain --token-budget "$TOKENS" > /dev/null 2> >(tee "$err" >&2)
+        echo "faults $dom case offset $k done"
+        if grep -q "PARTIAL RUN" "$err"; then echo "[faults] stopped at $dom offset $k (budget)"; rm -f "$err"; exit 3; fi
+        rm -f "$err"
+      done
+    done
+    echo "[faults] all $CASES cases per domain done."
+    exit 0 ;;
   *) echo "usage: $0 main|ablations|faults"; exit 2 ;;
 esac
 for k in $(seq 0 $((CASES - 1))); do

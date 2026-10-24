@@ -333,33 +333,49 @@ def main() -> int:
             llm_files.append((f, d))
         elif doms and all(x.get("injector") == "template" for x in doms) and len(doms) >= 3 and "llm" in d and d["llm"].startswith("mock"):
             tmpl_files.append((f, d))
-    for title, files, key in (("LLM-written faults (gpt-oss-20b; detector-independent)", llm_files[-1:], "llm"),
+    for title, files, key in (("LLM-written faults (gpt-oss-20b; detector-independent)", llm_files, "llm"),
                               ("Template faults (upper bound)", tmpl_files[-1:], "template")):
         if not files:
             continue
-        f, d = files[0]
-        agg = defaultdict(lambda: [0, 0])
+        # LLM faults run one (domain, case) chunk per file: merge the chunks, latest file per chunk wins
+        chunks = {}
+        for f, d in files:
+            for x in d["domains"]:
+                if x.get("injector") != key:
+                    continue
+                ck = (x["domain"], d.get("offset", 0), d.get("n"), tuple(d.get("levels") or []), f.name if key == "template" else "")
+                chunks[ck] = (f, x)
+        agg = defaultdict(lambda: [0, 0])     # blocked: any critical violation (the text is not shown)
+        exact = defaultdict(lambda: [0, 0])   # flagged with the fault's own code
         clean = [0, 0]
-        for x in d["domains"]:
-            if x.get("injector") != key:
-                continue
+        for f, x in chunks.values():
             for fault, v in x["per_fault"].items():
-                agg[fault][0] += v["detection"]["k"]
-                agg[fault][1] += v["detection"]["n"]
+                agg[fault][0] += v["any_rejection"]["k"]
+                agg[fault][1] += v["any_rejection"]["n"]
+                exact[fault][0] += v["detection"]["k"]
+                exact[fault][1] += v["detection"]["n"]
             clean[0] += x["clean"]["false_rejection"]["k"]
             clean[1] += x["clean"]["false_rejection"]["n"]
-        rows = [[fault.replace("_", " "), n, fmt(rate(k, n), True)] for fault, (k, n) in sorted(agg.items())]
+        f = files[-1][0]
+        d = {"domains": [x for _, x in chunks.values()]}
+        rows = [[fault.replace("_", " "), n, fmt(rate(k, n), True), fmt(rate(*exact[fault]), True)]
+                for fault, (k, n) in sorted(agg.items())]
         tot = rate(sum(k for k, _ in agg.values()), sum(n for _, n in agg.values()))
-        rows.append(["\\textbf{All faults}", tot["n"], fmt(tot, True)])
+        tot_exact = rate(sum(k for k, _ in exact.values()), sum(n for _, n in exact.values()))
+        rows.append(["\\textbf{All faults}", tot["n"], fmt(tot, True), fmt(tot_exact, True)])
         cr = rate(*clean)
-        num_faults[key] = {"file": f.name, "per_fault": {k: rate(*v) for k, v in agg.items()}, "overall": tot,
-                           "clean_false_rejection": cr, "domains": [x["domain"] for x in d["domains"]]}
+        num_faults[key] = {"files": sorted({ff.name for ff, _ in chunks.values()}), "chunks": len(chunks),
+                           "per_fault": {k: rate(*v) for k, v in agg.items()}, "overall": tot,
+                           "per_fault_exact": {k: rate(*v) for k, v in exact.items()}, "overall_exact": tot_exact,
+                           "clean_false_rejection": cr, "domains": sorted({x["domain"] for x in d["domains"]})}
         name = f"table_faults_{key}"
         write_tex(name, f"Verifier detection of injected faults: {title}. Clean texts: {cr['n']}, false rejections "
-                  f"{fmt(cr, True)}.", f"tab:faults-{key}", ["Fault type", "n", "Detected"], rows)
-        write_csv(name, ["fault", "n", "detected"], [[r[0].replace("\\textbf{", "").replace("}", ""), r[1], r[2].replace("\\%", "%")] for r in rows])
-        md += [f"## Faults: {title}", "", f"Source: `{f.name}`; domains: {', '.join(num_faults[key]['domains'])}.", ""]
-        md += md_table(["Fault type", "n", "Detected"], [[r[0].replace("\\textbf{", "**").replace("}", "**"), r[1], r[2].replace("\\%", "%")] for r in rows])
+                  f"{fmt(cr, True)}. Blocked: any critical violation, so the text is not shown; exact: flagged with the "
+                  f"fault's own error code.", f"tab:faults-{key}", ["Fault type", "n", "Blocked", "Exact code"], rows)
+        write_csv(name, ["fault", "n", "blocked", "exact_code"], [[r[0].replace("\\textbf{", "").replace("}", ""), r[1], r[2].replace("\\%", "%"), r[3].replace("\\%", "%")] for r in rows])
+        md += [f"## Faults: {title}", "", f"Sources: {len(num_faults[key]['files'])} file(s), {len(chunks)} chunk(s); "
+               f"domains: {', '.join(num_faults[key]['domains'])}.", ""]
+        md += md_table(["Fault type", "n", "Blocked", "Exact code"], [[r[0].replace("\\textbf{", "**").replace("}", "**"), r[1], r[2].replace("\\%", "%"), r[3].replace("\\%", "%")] for r in rows])
         md += ["", f"Clean texts: {cr['n']}, false rejections {fmt(cr)}.", ""]
 
     # ---------------- caveats
