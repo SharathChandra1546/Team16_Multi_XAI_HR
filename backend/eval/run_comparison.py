@@ -273,6 +273,9 @@ def main() -> int:
                     q = d.language.default_question if intent == "explain" else "What would lower the risk?"
                     for s in systems:
                         t0 = time.perf_counter()
+                        from app.llm.client import OpenAICompatLLM as _C
+
+                        err0 = sum(_C.errors.values())
                         if s.startswith("ours:"):
                             o = run_ours(svc, s[5:], d, x, level, intent, q)
                         else:
@@ -280,13 +283,20 @@ def main() -> int:
                             o = {"text": r.text, "status": "shown" if r.text.strip() else "empty", "attempts": r.rounds,
                                  "usage": r.usage, "accepted": r.accepted}
                         lat = (time.perf_counter() - t0) * 1000
-                        if llm.name != "mock" and not (o["usage"] or {}).get("calls"):
+                        o["llm_errors"] = sum(_C.errors.values()) - err0
+                        if o["llm_errors"] and not str(o["status"]).startswith("llm_failed"):
+                            # an API error during generation (e.g. a template fallback after a server error) is a
+                            # failed generation for every system alike; rerunning regenerates it
+                            o["status"] = f"llm_failed:api_error:{o['status']}"
+                            llm_failures += 1
+                        elif llm.name != "mock" and not (o["usage"] or {}).get("calls"):
                             # no LLM call succeeded (quota, network, retired model): the text is a template or empty
                             o["status"] = f"llm_failed:{o['status']}"
                             llm_failures += 1
                         m = measure_text(o["text"], pkg, plan, d, judge)
                         records.append({"domain": dname, "system": s, "case": cid, "level": level, "intent": intent,
                                         "status": o["status"], "attempts": o["attempts"], "accepted": o["accepted"],
+                                        "llm_errors": o.get("llm_errors", 0),
                                         "usage": o["usage"], "latency_ms": round(lat, 1),
                                         "escalation_score": esc["score"], "would_escalate_rule": esc["rule_decision"],
                                         "text": o["text"], "m": m})

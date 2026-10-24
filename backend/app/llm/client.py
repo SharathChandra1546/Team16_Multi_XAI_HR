@@ -151,6 +151,9 @@ class OpenAICompatLLM(BaseLLM):
     tokens_used: dict[str, int] = {}
     # models whose provider said the DAILY quota is used up (Groq: "tokens per day (TPD)"); runs stop on these
     daily_exhausted: dict[str, str] = {}
+    # calls that failed after all retries, per model (server errors, timeouts, quota): a text produced while one of
+    # these happened is a failed generation, not a pipeline decision
+    errors: dict[str, int] = {}
 
     def __init__(self, provider: str, model: str | None = None, temperature: float | None = None):
         if provider not in PROVIDERS:
@@ -232,6 +235,7 @@ class OpenAICompatLLM(BaseLLM):
                 if self.id in OpenAICompatLLM.daily_exhausted:
                     break  # retrying cannot help until the provider's daily window frees up
                 time.sleep(2 ** attempt * 2)
+        OpenAICompatLLM.errors[self.id] = OpenAICompatLLM.errors.get(self.id, 0) + 1
         raise LLMError(f"{self.id} failed for task '{task}': {last_err}")
 
 
