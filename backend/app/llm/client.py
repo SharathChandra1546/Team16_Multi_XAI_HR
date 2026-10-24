@@ -294,11 +294,14 @@ def parse_budget(spec: str) -> dict[str, int]:
     return out
 
 
-def over_budget(request_budget: dict[str, int], token_budget: dict[str, int]) -> str | None:
-    """First model (provider:model, or a provider key) that reached its request or token budget in this process."""
+def over_budget(request_budget: dict[str, int], token_budget: dict[str, int], only: set[str] | None = None) -> str | None:
+    """First model (provider:model, or a provider key) that reached its request or token budget today.
+    `only`: the model ids this run actually uses; other models' budgets do not stop it."""
     for counts, budget, unit in ((OpenAICompatLLM.requests_sent, request_budget, "requests"),
                                  (OpenAICompatLLM.tokens_used, token_budget, "tokens")):
         for mid, n in counts.items():
+            if only is not None and mid not in only:
+                continue
             for key, cap in budget.items():
                 if (mid == key or mid.split(":", 1)[0] == key) and n >= cap:
                     return f"{mid} used {n} {unit} (budget {key}={cap})"

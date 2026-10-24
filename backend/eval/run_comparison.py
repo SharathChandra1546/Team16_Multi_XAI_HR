@@ -247,8 +247,10 @@ def main() -> int:
         load_daily_usage()  # today's usage by earlier runs counts against the same daily budget
     stopped_for_budget = None
 
+    used = {c.id for c in (llm, reviewer, judge) if c is not None}
+
     def over_budget():
-        return _over(budget, tok_budget)
+        return _over(budget, tok_budget, used)
     for client in {id(c): c for c in (llm, reviewer, judge) if c is not None and c.name != "mock"}.values():
         try:  # fail fast: a dead key, quota or retired model would otherwise yield silent template fallbacks
             client.json("preflight", "Return the JSON object {\"ok\": true}.", "ping")

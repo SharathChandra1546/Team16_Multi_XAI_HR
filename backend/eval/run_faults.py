@@ -241,9 +241,13 @@ def main() -> int:
     if rb or tb:
         load_daily_usage()
 
+        used = {get_fault_llm().id} if args.faults in ("llm", "both") else set()
+        if args.reviewer:
+            used.add(get_reviewer().id)
+
         def BUDGET_CHECK():  # noqa: N802
             save_daily_usage()
-            return over_budget(rb, tb)
+            return over_budget(rb, tb, used)
     reg = default_registry()
     mock_llm.DOMAIN_RESOLVER = reg.get
     res = {"created": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "llm": get_llm().id,
