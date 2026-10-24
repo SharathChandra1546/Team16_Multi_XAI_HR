@@ -147,6 +147,8 @@ def _retry_after(r) -> float | None:
 class OpenAICompatLLM(BaseLLM):
     # HTTP requests sent per model ("provider:model") in this process, retries included (what a daily quota counts)
     requests_sent: dict[str, int] = {}
+    # tokens used per model in this process (prompt + completion, cached answers excluded)
+    tokens_used: dict[str, int] = {}
 
     def __init__(self, provider: str, model: str | None = None, temperature: float | None = None):
         if provider not in PROVIDERS:
@@ -212,8 +214,11 @@ class OpenAICompatLLM(BaseLLM):
                 usage = body_json.get("usage") or {}
                 if usage.get("prompt_tokens") is not None:
                     self.record_usage(task, usage.get("prompt_tokens", 0), usage.get("completion_tokens", 0))
+                    spent = int(usage.get("total_tokens") or (usage.get("prompt_tokens", 0) + usage.get("completion_tokens", 0)))
                 else:
                     self.record_usage(task, estimate_tokens(system + user), estimate_tokens(content), estimated=True)
+                    spent = estimate_tokens(system + user) + estimate_tokens(content)
+                OpenAICompatLLM.tokens_used[self.id] = OpenAICompatLLM.tokens_used.get(self.id, 0) + spent
                 if self.cache and self.temperature == 0:
                     self.cache.put(key, json.dumps(data))
                 return data
@@ -224,6 +229,80 @@ class OpenAICompatLLM(BaseLLM):
 
 
 _instances: dict[tuple, BaseLLM] = {}
+
+
+def _usage_file():
+    import datetime as _dt
+    from pathlib import Path as _P
+
+    day = _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%d")
+    return _P(__file__).resolve().parents[2] / "results" / f"llm_usage_{day}.json"
+
+
+_SAVED: dict[str, dict[str, int]] = {"requests": {}, "tokens": {}}  # what this process already wrote to the file
+
+
+def _read_usage() -> dict:
+    try:
+        return json.loads(_usage_file().read_text(encoding="utf-8"))
+    except Exception:
+        return {"requests": {}, "tokens": {}}
+
+
+def load_daily_usage() -> None:
+    """Count today's (UTC) usage by other runs, so a daily budget holds across restarts and parallel runs."""
+    d = _read_usage()
+    for kind, counts in (("requests", OpenAICompatLLM.requests_sent), ("tokens", OpenAICompatLLM.tokens_used)):
+        for k, v in d.get(kind, {}).items():
+            counts[k] = counts.get(k, 0) + int(v)
+            _SAVED[kind][k] = _SAVED[kind].get(k, 0) + int(v)
+
+
+def save_daily_usage() -> None:
+    """Add this process's new usage to the file (merge, so parallel runs do not overwrite each other)."""
+    import fcntl
+
+    f = _usage_file()
+    f.parent.mkdir(exist_ok=True)
+    with open(f.with_suffix(".lock"), "w") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        d = _read_usage()
+        for kind, counts in (("requests", OpenAICompatLLM.requests_sent), ("tokens", OpenAICompatLLM.tokens_used)):
+            for k, v in counts.items():
+                delta = v - _SAVED[kind].get(k, 0)
+                if delta:
+                    d.setdefault(kind, {})[k] = d.get(kind, {}).get(k, 0) + delta
+                    _SAVED[kind][k] = v
+            # pick up what parallel runs added meanwhile
+            for k, v in d.get(kind, {}).items():
+                mine = _SAVED[kind].get(k, 0)
+                if v > mine:
+                    counts[k] = counts.get(k, 0) + (v - mine)
+                    _SAVED[kind][k] = v
+        f.write_text(json.dumps(d, indent=1), encoding="utf-8")
+
+
+def parse_budget(spec: str) -> dict[str, int]:
+    """'groq=900,gemini:gemma-4-26b-a4b-it=5000' -> {key: cap}; k/M suffixes allowed (200k)."""
+    out = {}
+    for part in (spec or "").split(","):
+        if "=" in part:
+            k, v = part.rsplit("=", 1)
+            v = v.strip().lower()
+            mult = 1_000_000 if v.endswith("m") else 1_000 if v.endswith("k") else 1
+            out[k.strip()] = int(float(v.rstrip("km")) * mult)
+    return out
+
+
+def over_budget(request_budget: dict[str, int], token_budget: dict[str, int]) -> str | None:
+    """First model (provider:model, or a provider key) that reached its request or token budget in this process."""
+    for counts, budget, unit in ((OpenAICompatLLM.requests_sent, request_budget, "requests"),
+                                 (OpenAICompatLLM.tokens_used, token_budget, "tokens")):
+        for mid, n in counts.items():
+            for key, cap in budget.items():
+                if (mid == key or mid.split(":", 1)[0] == key) and n >= cap:
+                    return f"{mid} used {n} {unit} (budget {key}={cap})"
+    return None
 
 
 def get_llm(provider: str | None = None, model: str | None = None) -> BaseLLM:

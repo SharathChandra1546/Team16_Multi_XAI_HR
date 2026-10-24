@@ -174,8 +174,9 @@ def to_markdown(res: dict) -> str:
     if res.get("partial"):
         out += [f"> PARTIAL RUN (request budget reached: {res['partial']}). Not all cases are included.", ""]
     if res.get("requests_sent"):
-        out += ["HTTP requests sent in this run (cached answers excluded): "
-                + ", ".join(f"`{k}` {v}" for k, v in res["requests_sent"].items()), ""]
+        out += ["HTTP requests sent today across runs with a budget, else in this run (cached answers excluded): "
+                + ", ".join(f"`{k}` {v}" for k, v in res["requests_sent"].items())
+                + ". Tokens: " + ", ".join(f"`{k}` {v}" for k, v in (res.get("tokens_used") or {}).items()), ""]
     if res["mock_or_standin"]:
         out += ["> Mock LLM and/or synthetic stand-in data: these numbers test the software only. Do not report them.", ""]
     out += ["> Measurement shares the deterministic text and policy rules this framework gates on, which favours it. "
@@ -219,6 +220,8 @@ def main() -> int:
     ap.add_argument("--levels", default="novice,intermediate,expert")
     ap.add_argument("--intents", default="explain")
     ap.add_argument("--judge", action="store_true", help="also measure with the LLM extractor (JUDGE_PROVIDER)")
+    ap.add_argument("--token-budget", default=os.getenv("TOKEN_BUDGET", ""),
+                    help="like --budget but in tokens, e.g. 'groq:qwen/qwen3.8-27b=180k' (Groq free tier: 200K/day)")
     ap.add_argument("--budget", default=os.getenv("REQUEST_BUDGET", ""),
                     help="stop starting new cases once a model has sent this many HTTP requests, e.g. "
                          "'groq=900,gemini:gemma-4-31b-it=5000' (key = provider or provider:model). Cached answers "
@@ -237,17 +240,15 @@ def main() -> int:
     levels, intents = args.levels.split(","), args.intents.split(",")
     records = []
     llm_failures = 0
-    budget = {k.strip(): int(v) for k, v in (b.split("=") for b in args.budget.split(",") if b.strip())}
+    from app.llm.client import load_daily_usage, over_budget as _over, parse_budget, save_daily_usage
+
+    budget, tok_budget = parse_budget(args.budget), parse_budget(args.token_budget)
+    if budget or tok_budget:
+        load_daily_usage()  # today's usage by earlier runs counts against the same daily budget
     stopped_for_budget = None
 
     def over_budget():
-        from app.llm.client import OpenAICompatLLM
-
-        for mid, n in OpenAICompatLLM.requests_sent.items():
-            for key, cap in budget.items():
-                if (mid == key or mid.split(":", 1)[0] == key) and n >= cap:
-                    return f"{mid} sent {n} requests (budget {key}={cap})"
-        return None
+        return _over(budget, tok_budget)
     for client in {id(c): c for c in (llm, reviewer, judge) if c is not None and c.name != "mock"}.values():
         try:  # fail fast: a dead key, quota or retired model would otherwise yield silent template fallbacks
             client.json("preflight", "Return the JSON object {\"ok\": true}.", "ping")
@@ -257,6 +258,8 @@ def main() -> int:
         d = reg.get(dname)
         rt = d.runtime("main")
         for cid, x in cases_for(d, args.n, args.offset):
+            if budget or tok_budget:
+                save_daily_usage()
             stopped_for_budget = stopped_for_budget or over_budget()
             if stopped_for_budget:
                 break
@@ -287,6 +290,8 @@ def main() -> int:
                                         "text": o["text"], "m": m})
                 print(f"{dname} case {cid} level {level} done", flush=True)
     data_sources = {n: getattr(reg.get(n), "data_source", "unknown") for n in args.domains.split(",")}
+    if budget or tok_budget:
+        save_daily_usage()
     if stopped_for_budget:
         print(f"PARTIAL RUN: stopped starting new cases because {stopped_for_budget}. Rerun the same command after "
               "the quota resets; cached answers are reused for free.", file=sys.stderr, flush=True)
@@ -300,7 +305,8 @@ def main() -> int:
            "data_sources": data_sources,
            "mock_or_standin": llm.name == "mock" or any(v == "synthetic_standin" for v in data_sources.values()),
            "summary": summarize(records), "records": records,
-           "partial": stopped_for_budget, "requests_sent": __import__("app.llm.client", fromlist=["x"]).OpenAICompatLLM.requests_sent}
+           "partial": stopped_for_budget, "requests_sent": __import__("app.llm.client", fromlist=["x"]).OpenAICompatLLM.requests_sent,
+           "tokens_used": __import__("app.llm.client", fromlist=["x"]).OpenAICompatLLM.tokens_used}
     RESULTS.mkdir(exist_ok=True)
     stamp = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
     (RESULTS / f"comparison_{stamp}.json").write_text(json.dumps(res, indent=2, default=str), encoding="utf-8")
