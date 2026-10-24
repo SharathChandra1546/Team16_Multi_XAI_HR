@@ -1,7 +1,7 @@
 System,Texts,Value,Direction,Stated rank,Unsupported factor,Unsupported number,Causal wording,Raw code,Policy
-Ours (full pipeline),6,0,0,0,0,0,0,0,0
-Direct prompting,6,0,0,0,0,3,1,0,0
-B3 (LLM reviewer loop),6,0,0,0,0,0,1,0,0
-Explingo-style,6,0,0,0,0,4,0,0,0
-Critic-Rule (He \& Martens),6,0,0,0,0,1,1,0,0
-Musicco et al.-style,5,0,0,0,0,2,1,0,1
+Ours (full pipeline),12,0,0,0,0,0,0,0,0
+Direct prompting,12,0,0,1,0,7,1,1,0
+B3 (LLM reviewer loop),8,0,0,2,0,0,1,0,0
+Explingo-style,7,2,0,0,0,4,0,0,0
+Critic-Rule (He \& Martens),6,0,0,1,0,1,1,0,0
+Musicco et al.-style,5,0,0,1,0,2,1,0,1

@@ -1,6 +1,6 @@
 Baseline,Pairs,Only ours correct,Only baseline correct,Both,Neither,Exact McNemar p
-Direct prompting,0,0,0,0,0,1
-B3 (LLM reviewer loop),0,0,0,0,0,1
-Explingo-style,0,0,0,0,0,1
-Critic-Rule (He \& Martens),0,0,0,0,0,1
-Musicco et al.-style,0,0,0,0,0,1
+Direct prompting,12,7,0,5,0,0.0156
+B3 (LLM reviewer loop),8,2,0,6,0,0.5
+Explingo-style,7,4,0,3,0,0.125
+Critic-Rule (He \& Martens),6,3,0,3,0,0.25
+Musicco et al.-style,5,4,0,1,0,0.125

@@ -51,6 +51,8 @@ def wilson(k: int, n: int, z: float = 1.96):
 
 def rate(k, n):
     lo, hi = wilson(k, n)
+    if lo is not None:
+        lo, hi = max(0.0, lo), min(1.0, hi)
     return {"k": k, "n": n, "rate": (k / n) if n else None, "lo": lo, "hi": hi}
 
 

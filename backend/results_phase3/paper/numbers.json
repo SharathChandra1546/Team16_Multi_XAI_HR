@@ -1,6 +1,6 @@
 {
- "generated": "2026-10-24T17:01:54+00:00",
- "judge": "as stored",
+ "generated": "2026-10-24T21:41:39+00:00",
+ "judge": "groq:openai/gpt-oss-120b",
  "runs": [
   {
    "file": "comparison_20261024-161512.json",
@@ -71,25 +71,631 @@
    "reviewer": "groq:qwen/qwen3.8-27b",
    "judge": "groq:openai/gpt-oss-120b",
    "n_records": 12
+  },
+  {
+   "file": "comparison_20261024-170245.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-170353.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-170549.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-175638.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 0
+  },
+  {
+   "file": "comparison_20261024-180747.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261024-180755.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261024-181009.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-181017.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-181055.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-181103.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-181125.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-181133.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-182122.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-182129.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-182151.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-182217.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261024-183932.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261024-185802.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261024-185951.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-190109.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-190227.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-191834.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261024-193259.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-193307.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-193329.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-193336.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-193358.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-193405.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-193426.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-193434.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-193456.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-195331.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-195339.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-195401.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-195409.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-195431.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-195438.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-195501.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-195509.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-195531.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-203448.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-203512.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-203520.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-203654.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-203821.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-204144.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-204247.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-204435.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-204534.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-204705.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-204812.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-205236.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-205244.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-205307.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-205315.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-205338.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-205346.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-205411.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-205419.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-205443.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-210219.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-210226.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-210248.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-210255.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-210317.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-210325.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-210346.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-210353.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-210415.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213604.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213627.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213635.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213656.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213704.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213726.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213734.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213755.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213803.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213824.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213831.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
   }
  ],
  "main": {
   "ours:full": {
    "pooled": {
+    "n_generated": 12,
+    "n_failed": 0,
+    "n_shown": 12,
+    "n_empty": 0,
+    "status": {
+     "verified": 4,
+     "fallback": 8
+    },
+    "error_free_llm": {
+     "k": 12,
+     "n": 12,
+     "rate": 1.0,
+     "lo": 0.7574992425007574,
+     "hi": 0.9999999999999998
+    },
+    "error_free_rule": {
+     "k": 12,
+     "n": 12,
+     "rate": 1.0,
+     "lo": 0.7574992425007574,
+     "hi": 0.9999999999999998
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 12,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.2425007574992425
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 12,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.2425007574992425
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 1.0,
+    "top3": 0.9166666666666666,
+    "words": 69.08333333333333,
+    "calls": 2.8333333333333335,
+    "tokens": 3606.1666666666665,
+    "latency_s": 61.77000833333333
+   },
+   "finance": {
     "n_generated": 6,
     "n_failed": 0,
     "n_shown": 6,
     "n_empty": 0,
     "status": {
-     "verified": 3,
-     "fallback": 3
+     "verified": 1,
+     "fallback": 5
     },
     "error_free_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
+     "k": 6,
+     "n": 6,
+     "rate": 1.0,
+     "lo": 0.6096569663469354,
+     "hi": 1.0
     },
     "error_free_rule": {
      "k": 6,
@@ -100,10 +706,10 @@
     },
     "fidelity_error_llm": {
      "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
+     "n": 6,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3903430336530645
     },
     "policy_violation": {
      "k": 0,
@@ -112,383 +718,109 @@
      "lo": 0.0,
      "hi": 0.3903430336530645
     },
-    "va": null,
-    "sa": null,
-    "ra": null,
-    "top3": null,
-    "words": 73.16666666666667,
-    "calls": 4.0,
-    "tokens": 6853.5,
-    "latency_s": 20.718783333333334
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 1.0,
+    "top3": 1.0,
+    "words": 72.66666666666667,
+    "calls": 3.3333333333333335,
+    "tokens": 5590.0,
+    "latency_s": 75.50585
    },
-   "finance": {
-    "n_generated": 4,
+   "health": {
+    "n_generated": 6,
     "n_failed": 0,
-    "n_shown": 4,
+    "n_shown": 6,
     "n_empty": 0,
     "status": {
-     "verified": 1,
+     "verified": 3,
      "fallback": 3
     },
     "error_free_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
+     "k": 6,
+     "n": 6,
+     "rate": 1.0,
+     "lo": 0.6096569663469354,
+     "hi": 1.0
     },
     "error_free_rule": {
-     "k": 4,
-     "n": 4,
+     "k": 6,
+     "n": 6,
      "rate": 1.0,
-     "lo": 0.5100999795960008,
+     "lo": 0.6096569663469354,
      "hi": 1.0
     },
     "fidelity_error_llm": {
      "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
+     "n": 6,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3903430336530645
     },
     "policy_violation": {
      "k": 0,
-     "n": 4,
+     "n": 6,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.48990002040399916
+     "hi": 0.3903430336530645
     },
-    "va": null,
-    "sa": null,
-    "ra": null,
-    "top3": null,
-    "words": 72.0,
-    "calls": 4.0,
-    "tokens": 8508.75,
-    "latency_s": 30.75105
-   },
-   "health": {
-    "n_generated": 2,
-    "n_failed": 0,
-    "n_shown": 2,
-    "n_empty": 0,
-    "status": {
-     "verified": 2
-    },
-    "error_free_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
-    },
-    "error_free_rule": {
-     "k": 2,
-     "n": 2,
-     "rate": 1.0,
-     "lo": 0.3423719528896193,
-     "hi": 1.0
-    },
-    "fidelity_error_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
-    },
-    "policy_violation": {
-     "k": 0,
-     "n": 2,
-     "rate": 0.0,
-     "lo": 0.0,
-     "hi": 0.6576280471103807
-    },
-    "va": null,
-    "sa": null,
-    "ra": null,
-    "top3": null,
-    "words": 75.5,
-    "calls": 4.0,
-    "tokens": 3543.0,
-    "latency_s": 0.65425
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 1.0,
+    "top3": 0.8333333333333334,
+    "words": 65.5,
+    "calls": 2.3333333333333335,
+    "tokens": 1622.3333333333333,
+    "latency_s": 48.03416666666667
    }
   },
   "direct": {
    "pooled": {
-    "n_generated": 6,
+    "n_generated": 12,
     "n_failed": 0,
-    "n_shown": 6,
+    "n_shown": 12,
     "n_empty": 0,
     "status": {
-     "shown": 6
+     "shown": 12
     },
     "error_free_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
-    },
-    "error_free_rule": {
-     "k": 3,
-     "n": 6,
-     "rate": 0.5,
-     "lo": 0.1876128068994087,
-     "hi": 0.8123871931005913
-    },
-    "fidelity_error_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
-    },
-    "policy_violation": {
-     "k": 0,
-     "n": 6,
-     "rate": 0.0,
-     "lo": 0.0,
-     "hi": 0.3903430336530645
-    },
-    "va": null,
-    "sa": null,
-    "ra": null,
-    "top3": null,
-    "words": 78.33333333333333,
-    "calls": 1.0,
-    "tokens": 362.6666666666667,
-    "latency_s": 17.793883333333333
-   },
-   "finance": {
-    "n_generated": 4,
-    "n_failed": 0,
-    "n_shown": 4,
-    "n_empty": 0,
-    "status": {
-     "shown": 4
-    },
-    "error_free_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
-    },
-    "error_free_rule": {
-     "k": 2,
-     "n": 4,
-     "rate": 0.5,
-     "lo": 0.15003570882017145,
-     "hi": 0.8499642911798285
-    },
-    "fidelity_error_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
-    },
-    "policy_violation": {
-     "k": 0,
-     "n": 4,
-     "rate": 0.0,
-     "lo": 0.0,
-     "hi": 0.48990002040399916
-    },
-    "va": null,
-    "sa": null,
-    "ra": null,
-    "top3": null,
-    "words": 75.25,
-    "calls": 1.0,
-    "tokens": 344.0,
-    "latency_s": 25.887024999999998
-   },
-   "health": {
-    "n_generated": 2,
-    "n_failed": 0,
-    "n_shown": 2,
-    "n_empty": 0,
-    "status": {
-     "shown": 2
-    },
-    "error_free_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
-    },
-    "error_free_rule": {
-     "k": 1,
-     "n": 2,
-     "rate": 0.5,
-     "lo": 0.09452865480086611,
-     "hi": 0.905471345199134
-    },
-    "fidelity_error_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
-    },
-    "policy_violation": {
-     "k": 0,
-     "n": 2,
-     "rate": 0.0,
-     "lo": 0.0,
-     "hi": 0.6576280471103807
-    },
-    "va": null,
-    "sa": null,
-    "ra": null,
-    "top3": null,
-    "words": 84.5,
-    "calls": 1.0,
-    "tokens": 400.0,
-    "latency_s": 1.6076
-   }
-  },
-  "b3": {
-   "pooled": {
-    "n_generated": 6,
-    "n_failed": 0,
-    "n_shown": 6,
-    "n_empty": 0,
-    "status": {
-     "shown": 6
-    },
-    "error_free_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
-    },
-    "error_free_rule": {
      "k": 5,
-     "n": 6,
-     "rate": 0.8333333333333334,
-     "lo": 0.4364905634363539,
-     "hi": 0.9699474141282696
+     "n": 12,
+     "rate": 0.4166666666666667,
+     "lo": 0.19325746190524656,
+     "hi": 0.6804926643446271
+    },
+    "error_free_rule": {
+     "k": 4,
+     "n": 12,
+     "rate": 0.3333333333333333,
+     "lo": 0.13811783989736134,
+     "hi": 0.609382412602386
     },
     "fidelity_error_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
+     "k": 7,
+     "n": 12,
+     "rate": 0.5833333333333334,
+     "lo": 0.3195073356553728,
+     "hi": 0.8067425380947534
     },
     "policy_violation": {
      "k": 0,
-     "n": 6,
+     "n": 12,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.3903430336530645
+     "hi": 0.2425007574992425
     },
-    "va": null,
-    "sa": null,
-    "ra": null,
-    "top3": null,
-    "words": 103.83333333333333,
-    "calls": 2.3333333333333335,
-    "tokens": 4090.3333333333335,
-    "latency_s": 7.7138
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.7826333333333334,
+    "top3": 1.0,
+    "words": 80.58333333333333,
+    "calls": 1.0,
+    "tokens": 349.25,
+    "latency_s": 0.8673583333333333
    },
    "finance": {
-    "n_generated": 4,
-    "n_failed": 0,
-    "n_shown": 4,
-    "n_empty": 0,
-    "status": {
-     "shown": 4
-    },
-    "error_free_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
-    },
-    "error_free_rule": {
-     "k": 3,
-     "n": 4,
-     "rate": 0.75,
-     "lo": 0.30063605244263664,
-     "hi": 0.9544139373553638
-    },
-    "fidelity_error_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
-    },
-    "policy_violation": {
-     "k": 0,
-     "n": 4,
-     "rate": 0.0,
-     "lo": 0.0,
-     "hi": 0.48990002040399916
-    },
-    "va": null,
-    "sa": null,
-    "ra": null,
-    "top3": null,
-    "words": 109.75,
-    "calls": 2.5,
-    "tokens": 5071.25,
-    "latency_s": 11.5704
-   },
-   "health": {
-    "n_generated": 2,
-    "n_failed": 0,
-    "n_shown": 2,
-    "n_empty": 0,
-    "status": {
-     "shown": 2
-    },
-    "error_free_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
-    },
-    "error_free_rule": {
-     "k": 2,
-     "n": 2,
-     "rate": 1.0,
-     "lo": 0.3423719528896193,
-     "hi": 1.0
-    },
-    "fidelity_error_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
-    },
-    "policy_violation": {
-     "k": 0,
-     "n": 2,
-     "rate": 0.0,
-     "lo": 0.0,
-     "hi": 0.6576280471103807
-    },
-    "va": null,
-    "sa": null,
-    "ra": null,
-    "top3": null,
-    "words": 92.0,
-    "calls": 2.0,
-    "tokens": 2128.5,
-    "latency_s": 0.0006000000000000001
-   }
-  },
-  "explingo": {
-   "pooled": {
     "n_generated": 6,
     "n_failed": 0,
     "n_shown": 6,
@@ -497,11 +829,11 @@
      "shown": 6
     },
     "error_free_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
+     "k": 2,
+     "n": 6,
+     "rate": 0.3333333333333333,
+     "lo": 0.09676933255921684,
+     "hi": 0.7000116786584712
     },
     "error_free_rule": {
      "k": 2,
@@ -511,11 +843,11 @@
      "hi": 0.7000116786584712
     },
     "fidelity_error_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
+     "k": 4,
+     "n": 6,
+     "rate": 0.6666666666666666,
+     "lo": 0.2999883213415286,
+     "hi": 0.903230667440783
     },
     "policy_violation": {
      "k": 0,
@@ -524,108 +856,16 @@
      "lo": 0.0,
      "hi": 0.3903430336530645
     },
-    "va": null,
-    "sa": null,
-    "ra": null,
-    "top3": null,
-    "words": 73.0,
-    "calls": 2.5,
-    "tokens": 1887.8333333333333,
-    "latency_s": 37.36936666666667
-   },
-   "finance": {
-    "n_generated": 4,
-    "n_failed": 0,
-    "n_shown": 4,
-    "n_empty": 0,
-    "status": {
-     "shown": 4
-    },
-    "error_free_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
-    },
-    "error_free_rule": {
-     "k": 1,
-     "n": 4,
-     "rate": 0.25,
-     "lo": 0.045586062644636216,
-     "hi": 0.6993639475573634
-    },
-    "fidelity_error_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
-    },
-    "policy_violation": {
-     "k": 0,
-     "n": 4,
-     "rate": 0.0,
-     "lo": 0.0,
-     "hi": 0.48990002040399916
-    },
-    "va": null,
-    "sa": null,
-    "ra": null,
-    "top3": null,
-    "words": 76.0,
-    "calls": 2.75,
-    "tokens": 2126.0,
-    "latency_s": 55.615225
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.7847166666666667,
+    "top3": 1.0,
+    "words": 85.0,
+    "calls": 1.0,
+    "tokens": 356.5,
+    "latency_s": 0.33313333333333334
    },
    "health": {
-    "n_generated": 2,
-    "n_failed": 0,
-    "n_shown": 2,
-    "n_empty": 0,
-    "status": {
-     "shown": 2
-    },
-    "error_free_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
-    },
-    "error_free_rule": {
-     "k": 1,
-     "n": 2,
-     "rate": 0.5,
-     "lo": 0.09452865480086611,
-     "hi": 0.905471345199134
-    },
-    "fidelity_error_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
-    },
-    "policy_violation": {
-     "k": 0,
-     "n": 2,
-     "rate": 0.0,
-     "lo": 0.0,
-     "hi": 0.6576280471103807
-    },
-    "va": null,
-    "sa": null,
-    "ra": null,
-    "top3": null,
-    "words": 67.0,
-    "calls": 2.0,
-    "tokens": 1411.5,
-    "latency_s": 0.87765
-   }
-  },
-  "critic_rule": {
-   "pooled": {
     "n_generated": 6,
     "n_failed": 0,
     "n_shown": 6,
@@ -634,25 +874,25 @@
      "shown": 6
     },
     "error_free_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
-    },
-    "error_free_rule": {
      "k": 3,
      "n": 6,
      "rate": 0.5,
      "lo": 0.1876128068994087,
      "hi": 0.8123871931005913
     },
+    "error_free_rule": {
+     "k": 2,
+     "n": 6,
+     "rate": 0.3333333333333333,
+     "lo": 0.09676933255921684,
+     "hi": 0.7000116786584712
+    },
     "fidelity_error_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
+     "k": 3,
+     "n": 6,
+     "rate": 0.5,
+     "lo": 0.1876128068994087,
+     "hi": 0.8123871931005913
     },
     "policy_violation": {
      "k": 0,
@@ -661,43 +901,90 @@
      "lo": 0.0,
      "hi": 0.3903430336530645
     },
-    "va": null,
-    "sa": null,
-    "ra": null,
-    "top3": null,
-    "words": 118.16666666666667,
-    "calls": 4.166666666666667,
-    "tokens": 5379.166666666667,
-    "latency_s": 12.146700000000001
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.78055,
+    "top3": 1.0,
+    "words": 76.16666666666667,
+    "calls": 1.0,
+    "tokens": 342.0,
+    "latency_s": 1.4015833333333336
+   }
+  },
+  "b3": {
+   "pooled": {
+    "n_generated": 12,
+    "n_failed": 4,
+    "n_shown": 8,
+    "n_empty": 0,
+    "status": {
+     "shown": 8
+    },
+    "error_free_llm": {
+     "k": 6,
+     "n": 8,
+     "rate": 0.75,
+     "lo": 0.40926987910258916,
+     "hi": 0.9285223111419724
+    },
+    "error_free_rule": {
+     "k": 7,
+     "n": 8,
+     "rate": 0.875,
+     "lo": 0.5291051942301385,
+     "hi": 0.9775830911367039
+    },
+    "fidelity_error_llm": {
+     "k": 2,
+     "n": 8,
+     "rate": 0.25,
+     "lo": 0.07147768885802765,
+     "hi": 0.5907301208974108
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 8,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3244156195108769
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.627075,
+    "top3": 1.0,
+    "words": 102.625,
+    "calls": 2.25,
+    "tokens": 3243.75,
+    "latency_s": 54.956737499999996
    },
    "finance": {
-    "n_generated": 4,
-    "n_failed": 0,
+    "n_generated": 6,
+    "n_failed": 2,
     "n_shown": 4,
     "n_empty": 0,
     "status": {
      "shown": 4
     },
     "error_free_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
+     "k": 3,
+     "n": 4,
+     "rate": 0.75,
+     "lo": 0.30063605244263664,
+     "hi": 0.9544139373553638
     },
     "error_free_rule": {
-     "k": 2,
+     "k": 3,
      "n": 4,
-     "rate": 0.5,
-     "lo": 0.15003570882017145,
-     "hi": 0.8499642911798285
+     "rate": 0.75,
+     "lo": 0.30063605244263664,
+     "hi": 0.9544139373553638
     },
     "fidelity_error_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
+     "k": 1,
+     "n": 4,
+     "rate": 0.25,
+     "lo": 0.045586062644636216,
+     "hi": 0.6993639475573634
     },
     "policy_violation": {
      "k": 0,
@@ -706,63 +993,109 @@
      "lo": 0.0,
      "hi": 0.48990002040399916
     },
-    "va": null,
-    "sa": null,
-    "ra": null,
-    "top3": null,
-    "words": 123.75,
-    "calls": 4.25,
-    "tokens": 6339.5,
-    "latency_s": 18.219575
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.614575,
+    "top3": 1.0,
+    "words": 109.75,
+    "calls": 2.5,
+    "tokens": 4411.75,
+    "latency_s": 0.00135
    },
    "health": {
-    "n_generated": 2,
-    "n_failed": 0,
-    "n_shown": 2,
+    "n_generated": 6,
+    "n_failed": 2,
+    "n_shown": 4,
     "n_empty": 0,
     "status": {
-     "shown": 2
+     "shown": 4
     },
     "error_free_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
+     "k": 3,
+     "n": 4,
+     "rate": 0.75,
+     "lo": 0.30063605244263664,
+     "hi": 0.9544139373553638
     },
     "error_free_rule": {
-     "k": 1,
-     "n": 2,
-     "rate": 0.5,
-     "lo": 0.09452865480086611,
-     "hi": 0.905471345199134
+     "k": 4,
+     "n": 4,
+     "rate": 1.0,
+     "lo": 0.5100999795960008,
+     "hi": 1.0
     },
     "fidelity_error_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
+     "k": 1,
+     "n": 4,
+     "rate": 0.25,
+     "lo": 0.045586062644636216,
+     "hi": 0.6993639475573634
     },
     "policy_violation": {
      "k": 0,
-     "n": 2,
+     "n": 4,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.6576280471103807
+     "hi": 0.48990002040399916
     },
-    "va": null,
-    "sa": null,
-    "ra": null,
-    "top3": null,
-    "words": 107.0,
-    "calls": 4.0,
-    "tokens": 3458.5,
-    "latency_s": 0.0009500000000000001
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.639575,
+    "top3": 1.0,
+    "words": 95.5,
+    "calls": 2.0,
+    "tokens": 2075.75,
+    "latency_s": 109.91212499999999
    }
   },
-  "musicco": {
+  "explingo": {
    "pooled": {
+    "n_generated": 12,
+    "n_failed": 0,
+    "n_shown": 7,
+    "n_empty": 5,
+    "status": {
+     "shown": 7,
+     "empty": 5
+    },
+    "error_free_llm": {
+     "k": 3,
+     "n": 7,
+     "rate": 0.42857142857142855,
+     "lo": 0.1582169222626268,
+     "hi": 0.7495457695909742
+    },
+    "error_free_rule": {
+     "k": 3,
+     "n": 7,
+     "rate": 0.42857142857142855,
+     "lo": 0.1582169222626268,
+     "hi": 0.7495457695909742
+    },
+    "fidelity_error_llm": {
+     "k": 4,
+     "n": 7,
+     "rate": 0.5714285714285714,
+     "lo": 0.2504542304090258,
+     "hi": 0.8417830777373732
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 7,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.35433884297520657
+    },
+    "va": 0.8690428571428572,
+    "sa": 1.0,
+    "ra": 1.0,
+    "top3": 1.0,
+    "words": 71.28571428571429,
+    "calls": 2.75,
+    "tokens": 1341.1666666666667,
+    "latency_s": 116.76048333333334
+   },
+   "finance": {
     "n_generated": 6,
     "n_failed": 0,
     "n_shown": 5,
@@ -772,11 +1105,245 @@
      "empty": 1
     },
     "error_free_llm": {
+     "k": 2,
+     "n": 5,
+     "rate": 0.4,
+     "lo": 0.11761823115925325,
+     "hi": 0.769280067791163
+    },
+    "error_free_rule": {
+     "k": 2,
+     "n": 5,
+     "rate": 0.4,
+     "lo": 0.11761823115925325,
+     "hi": 0.769280067791163
+    },
+    "fidelity_error_llm": {
+     "k": 3,
+     "n": 5,
+     "rate": 0.6,
+     "lo": 0.23071993220883702,
+     "hi": 0.8823817688407467
+    },
+    "policy_violation": {
      "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
+     "n": 5,
+     "rate": 0.0,
+     "lo": -3.139202815737979e-17,
+     "hi": 0.43449149475208104
+    },
+    "va": 0.81666,
+    "sa": 1.0,
+    "ra": 1.0,
+    "top3": 1.0,
+    "words": 73.0,
+    "calls": 2.8333333333333335,
+    "tokens": 1737.0,
+    "latency_s": 168.86228333333332
+   },
+   "health": {
+    "n_generated": 6,
+    "n_failed": 0,
+    "n_shown": 2,
+    "n_empty": 4,
+    "status": {
+     "shown": 2,
+     "empty": 4
+    },
+    "error_free_llm": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09452865480086611,
+     "hi": 0.905471345199134
+    },
+    "error_free_rule": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09452865480086611,
+     "hi": 0.905471345199134
+    },
+    "fidelity_error_llm": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09452865480086611,
+     "hi": 0.905471345199134
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 2,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.6576280471103807
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 1.0,
+    "top3": 1.0,
+    "words": 67.0,
+    "calls": 2.6666666666666665,
+    "tokens": 945.3333333333334,
+    "latency_s": 64.65868333333333
+   }
+  },
+  "critic_rule": {
+   "pooled": {
+    "n_generated": 12,
+    "n_failed": 1,
+    "n_shown": 6,
+    "n_empty": 5,
+    "status": {
+     "shown": 6,
+     "empty": 5
+    },
+    "error_free_llm": {
+     "k": 3,
+     "n": 6,
+     "rate": 0.5,
+     "lo": 0.1876128068994087,
+     "hi": 0.8123871931005913
+    },
+    "error_free_rule": {
+     "k": 3,
+     "n": 6,
+     "rate": 0.5,
+     "lo": 0.1876128068994087,
+     "hi": 0.8123871931005913
+    },
+    "fidelity_error_llm": {
+     "k": 3,
+     "n": 6,
+     "rate": 0.5,
+     "lo": 0.1876128068994087,
+     "hi": 0.8123871931005913
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 6,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3903430336530645
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.8888833333333334,
+    "top3": 0.9444499999999999,
+    "words": 118.16666666666667,
+    "calls": 2.727272727272727,
+    "tokens": 2806.090909090909,
+    "latency_s": 17.068327272727274
+   },
+   "finance": {
+    "n_generated": 6,
+    "n_failed": 1,
+    "n_shown": 4,
+    "n_empty": 1,
+    "status": {
+     "shown": 4,
+     "empty": 1
+    },
+    "error_free_llm": {
+     "k": 2,
+     "n": 4,
+     "rate": 0.5,
+     "lo": 0.15003570882017145,
+     "hi": 0.8499642911798285
+    },
+    "error_free_rule": {
+     "k": 2,
+     "n": 4,
+     "rate": 0.5,
+     "lo": 0.15003570882017145,
+     "hi": 0.8499642911798285
+    },
+    "fidelity_error_llm": {
+     "k": 2,
+     "n": 4,
+     "rate": 0.5,
+     "lo": 0.15003570882017145,
+     "hi": 0.8499642911798285
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 4,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.48990002040399916
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.833325,
+    "top3": 0.916675,
+    "words": 123.75,
+    "calls": 3.6,
+    "tokens": 4604.4,
+    "latency_s": 12.08532
+   },
+   "health": {
+    "n_generated": 6,
+    "n_failed": 0,
+    "n_shown": 2,
+    "n_empty": 4,
+    "status": {
+     "shown": 2,
+     "empty": 4
+    },
+    "error_free_llm": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09452865480086611,
+     "hi": 0.905471345199134
+    },
+    "error_free_rule": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09452865480086611,
+     "hi": 0.905471345199134
+    },
+    "fidelity_error_llm": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09452865480086611,
+     "hi": 0.905471345199134
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 2,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.6576280471103807
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 1.0,
+    "top3": 1.0,
+    "words": 107.0,
+    "calls": 2.0,
+    "tokens": 1307.5,
+    "latency_s": 21.220833333333335
+   }
+  },
+  "musicco": {
+   "pooled": {
+    "n_generated": 12,
+    "n_failed": 5,
+    "n_shown": 5,
+    "n_empty": 2,
+    "status": {
+     "shown": 5,
+     "empty": 2
+    },
+    "error_free_llm": {
+     "k": 1,
+     "n": 5,
+     "rate": 0.2,
+     "lo": 0.036223160969787456,
+     "hi": 0.6244717358814612
     },
     "error_free_rule": {
      "k": 1,
@@ -786,11 +1353,11 @@
      "hi": 0.6244717358814612
     },
     "fidelity_error_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
+     "k": 3,
+     "n": 5,
+     "rate": 0.6,
+     "lo": 0.23071993220883702,
+     "hi": 0.8823817688407467
     },
     "policy_violation": {
      "k": 1,
@@ -799,18 +1366,18 @@
      "lo": 0.036223160969787456,
      "hi": 0.6244717358814612
     },
-    "va": null,
-    "sa": null,
-    "ra": null,
-    "top3": null,
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.74166,
+    "top3": 1.0,
     "words": 137.8,
-    "calls": 3.5,
-    "tokens": 7776.666666666667,
-    "latency_s": 36.2012
+    "calls": 3.5714285714285716,
+    "tokens": 7107.285714285715,
+    "latency_s": 50.82758571428571
    },
    "finance": {
-    "n_generated": 4,
-    "n_failed": 0,
+    "n_generated": 6,
+    "n_failed": 2,
     "n_shown": 3,
     "n_empty": 1,
     "status": {
@@ -818,11 +1385,11 @@
      "empty": 1
     },
     "error_free_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
+     "k": 1,
+     "n": 3,
+     "rate": 0.3333333333333333,
+     "lo": 0.061490315276160515,
+     "hi": 0.7923450448735121
     },
     "error_free_rule": {
      "k": 1,
@@ -832,11 +1399,11 @@
      "hi": 0.7923450448735121
     },
     "fidelity_error_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
+     "k": 2,
+     "n": 3,
+     "rate": 0.6666666666666666,
+     "lo": 0.20765495512648788,
+     "hi": 0.9385096847238393
     },
     "policy_violation": {
      "k": 0,
@@ -845,29 +1412,30 @@
      "lo": 0.0,
      "hi": 0.5615060804490177
     },
-    "va": null,
-    "sa": null,
-    "ra": null,
-    "top3": null,
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 1.0,
+    "top3": 1.0,
     "words": 146.0,
-    "calls": 3.75,
-    "tokens": 9470.0,
-    "latency_s": 53.77535
+    "calls": 4.0,
+    "tokens": 9683.75,
+    "latency_s": 16.342825
    },
    "health": {
-    "n_generated": 2,
-    "n_failed": 0,
+    "n_generated": 6,
+    "n_failed": 3,
     "n_shown": 2,
-    "n_empty": 0,
+    "n_empty": 1,
     "status": {
-     "shown": 2
+     "shown": 2,
+     "empty": 1
     },
     "error_free_llm": {
      "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
+     "n": 2,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.6576280471103807
     },
     "error_free_rule": {
      "k": 0,
@@ -877,11 +1445,11 @@
      "hi": 0.6576280471103807
     },
     "fidelity_error_llm": {
-     "k": 0,
-     "n": 0,
-     "rate": null,
-     "lo": null,
-     "hi": null
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09452865480086611,
+     "hi": 0.905471345199134
     },
     "policy_violation": {
      "k": 1,
@@ -890,57 +1458,57 @@
      "lo": 0.09452865480086611,
      "hi": 0.905471345199134
     },
-    "va": null,
-    "sa": null,
-    "ra": null,
-    "top3": null,
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.35414999999999996,
+    "top3": 1.0,
     "words": 125.5,
     "calls": 3.0,
-    "tokens": 4390.0,
-    "latency_s": 1.0529
+    "tokens": 3672.0,
+    "latency_s": 96.80726666666665
    }
   }
  },
  "paired": {
   "direct": {
-   "pairs": 0,
-   "ours_only": 0,
+   "pairs": 12,
+   "ours_only": 7,
    "other_only": 0,
-   "both": 0,
+   "both": 5,
    "neither": 0,
-   "p_mcnemar": 1.0
+   "p_mcnemar": 0.015625
   },
   "b3": {
-   "pairs": 0,
-   "ours_only": 0,
+   "pairs": 8,
+   "ours_only": 2,
    "other_only": 0,
-   "both": 0,
+   "both": 6,
    "neither": 0,
-   "p_mcnemar": 1.0
+   "p_mcnemar": 0.5
   },
   "explingo": {
-   "pairs": 0,
-   "ours_only": 0,
+   "pairs": 7,
+   "ours_only": 4,
    "other_only": 0,
-   "both": 0,
+   "both": 3,
    "neither": 0,
-   "p_mcnemar": 1.0
+   "p_mcnemar": 0.125
   },
   "critic_rule": {
-   "pairs": 0,
-   "ours_only": 0,
+   "pairs": 6,
+   "ours_only": 3,
    "other_only": 0,
-   "both": 0,
+   "both": 3,
    "neither": 0,
-   "p_mcnemar": 1.0
+   "p_mcnemar": 0.25
   },
   "musicco": {
-   "pairs": 0,
-   "ours_only": 0,
+   "pairs": 5,
+   "ours_only": 4,
    "other_only": 0,
-   "both": 0,
+   "both": 1,
    "neither": 0,
-   "p_mcnemar": 1.0
+   "p_mcnemar": 0.125
   }
  },
  "errors": {
@@ -956,23 +1524,23 @@
   "direct": {
    "value": 0,
    "direction": 0,
-   "stated rank": 0,
+   "stated rank": 1,
    "unsupported factor": 0,
-   "unsupported number": 3,
+   "unsupported number": 7,
    "causal wording": 1,
-   "raw code": 0
+   "raw code": 1
   },
   "b3": {
    "value": 0,
    "direction": 0,
-   "stated rank": 0,
+   "stated rank": 2,
    "unsupported factor": 0,
    "unsupported number": 0,
    "causal wording": 1,
    "raw code": 0
   },
   "explingo": {
-   "value": 0,
+   "value": 2,
    "direction": 0,
    "stated rank": 0,
    "unsupported factor": 0,
@@ -983,7 +1551,7 @@
   "critic_rule": {
    "value": 0,
    "direction": 0,
-   "stated rank": 0,
+   "stated rank": 1,
    "unsupported factor": 0,
    "unsupported number": 1,
    "causal wording": 1,
@@ -992,7 +1560,7 @@
   "musicco": {
    "value": 0,
    "direction": 0,
-   "stated rank": 0,
+   "stated rank": 1,
    "unsupported factor": 0,
    "unsupported number": 2,
    "causal wording": 1,
@@ -1002,479 +1570,484 @@
  },
  "ablations": {
   "ours:full": {
-   "n_generated": 12,
+   "n_generated": 40,
    "n_failed": 0,
-   "n_shown": 12,
+   "n_shown": 40,
    "n_empty": 0,
    "status": {
-    "verified": 10,
-    "fallback": 2
+    "verified": 33,
+    "fallback": 7
    },
    "error_free_llm": {
-    "k": 0,
-    "n": 0,
-    "rate": null,
-    "lo": null,
-    "hi": null
+    "k": 39,
+    "n": 40,
+    "rate": 0.975,
+    "lo": 0.8711834051199223,
+    "hi": 0.9955732825922052
    },
    "error_free_rule": {
-    "k": 12,
-    "n": 12,
+    "k": 40,
+    "n": 40,
     "rate": 1.0,
-    "lo": 0.7574992425007574,
-    "hi": 0.9999999999999998
+    "lo": 0.9123754607496077,
+    "hi": 1.0
    },
    "fidelity_error_llm": {
-    "k": 0,
-    "n": 0,
-    "rate": null,
-    "lo": null,
-    "hi": null
+    "k": 1,
+    "n": 40,
+    "rate": 0.025,
+    "lo": 0.004426717407794919,
+    "hi": 0.1288165948800778
    },
    "policy_violation": {
     "k": 0,
-    "n": 12,
+    "n": 40,
     "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.2425007574992425
+    "lo": -6.330876522670002e-18,
+    "hi": 0.08762453925039232
    },
-   "va": null,
-   "sa": null,
-   "ra": null,
-   "top3": null,
-   "words": 60.333333333333336,
-   "calls": 4.666666666666667,
-   "tokens": 4902.333333333333,
-   "latency_s": 48.858200000000004
+   "va": 1.0,
+   "sa": 0.975,
+   "ra": 0.9833325,
+   "top3": 0.7083275,
+   "words": 54.7,
+   "calls": 4.375,
+   "tokens": 4063.6,
+   "latency_s": 18.2173325
   },
   "ours:no_verifier": {
-   "n_generated": 12,
+   "n_generated": 40,
    "n_failed": 0,
-   "n_shown": 12,
+   "n_shown": 40,
    "n_empty": 0,
    "status": {
-    "verified": 10,
-    "fallback": 2
+    "verified": 31,
+    "fallback": 4,
+    "unverified": 5
    },
    "error_free_llm": {
-    "k": 0,
-    "n": 0,
-    "rate": null,
-    "lo": null,
-    "hi": null
+    "k": 39,
+    "n": 40,
+    "rate": 0.975,
+    "lo": 0.8711834051199223,
+    "hi": 0.9955732825922052
    },
    "error_free_rule": {
-    "k": 12,
-    "n": 12,
+    "k": 40,
+    "n": 40,
     "rate": 1.0,
-    "lo": 0.7574992425007574,
-    "hi": 0.9999999999999998
+    "lo": 0.9123754607496077,
+    "hi": 1.0
    },
    "fidelity_error_llm": {
-    "k": 0,
-    "n": 0,
-    "rate": null,
-    "lo": null,
-    "hi": null
+    "k": 1,
+    "n": 40,
+    "rate": 0.025,
+    "lo": 0.004426717407794919,
+    "hi": 0.1288165948800778
    },
    "policy_violation": {
     "k": 0,
-    "n": 12,
+    "n": 40,
     "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.2425007574992425
+    "lo": -6.330876522670002e-18,
+    "hi": 0.08762453925039232
    },
-   "va": null,
-   "sa": null,
-   "ra": null,
-   "top3": null,
-   "words": 60.333333333333336,
-   "calls": 4.666666666666667,
-   "tokens": 4322.75,
-   "latency_s": 5.73975
+   "va": 1.0,
+   "sa": 0.975,
+   "ra": 0.9833325,
+   "top3": 0.6583249999999999,
+   "words": 50.5,
+   "calls": 4.3,
+   "tokens": 3802.4,
+   "latency_s": 0.872405
   },
   "ours:no_critic": {
-   "n_generated": 12,
+   "n_generated": 40,
    "n_failed": 0,
-   "n_shown": 12,
+   "n_shown": 40,
    "n_empty": 0,
    "status": {
-    "unverified": 6,
-    "verified": 6
+    "unverified": 19,
+    "verified": 20,
+    "fallback": 1
    },
    "error_free_llm": {
-    "k": 0,
-    "n": 0,
-    "rate": null,
-    "lo": null,
-    "hi": null
+    "k": 40,
+    "n": 40,
+    "rate": 1.0,
+    "lo": 0.9123754607496077,
+    "hi": 1.0
    },
    "error_free_rule": {
-    "k": 12,
-    "n": 12,
+    "k": 40,
+    "n": 40,
     "rate": 1.0,
-    "lo": 0.7574992425007574,
-    "hi": 0.9999999999999998
+    "lo": 0.9123754607496077,
+    "hi": 1.0
    },
    "fidelity_error_llm": {
     "k": 0,
-    "n": 0,
-    "rate": null,
-    "lo": null,
-    "hi": null
+    "n": 40,
+    "rate": 0.0,
+    "lo": -6.330876522670002e-18,
+    "hi": 0.08762453925039232
    },
    "policy_violation": {
     "k": 0,
-    "n": 12,
+    "n": 40,
     "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.2425007574992425
+    "lo": -6.330876522670002e-18,
+    "hi": 0.08762453925039232
    },
-   "va": null,
-   "sa": null,
-   "ra": null,
-   "top3": null,
-   "words": 48.916666666666664,
-   "calls": 2.0,
-   "tokens": 2263.1666666666665,
-   "latency_s": 3.9236416666666663
+   "va": 1.0,
+   "sa": 1.0,
+   "ra": 0.9833325,
+   "top3": 0.5583125,
+   "words": 48.0,
+   "calls": 2.1,
+   "tokens": 2448.6,
+   "latency_s": 20.4232175
   },
   "ours:no_repair": {
-   "n_generated": 12,
+   "n_generated": 40,
    "n_failed": 0,
-   "n_shown": 12,
+   "n_shown": 40,
    "n_empty": 0,
    "status": {
-    "fallback": 8,
-    "verified": 4
+    "fallback": 25,
+    "verified": 15
    },
    "error_free_llm": {
-    "k": 0,
-    "n": 0,
-    "rate": null,
-    "lo": null,
-    "hi": null
+    "k": 40,
+    "n": 40,
+    "rate": 1.0,
+    "lo": 0.9123754607496077,
+    "hi": 1.0
    },
    "error_free_rule": {
-    "k": 12,
-    "n": 12,
+    "k": 40,
+    "n": 40,
     "rate": 1.0,
-    "lo": 0.7574992425007574,
-    "hi": 0.9999999999999998
+    "lo": 0.9123754607496077,
+    "hi": 1.0
    },
    "fidelity_error_llm": {
     "k": 0,
-    "n": 0,
-    "rate": null,
-    "lo": null,
-    "hi": null
+    "n": 40,
+    "rate": 0.0,
+    "lo": -6.330876522670002e-18,
+    "hi": 0.08762453925039232
    },
    "policy_violation": {
     "k": 0,
-    "n": 12,
+    "n": 40,
     "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.2425007574992425
+    "lo": -6.330876522670002e-18,
+    "hi": 0.08762453925039232
    },
-   "va": null,
-   "sa": null,
-   "ra": null,
-   "top3": null,
-   "words": 74.41666666666667,
-   "calls": 5.666666666666667,
-   "tokens": 5198.916666666667,
-   "latency_s": 6.05875
+   "va": 1.0,
+   "sa": 1.0,
+   "ra": 1.0,
+   "top3": 0.8833275,
+   "words": 67.45,
+   "calls": 5.125,
+   "tokens": 4852.7,
+   "latency_s": 0.8677675
   },
   "ours:no_policy_rules": {
-   "n_generated": 12,
+   "n_generated": 40,
    "n_failed": 0,
-   "n_shown": 12,
+   "n_shown": 40,
    "n_empty": 0,
    "status": {
-    "verified": 10,
-    "fallback": 2
+    "verified": 33,
+    "fallback": 7
    },
    "error_free_llm": {
-    "k": 0,
-    "n": 0,
-    "rate": null,
-    "lo": null,
-    "hi": null
+    "k": 39,
+    "n": 40,
+    "rate": 0.975,
+    "lo": 0.8711834051199223,
+    "hi": 0.9955732825922052
    },
    "error_free_rule": {
-    "k": 12,
-    "n": 12,
+    "k": 40,
+    "n": 40,
     "rate": 1.0,
-    "lo": 0.7574992425007574,
-    "hi": 0.9999999999999998
+    "lo": 0.9123754607496077,
+    "hi": 1.0
    },
    "fidelity_error_llm": {
-    "k": 0,
-    "n": 0,
-    "rate": null,
-    "lo": null,
-    "hi": null
+    "k": 1,
+    "n": 40,
+    "rate": 0.025,
+    "lo": 0.004426717407794919,
+    "hi": 0.1288165948800778
    },
    "policy_violation": {
     "k": 0,
-    "n": 12,
+    "n": 40,
     "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.2425007574992425
+    "lo": -6.330876522670002e-18,
+    "hi": 0.08762453925039232
    },
-   "va": null,
-   "sa": null,
-   "ra": null,
-   "top3": null,
-   "words": 60.333333333333336,
-   "calls": 4.666666666666667,
-   "tokens": 4322.75,
-   "latency_s": 1.9206416666666666
+   "va": 1.0,
+   "sa": 0.975,
+   "ra": 0.9833325,
+   "top3": 0.7083275,
+   "words": 54.7,
+   "calls": 4.375,
+   "tokens": 4063.6,
+   "latency_s": 20.4478875
   }
  },
  "faults": {
   "llm": {
    "files": [
-    "faults_20261024-165802.json"
+    "faults_20261024-165802.json",
+    "faults_20261024-170746.json",
+    "faults_20261024-170750.json"
    ],
-   "chunks": 1,
+   "chunks": 3,
    "per_fault": {
     "direction_flip": {
-     "k": 2,
-     "n": 2,
+     "k": 4,
+     "n": 4,
      "rate": 1.0,
-     "lo": 0.3423719528896193,
+     "lo": 0.5100999795960008,
      "hi": 1.0
     },
     "value_swap": {
-     "k": 2,
-     "n": 2,
+     "k": 4,
+     "n": 4,
      "rate": 1.0,
-     "lo": 0.3423719528896193,
+     "lo": 0.5100999795960008,
      "hi": 1.0
     },
     "fake_feature": {
-     "k": 2,
-     "n": 2,
+     "k": 4,
+     "n": 4,
      "rate": 1.0,
-     "lo": 0.3423719528896193,
+     "lo": 0.5100999795960008,
      "hi": 1.0
     },
     "wrong_top": {
-     "k": 2,
-     "n": 2,
+     "k": 4,
+     "n": 4,
      "rate": 1.0,
-     "lo": 0.3423719528896193,
+     "lo": 0.5100999795960008,
      "hi": 1.0
     },
     "unsupported_number": {
-     "k": 2,
-     "n": 2,
+     "k": 4,
+     "n": 4,
      "rate": 1.0,
-     "lo": 0.3423719528896193,
+     "lo": 0.5100999795960008,
      "hi": 1.0
     },
     "missing_citation": {
-     "k": 2,
-     "n": 2,
+     "k": 4,
+     "n": 4,
      "rate": 1.0,
-     "lo": 0.3423719528896193,
+     "lo": 0.5100999795960008,
      "hi": 1.0
     },
     "causal_claim": {
-     "k": 2,
-     "n": 2,
+     "k": 4,
+     "n": 4,
      "rate": 1.0,
-     "lo": 0.3423719528896193,
+     "lo": 0.5100999795960008,
      "hi": 1.0
     },
     "raw_code": {
      "k": 0,
-     "n": 2,
+     "n": 4,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.6576280471103807
+     "hi": 0.48990002040399916
     },
     "decision_wording": {
-     "k": 2,
-     "n": 2,
+     "k": 4,
+     "n": 4,
      "rate": 1.0,
-     "lo": 0.3423719528896193,
+     "lo": 0.5100999795960008,
      "hi": 1.0
     },
     "protected_inference": {
-     "k": 2,
-     "n": 2,
+     "k": 4,
+     "n": 4,
      "rate": 1.0,
-     "lo": 0.3423719528896193,
+     "lo": 0.5100999795960008,
      "hi": 1.0
     },
     "blame_wording": {
-     "k": 0,
-     "n": 1,
-     "rate": 0.0,
-     "lo": 0.0,
-     "hi": 0.7934567085261071
+     "k": 1,
+     "n": 3,
+     "rate": 0.3333333333333333,
+     "lo": 0.061490315276160515,
+     "hi": 0.7923450448735121
     },
     "prediction_as_fact": {
      "k": 1,
-     "n": 2,
-     "rate": 0.5,
-     "lo": 0.09452865480086611,
-     "hi": 0.905471345199134
+     "n": 3,
+     "rate": 0.3333333333333333,
+     "lo": 0.061490315276160515,
+     "hi": 0.7923450448735121
     },
     "magnitude_swap": {
-     "k": 1,
-     "n": 2,
+     "k": 2,
+     "n": 4,
      "rate": 0.5,
-     "lo": 0.09452865480086611,
-     "hi": 0.905471345199134
+     "lo": 0.15003570882017145,
+     "hi": 0.8499642911798285
     },
     "risk_text_swap": {
-     "k": 2,
-     "n": 2,
+     "k": 4,
+     "n": 4,
      "rate": 1.0,
-     "lo": 0.3423719528896193,
+     "lo": 0.5100999795960008,
      "hi": 1.0
     },
     "wrong_ordinal": {
      "k": 1,
-     "n": 1,
-     "rate": 1.0,
-     "lo": 0.20654329147389294,
-     "hi": 1.0
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09452865480086611,
+     "hi": 0.905471345199134
     }
    },
    "overall": {
-    "k": 23,
-    "n": 28,
-    "rate": 0.8214285714285714,
-    "lo": 0.644082084514089,
-    "hi": 0.9212161417056989
+    "k": 45,
+    "n": 56,
+    "rate": 0.8035714285714286,
+    "lo": 0.6815514267252283,
+    "hi": 0.886615199835559
    },
    "per_fault_exact": {
     "direction_flip": {
-     "k": 2,
-     "n": 2,
+     "k": 4,
+     "n": 4,
      "rate": 1.0,
-     "lo": 0.3423719528896193,
+     "lo": 0.5100999795960008,
      "hi": 1.0
     },
     "value_swap": {
-     "k": 2,
-     "n": 2,
+     "k": 4,
+     "n": 4,
      "rate": 1.0,
-     "lo": 0.3423719528896193,
+     "lo": 0.5100999795960008,
      "hi": 1.0
     },
     "fake_feature": {
      "k": 0,
-     "n": 2,
+     "n": 4,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.6576280471103807
+     "hi": 0.48990002040399916
     },
     "wrong_top": {
-     "k": 2,
-     "n": 2,
+     "k": 4,
+     "n": 4,
      "rate": 1.0,
-     "lo": 0.3423719528896193,
+     "lo": 0.5100999795960008,
      "hi": 1.0
     },
     "unsupported_number": {
-     "k": 1,
-     "n": 2,
+     "k": 2,
+     "n": 4,
      "rate": 0.5,
-     "lo": 0.09452865480086611,
-     "hi": 0.905471345199134
+     "lo": 0.15003570882017145,
+     "hi": 0.8499642911798285
     },
     "missing_citation": {
-     "k": 2,
-     "n": 2,
+     "k": 4,
+     "n": 4,
      "rate": 1.0,
-     "lo": 0.3423719528896193,
+     "lo": 0.5100999795960008,
      "hi": 1.0
     },
     "causal_claim": {
-     "k": 2,
-     "n": 2,
+     "k": 4,
+     "n": 4,
      "rate": 1.0,
-     "lo": 0.3423719528896193,
+     "lo": 0.5100999795960008,
      "hi": 1.0
     },
     "raw_code": {
      "k": 0,
-     "n": 2,
+     "n": 4,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.6576280471103807
+     "hi": 0.48990002040399916
     },
     "decision_wording": {
-     "k": 2,
-     "n": 2,
+     "k": 4,
+     "n": 4,
      "rate": 1.0,
-     "lo": 0.3423719528896193,
+     "lo": 0.5100999795960008,
      "hi": 1.0
     },
     "protected_inference": {
-     "k": 2,
-     "n": 2,
-     "rate": 1.0,
-     "lo": 0.3423719528896193,
-     "hi": 1.0
+     "k": 3,
+     "n": 4,
+     "rate": 0.75,
+     "lo": 0.30063605244263664,
+     "hi": 0.9544139373553638
     },
     "blame_wording": {
-     "k": 0,
-     "n": 1,
-     "rate": 0.0,
-     "lo": 0.0,
-     "hi": 0.7934567085261071
+     "k": 1,
+     "n": 3,
+     "rate": 0.3333333333333333,
+     "lo": 0.061490315276160515,
+     "hi": 0.7923450448735121
     },
     "prediction_as_fact": {
+     "k": 1,
+     "n": 3,
+     "rate": 0.3333333333333333,
+     "lo": 0.061490315276160515,
+     "hi": 0.7923450448735121
+    },
+    "magnitude_swap": {
+     "k": 0,
+     "n": 4,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.48990002040399916
+    },
+    "risk_text_swap": {
+     "k": 4,
+     "n": 4,
+     "rate": 1.0,
+     "lo": 0.5100999795960008,
+     "hi": 1.0
+    },
+    "wrong_ordinal": {
      "k": 1,
      "n": 2,
      "rate": 0.5,
      "lo": 0.09452865480086611,
      "hi": 0.905471345199134
-    },
-    "magnitude_swap": {
-     "k": 0,
-     "n": 2,
-     "rate": 0.0,
-     "lo": 0.0,
-     "hi": 0.6576280471103807
-    },
-    "risk_text_swap": {
-     "k": 2,
-     "n": 2,
-     "rate": 1.0,
-     "lo": 0.3423719528896193,
-     "hi": 1.0
-    },
-    "wrong_ordinal": {
-     "k": 1,
-     "n": 1,
-     "rate": 1.0,
-     "lo": 0.20654329147389294,
-     "hi": 1.0
     }
    },
    "overall_exact": {
-    "k": 19,
-    "n": 28,
-    "rate": 0.6785714285714286,
-    "lo": 0.4933850455563118,
-    "hi": 0.8206695245657927
+    "k": 36,
+    "n": 56,
+    "rate": 0.6428571428571429,
+    "lo": 0.5119364571733127,
+    "hi": 0.7554360729729401
    },
    "clean_false_rejection": {
     "k": 0,
-    "n": 8,
+    "n": 16,
     "rate": 0.0,
     "lo": 0.0,
-    "hi": 0.3244156195108769
+    "hi": 0.19361341827271994
    },
    "domains": [
-    "finance"
+    "finance",
+    "health"
    ]
   },
   "template": {
