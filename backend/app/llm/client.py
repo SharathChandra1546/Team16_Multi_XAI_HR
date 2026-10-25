@@ -257,12 +257,20 @@ def _read_usage() -> dict:
     try:
         return json.loads(_usage_file().read_text(encoding="utf-8"))
     except Exception:
-        return {"requests": {}, "tokens": {}}
+        return {"requests": {}, "tokens": {}, "exhausted": {}}
+
+
+EXHAUSTED_TTL_S = 3600  # a provider's "daily quota used up" is believed for an hour, then tried again
 
 
 def load_daily_usage() -> None:
     """Count today's (UTC) usage by other runs, so a daily budget holds across restarts and parallel runs."""
+    import time as _t
+
     d = _read_usage()
+    for mid, ts in (d.get("exhausted") or {}).items():
+        if _t.time() - float(ts) < EXHAUSTED_TTL_S:
+            OpenAICompatLLM.daily_exhausted.setdefault(mid, "reported by an earlier run in the last hour")
     for kind, counts in (("requests", OpenAICompatLLM.requests_sent), ("tokens", OpenAICompatLLM.tokens_used)):
         for k, v in d.get(kind, {}).items():
             counts[k] = counts.get(k, 0) + int(v)
@@ -290,6 +298,12 @@ def save_daily_usage() -> None:
                 if v > mine:
                     counts[k] = counts.get(k, 0) + (v - mine)
                     _SAVED[kind][k] = v
+        import time as _t
+
+        ex = d.setdefault("exhausted", {})
+        for mid in OpenAICompatLLM.daily_exhausted:
+            if OpenAICompatLLM.daily_exhausted[mid] != "reported by an earlier run in the last hour":
+                ex[mid] = ex.get(mid) if mid in ex and _t.time() - float(ex[mid]) < EXHAUSTED_TTL_S else _t.time()
         f.write_text(json.dumps(d, indent=1), encoding="utf-8")
 
 

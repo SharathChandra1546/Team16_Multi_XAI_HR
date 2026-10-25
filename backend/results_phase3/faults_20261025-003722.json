@@ -1,0 +1,306 @@
+{
+  "created": "2026-10-25T00:37:07+00:00",
+  "llm": "mock:deterministic-template",
+  "judge": null,
+  "base": "template",
+  "data_source": "uci_statlog",
+  "domains": [
+    {
+      "domain": "finance",
+      "base": "template",
+      "injector": "llm",
+      "fault_llm": "groq:openai/gpt-oss-20b",
+      "n_cases": 1,
+      "skipped_bases_not_clean": 0,
+      "per_fault": {},
+      "overall": {
+        "detection": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "ci95": [
+            null,
+            null
+          ]
+        },
+        "any_rejection": {
+          "k": 0,
+          "n": 0,
+          "rate": null,
+          "ci95": [
+            null,
+            null
+          ]
+        },
+        "reviewer_detection": null
+      },
+      "clean": {
+        "n": 8,
+        "false_rejection_rate": 0.0,
+        "false_rejection": {
+          "k": 0,
+          "n": 8,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.3244156195108769
+          ]
+        },
+        "reviewer_false_rejection_rate": null,
+        "codes": {}
+      },
+      "llm_fault_records": [
+        {
+          "fault": "direction_flip",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "novice",
+          "intent": "explain"
+        },
+        {
+          "fault": "value_swap",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "novice",
+          "intent": "explain"
+        },
+        {
+          "fault": "fake_feature",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "novice",
+          "intent": "explain"
+        },
+        {
+          "fault": "wrong_top",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "novice",
+          "intent": "explain"
+        },
+        {
+          "fault": "unsupported_number",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "novice",
+          "intent": "explain"
+        },
+        {
+          "fault": "missing_citation",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "novice",
+          "intent": "explain"
+        },
+        {
+          "fault": "causal_claim",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "novice",
+          "intent": "explain"
+        },
+        {
+          "fault": "raw_code",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "novice",
+          "intent": "explain"
+        },
+        {
+          "fault": "decision_wording",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "novice",
+          "intent": "explain"
+        },
+        {
+          "fault": "protected_inference",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "novice",
+          "intent": "explain"
+        },
+        {
+          "fault": "blame_wording",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "novice",
+          "intent": "explain"
+        },
+        {
+          "fault": "prediction_as_fact",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "novice",
+          "intent": "explain"
+        },
+        {
+          "fault": "magnitude_swap",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "novice",
+          "intent": "explain"
+        },
+        {
+          "fault": "risk_text_swap",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "novice",
+          "intent": "explain"
+        },
+        {
+          "fault": "wrong_ordinal",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "novice",
+          "intent": "explain"
+        },
+        {
+          "fault": "direction_flip",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "expert",
+          "intent": "explain"
+        },
+        {
+          "fault": "value_swap",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "expert",
+          "intent": "explain"
+        },
+        {
+          "fault": "fake_feature",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "expert",
+          "intent": "explain"
+        },
+        {
+          "fault": "wrong_top",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "expert",
+          "intent": "explain"
+        },
+        {
+          "fault": "unsupported_number",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "expert",
+          "intent": "explain"
+        },
+        {
+          "fault": "missing_citation",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "expert",
+          "intent": "explain"
+        },
+        {
+          "fault": "causal_claim",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "expert",
+          "intent": "explain"
+        },
+        {
+          "fault": "raw_code",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "expert",
+          "intent": "explain"
+        },
+        {
+          "fault": "decision_wording",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "expert",
+          "intent": "explain"
+        },
+        {
+          "fault": "protected_inference",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "expert",
+          "intent": "explain"
+        },
+        {
+          "fault": "blame_wording",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "expert",
+          "intent": "explain"
+        },
+        {
+          "fault": "prediction_as_fact",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "expert",
+          "intent": "explain"
+        },
+        {
+          "fault": "magnitude_swap",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "expert",
+          "intent": "explain"
+        },
+        {
+          "fault": "risk_text_swap",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "expert",
+          "intent": "explain"
+        },
+        {
+          "fault": "wrong_ordinal",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "",
+          "error": "LLMError",
+          "level": "expert",
+          "intent": "explain"
+        }
+      ]
+    }
+  ],
+  "partial": null,
+  "levels": [
+    "novice",
+    "expert"
+  ],
+  "intents": [
+    "explain"
+  ],
+  "offset": 3,
+  "n": 1
+}

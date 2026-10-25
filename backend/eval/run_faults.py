@@ -160,6 +160,9 @@ def run_domain(d, n, base, use_reviewer, seed, injector="template"):
                         r["collateral"][c] += 1
                     if judge and reviewer_flags(judge, pkg, plan, bad):
                         r["reviewer_detected"] += 1
+    why = BUDGET_CHECK()  # a provider can refuse mid-case (daily quota): report it so the driver stops
+    if why and not STOPPED:
+        STOPPED.append(f"{d.name}: {why}")
     per_fault = {}
     for f, r in det.items():
         per_fault[f] = {"expected_code": FAULTS[f], "category": TAXONOMY[f]["category"], "n": r["n"],
