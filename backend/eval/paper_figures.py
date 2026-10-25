@@ -70,16 +70,35 @@ def fig_main(num):
 
 
 def fig_ablation(num):
+    """Per variant: error-free rate and template-fallback rate (both % of texts, 95% Wilson intervals)."""
     abl = num.get("ablations") or {}
     if not abl:
         return
+    import math
+
+    def wil(k, n, z=1.96):
+        if not n:
+            return None
+        p = k / n
+        d = 1 + z * z / n
+        c = p + z * z / (2 * n)
+        h = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n))
+        return {"rate": p, "lo": max(0.0, (c - h) / d), "hi": min(1.0, (c + h) / d), "n": n}
+
     names = list(abl.keys())
-    fig, ax = plt.subplots(figsize=(3.4, 0.36 * len(names) + 0.8))
+    fig, ax = plt.subplots(figsize=(3.4, 0.5 * len(names) + 0.9))
     for i, s in enumerate(names):
-        whisker(ax, len(names) - 1 - i, abl[s]["error_free_llm"], INK)
+        y = len(names) - 1 - i
+        st = abl[s]["status"]
+        n = sum(st.values())
+        whisker(ax, y + 0.15, abl[s]["error_free_llm"], DOMAIN_COLOR["finance"], label="Error-free" if i == 0 else None)
+        whisker(ax, y - 0.15, wil(st.get("fallback", 0), n), DOMAIN_COLOR["health"], marker="s", size=4.5,
+                label="Template fallback" if i == 0 else None)
     ax.set_yticks(range(len(names)))
     ax.set_yticklabels([LABEL.get(s, s) for s in reversed(names)])
-    style(ax, "Error-free explanations (%), 95% CI")
+    style(ax, "% of texts, 95% CI")
+    ax.legend(frameon=False, fontsize=7, loc="lower center", bbox_to_anchor=(0.4, 1.0), ncol=2, handletextpad=0.3,
+              columnspacing=1.0, borderaxespad=0.1)
     fig.tight_layout()
     save(fig, "fig_ablation")
 
@@ -94,7 +113,7 @@ def fig_faults(num):
         whisker(ax, i, r, INK, size=4)
     ax.set_yticks(range(len(items)))
     ax.set_yticklabels([f.replace("_", " ") for f, _ in items])
-    style(ax, "Injected faults blocked by the verifier (%), 95% CI")
+    style(ax, "Faults blocked (%), 95% CI")
     fig.tight_layout()
     save(fig, "fig_faults_llm")
 

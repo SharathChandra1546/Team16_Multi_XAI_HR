@@ -12,7 +12,7 @@ set -u
 cd "$(dirname "$0")/.."
 CASES=${CASES:-6}
 LEVELS=${LEVELS:-novice,expert}
-TOKENS="groq:qwen/qwen3.8-27b=170k,groq:openai/gpt-oss-120b=170k,groq:openai/gpt-oss-20b=170k"
+TOKENS="groq:qwen/qwen3.8-27b=1000k,groq:openai/gpt-oss-120b=1000k,groq:openai/gpt-oss-20b=1000k"  # safety cap only; the provider's own refusal (rolling 24h window) is what stops a run
 export JUDGE_PROVIDER=groq JUDGE_MODEL=openai/gpt-oss-120b
 mode=${1:-main}
 case "$mode" in

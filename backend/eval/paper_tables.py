@@ -325,7 +325,7 @@ def main() -> int:
     # ---------------- faults
     num_faults = {}
     llm_files, tmpl_files = [], []
-    for f in sorted(RESULTS.glob("faults_*.json")):
+    for f in sorted(RESULTS.glob("faults_*.json"), key=lambda p: p.stat().st_mtime):
         try:
             d = json.loads(f.read_text(encoding="utf-8"))
         except Exception:
@@ -345,7 +345,9 @@ def main() -> int:
             for x in d["domains"]:
                 if x.get("injector") != key:
                     continue
-                ck = (x["domain"], d.get("offset", 0), d.get("n"), tuple(d.get("levels") or []), f.name if key == "template" else "")
+                # one chunk = one (domain, case offset); early files did not record n/levels, so those are not
+                # part of the key (they would count the same case twice). Template runs: one file per run.
+                ck = (x["domain"], f.name) if key == "template" else (x["domain"], d.get("offset", 0))
                 chunks[ck] = (f, x)
         agg = defaultdict(lambda: [0, 0])     # blocked: any critical violation (the text is not shown)
         exact = defaultdict(lambda: [0, 0])   # flagged with the fault's own code
@@ -390,6 +392,18 @@ def main() -> int:
            "- Open-weights models on free-tier APIs (Qwen 3.8 27B and gpt-oss on Groq, Gemma 4 26B on the Gemini API); "
            "the ablations use a different writer from the main comparison.",
            "- Generation failures (empty or error replies from the provider) are excluded and counted per system.", ""]
+    # one row per text, for the independent verification pass (eval/verify_paper_numbers.py)
+    with open(OUT / "records.csv", "w", newline="", encoding="utf-8") as fh:
+        w = csv.writer(fh)
+        w.writerow(["writer", "domain", "case", "level", "intent", "system", "status", "failed", "empty",
+                    "error_free_llm", "error_free_rule", "fidelity_errors_llm", "policy_violations", "file", "text"])
+        for r in recs:
+            m = r.get("m") or {}
+            w.writerow([r["_writer"], r["domain"], r["case"], r["level"], r["intent"], r["system"], r.get("status"),
+                        int(r["_failed"]), int(bool(m.get("empty"))) if m else "",
+                        "" if m.get("error_free_llm") is None else int(m["error_free_llm"]),
+                        "" if not m else int(m["error_free"]), "" if m.get("fidelity_errors_llm") is None else m["fidelity_errors_llm"],
+                        ";".join(m.get("policy_violations") or []), r["_file"], r["text"]])
     numbers.update({"main": num_main, "paired": num_pairs, "errors": num_err, "ablations": num_abl,
                     "faults": num_faults})
     (OUT / "numbers.json").write_text(json.dumps(numbers, indent=1, default=str), encoding="utf-8")
