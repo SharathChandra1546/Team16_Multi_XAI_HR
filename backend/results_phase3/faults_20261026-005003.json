@@ -1,0 +1,820 @@
+{
+  "created": "2026-10-26T00:50:02+00:00",
+  "llm": "mock:deterministic-template",
+  "judge": null,
+  "base": "template",
+  "data_source": "pima_niddk",
+  "domains": [
+    {
+      "domain": "health",
+      "base": "template",
+      "injector": "llm",
+      "fault_llm": "groq:openai/gpt-oss-20b",
+      "n_cases": 1,
+      "skipped_bases_not_clean": 0,
+      "per_fault": {
+        "direction_flip": {
+          "expected_code": "direction_mismatch",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "value_swap": {
+          "expected_code": "value_mismatch",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "exact_code_rate": 0.5,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {
+            "level_numbers": 1
+          }
+        },
+        "fake_feature": {
+          "expected_code": "unknown_evidence",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 0.0,
+          "detection": {
+            "k": 0,
+            "n": 2,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.6576280471103807
+            ]
+          },
+          "exact_code_rate": 0.0,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {
+            "missing_citation": 2
+          }
+        },
+        "wrong_top": {
+          "expected_code": "rank_mismatch",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "exact_code_rate": 0.5,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {
+            "missing_required": 1
+          }
+        },
+        "unsupported_number": {
+          "expected_code": "unsupported_number",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 0.5,
+          "detection": {
+            "k": 1,
+            "n": 2,
+            "rate": 0.5,
+            "ci95": [
+              0.09452865480086614,
+              0.9054713451991339
+            ]
+          },
+          "exact_code_rate": 0.5,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {
+            "missing_citation": 1
+          }
+        },
+        "missing_citation": {
+          "expected_code": "missing_citation",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "causal_claim": {
+          "expected_code": "causal_wording",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "raw_code": {
+          "expected_code": "raw_code_leak",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 0.0,
+          "detection": {
+            "k": 0,
+            "n": 2,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.6576280471103807
+            ]
+          },
+          "exact_code_rate": 0.0,
+          "any_rejection": {
+            "k": 0,
+            "n": 2,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.6576280471103807
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "decision_wording": {
+          "expected_code": "decision_wording",
+          "category": "policy",
+          "n": 2,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "exact_code_rate": 0.0,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {
+            "missing_citation": 2
+          }
+        },
+        "protected_inference": {
+          "expected_code": "protected_attribute_inference",
+          "category": "policy",
+          "n": 2,
+          "detection_rate": 0.5,
+          "detection": {
+            "k": 1,
+            "n": 2,
+            "rate": 0.5,
+            "ci95": [
+              0.09452865480086614,
+              0.9054713451991339
+            ]
+          },
+          "exact_code_rate": 0.5,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {
+            "missing_citation": 1
+          }
+        },
+        "blame_wording": {
+          "expected_code": "blame_wording",
+          "category": "policy",
+          "n": 2,
+          "detection_rate": 0.5,
+          "detection": {
+            "k": 1,
+            "n": 2,
+            "rate": 0.5,
+            "ci95": [
+              0.09452865480086614,
+              0.9054713451991339
+            ]
+          },
+          "exact_code_rate": 0.0,
+          "any_rejection": {
+            "k": 1,
+            "n": 2,
+            "rate": 0.5,
+            "ci95": [
+              0.09452865480086614,
+              0.9054713451991339
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {
+            "missing_citation": 1
+          }
+        },
+        "prediction_as_fact": {
+          "expected_code": "prediction_as_fact",
+          "category": "policy",
+          "n": 1,
+          "detection_rate": 0.0,
+          "detection": {
+            "k": 0,
+            "n": 1,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.7934567085261071
+            ]
+          },
+          "exact_code_rate": 0.0,
+          "any_rejection": {
+            "k": 0,
+            "n": 1,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.7934567085261071
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "magnitude_swap": {
+          "expected_code": "magnitude_mismatch",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 0.0,
+          "detection": {
+            "k": 0,
+            "n": 2,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.6576280471103807
+            ]
+          },
+          "exact_code_rate": 0.0,
+          "any_rejection": {
+            "k": 1,
+            "n": 2,
+            "rate": 0.5,
+            "ci95": [
+              0.09452865480086614,
+              0.9054713451991339
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {
+            "level_numbers": 1
+          }
+        },
+        "risk_text_swap": {
+          "expected_code": "risk_mismatch",
+          "category": "fidelity",
+          "n": 2,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 2,
+            "n": 2,
+            "rate": 1.0,
+            "ci95": [
+              0.34237195288961925,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "wrong_ordinal": {
+          "expected_code": "rank_mismatch",
+          "category": "fidelity",
+          "n": 1,
+          "detection_rate": 0.0,
+          "detection": {
+            "k": 0,
+            "n": 1,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.7934567085261071
+            ]
+          },
+          "exact_code_rate": 0.0,
+          "any_rejection": {
+            "k": 0,
+            "n": 1,
+            "rate": 0.0,
+            "ci95": [
+              0.0,
+              0.7934567085261071
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        }
+      },
+      "overall": {
+        "detection": {
+          "k": 17,
+          "n": 28,
+          "rate": 0.6071428571428571,
+          "ci95": [
+            0.42408726034906297,
+            0.7643454817241996
+          ]
+        },
+        "any_rejection": {
+          "k": 22,
+          "n": 28,
+          "rate": 0.7857142857142857,
+          "ci95": [
+            0.6046105292072612,
+            0.8978767829881058
+          ]
+        },
+        "reviewer_detection": null
+      },
+      "clean": {
+        "n": 8,
+        "false_rejection_rate": 0.0,
+        "false_rejection": {
+          "k": 0,
+          "n": 8,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.3244156195108769
+          ]
+        },
+        "reviewer_false_rejection_rate": null,
+        "codes": {}
+      },
+      "llm_fault_records": [
+        {
+          "fault": "direction_flip",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "BMI (27.4 kg/m2) pulls the estimate up.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "direction_mismatch"
+          ]
+        },
+        {
+          "fault": "value_swap",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "BMI (28.4 kg/m2) pulls the estimate down.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "level_numbers",
+            "value_mismatch"
+          ]
+        },
+        {
+          "fault": "fake_feature",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Blood pressure (120 mmHg) also pushes the estimate up.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "missing_citation"
+          ]
+        },
+        {
+          "fault": "wrong_top",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The biggest factor is pregnancies (7), which pushes the estimate up.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "rank_mismatch"
+          ]
+        },
+        {
+          "fault": "unsupported_number",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "BMI contributes an additional 10% to the overall risk estimate.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "missing_citation"
+          ]
+        },
+        {
+          "fault": "missing_citation",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "BMI (27.4 kg/m2) pulls the estimate down.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "missing_citation"
+          ]
+        },
+        {
+          "fault": "causal_claim",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "BMI (27.4 kg/m2) causes the estimate to be lower.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "causal_wording"
+          ]
+        },
+        {
+          "fault": "raw_code",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The biggest factor is G-GLUCOSE (159 mg/dL), which pushes the estimate up.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": []
+        },
+        {
+          "fault": "decision_wording",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The model suggests the patient should be referred for immediate diabetes screening.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "decision_wording",
+            "missing_citation"
+          ]
+        },
+        {
+          "fault": "protected_inference",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The patient is 45 years old, which is a typical age for this risk level.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "missing_citation"
+          ]
+        },
+        {
+          "fault": "blame_wording",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "BMI (27.4 kg/m2) pulls the estimate down because the patient is overweight.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": []
+        },
+        {
+          "fault": "prediction_as_fact",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The model predicts that a patient with this profile will have diabetes by the study's criteria, which is in the high risk band.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": []
+        },
+        {
+          "fault": "magnitude_swap",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The biggest factor is glucose (159 mg/dL), which pushes the estimate up by about 50 percentage points.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "level_numbers"
+          ]
+        },
+        {
+          "fault": "risk_text_swap",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "The model estimates a 60% chance that a patient with this profile has diabetes by the study's criteria, which is in the high risk band.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": [
+            "risk_mismatch"
+          ]
+        },
+        {
+          "fault": "wrong_ordinal",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Pregnancies (7) is the second most influential factor, pushing the estimate up.",
+          "error": null,
+          "level": "novice",
+          "intent": "explain",
+          "codes": []
+        },
+        {
+          "fault": "direction_flip",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "BMI (27.4 kg/m2): +10.0 percentage points (moderate).",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "direction_mismatch"
+          ]
+        },
+        {
+          "fault": "value_swap",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "BMI (28.4 kg/m2): -10.0 percentage points (moderate).",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "value_mismatch"
+          ]
+        },
+        {
+          "fault": "fake_feature",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Family history of hypertension: +3.5 percentage points (weak).",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "missing_citation"
+          ]
+        },
+        {
+          "fault": "wrong_top",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Largest contribution: BMI (27.4 kg/m2), -10.0 percentage points (moderate).",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "missing_required",
+            "rank_mismatch"
+          ]
+        },
+        {
+          "fault": "unsupported_number",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "BMI (27.4 kg/m2): -12.5 percentage points (moderate).",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "unsupported_number"
+          ]
+        },
+        {
+          "fault": "missing_citation",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "BMI (27.4 kg/m2): -10.0 percentage points (moderate).",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "missing_citation"
+          ]
+        },
+        {
+          "fault": "causal_claim",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "BMI (27.4 kg/m2) causes a lower risk of diabetes.",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "causal_wording"
+          ]
+        },
+        {
+          "fault": "raw_code",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Largest contribution: G-GLUCOSE (159 mg/dL), +31.9 percentage points (strong).",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": []
+        },
+        {
+          "fault": "decision_wording",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Given the high risk, the patient should be referred for immediate insulin therapy.",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "decision_wording",
+            "missing_citation"
+          ]
+        },
+        {
+          "fault": "protected_inference",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Age (40 years): +2.4 percentage points (weak). As a woman, age may influence risk.",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "protected_attribute_inference"
+          ]
+        },
+        {
+          "fault": "blame_wording",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "This indicates the patient is careless about weight.",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "blame_wording",
+            "missing_citation"
+          ]
+        },
+        {
+          "fault": "prediction_as_fact",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Calibrated diabetes risk estimate: 57.2% (high band; bootstrap range 50.4% to 64.9%; review threshold 14%).",
+          "error": "unchanged",
+          "level": "expert",
+          "intent": "explain"
+        },
+        {
+          "fault": "magnitude_swap",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Largest contribution: Glucose (159 mg/dL), +50.0 percentage points (strong).",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": []
+        },
+        {
+          "fault": "risk_text_swap",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Calibrated diabetes risk estimate: 60.0% (high band; bootstrap range 50.4% to 64.9%; review threshold 14%).",
+          "error": null,
+          "level": "expert",
+          "intent": "explain",
+          "codes": [
+            "risk_mismatch"
+          ]
+        },
+        {
+          "fault": "wrong_ordinal",
+          "generator": "groq:openai/gpt-oss-20b",
+          "changed_sentence": "Pregnancies (7): +7.7 percentage points (moderate).",
+          "error": "unchanged",
+          "level": "expert",
+          "intent": "explain"
+        }
+      ]
+    }
+  ],
+  "partial": null,
+  "levels": [
+    "novice",
+    "expert"
+  ],
+  "intents": [
+    "explain"
+  ],
+  "offset": 0,
+  "n": 1
+}
