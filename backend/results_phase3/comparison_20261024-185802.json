@@ -1,0 +1,1607 @@
+{
+  "created": "2026-10-24T18:58:02+00:00",
+  "llm": "groq:qwen/qwen3.8-27b",
+  "reviewer": "groq:qwen/qwen3.8-27b",
+  "judge": "groq:openai/gpt-oss-120b",
+  "systems": [
+    "ours:full",
+    "direct",
+    "b3",
+    "explingo",
+    "critic_rule",
+    "musicco"
+  ],
+  "domains": [
+    "finance"
+  ],
+  "n": 1,
+  "levels": [
+    "novice",
+    "expert"
+  ],
+  "intents": [
+    "explain"
+  ],
+  "data_sources": {
+    "finance": "uci_statlog"
+  },
+  "mock_or_standin": false,
+  "summary": {
+    "finance/critic_rule": {
+      "domain": "finance",
+      "system": "critic_rule",
+      "n_cases": 1,
+      "n_shown": 0,
+      "status": {
+        "empty": 1
+      },
+      "error_free": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "error_free_llm": null,
+      "any_fidelity_error_llm": null,
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {},
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "agreement_det": {
+        "value": null,
+        "sign": null,
+        "rank": null,
+        "top3_coverage": null
+      },
+      "agreement_llm": null,
+      "by_level": {
+        "expert": {
+          "words": null,
+          "reading_ease": null,
+          "level_violation_rate": null
+        }
+      },
+      "cost": {
+        "calls": 1,
+        "tokens": 445,
+        "latency_ms": 60415.6
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        }
+      ]
+    },
+    "finance/direct": {
+      "domain": "finance",
+      "system": "direct",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "shown": 2
+      },
+      "error_free": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "error_free_llm": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 2,
+        "causal_wording": 0,
+        "raw_codes": 1
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 0.6875,
+        "top3_coverage": 1.0
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 0.6875
+      },
+      "by_level": {
+        "expert": {
+          "words": 131,
+          "reading_ease": 38.7,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 78,
+          "reading_ease": 72.2,
+          "level_violation_rate": 1.0
+        }
+      },
+      "cost": {
+        "calls": 1,
+        "tokens": 477,
+        "latency_ms": 998.5
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        }
+      ]
+    },
+    "finance/explingo": {
+      "domain": "finance",
+      "system": "explingo",
+      "n_cases": 2,
+      "n_shown": 1,
+      "status": {
+        "shown": 1,
+        "empty": 1
+      },
+      "error_free": {
+        "k": 1,
+        "n": 1,
+        "rate": 1.0,
+        "ci95": [
+          0.20654329147389294,
+          1.0
+        ]
+      },
+      "error_free_llm": {
+        "k": 1,
+        "n": 1,
+        "rate": 1.0,
+        "ci95": [
+          0.20654329147389294,
+          1.0
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 0,
+        "n": 1,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.7934567085261071
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 1,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.7934567085261071
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 1,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.7934567085261071
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 0,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 1,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.7934567085261071
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0,
+        "top3_coverage": 1.0
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0
+      },
+      "by_level": {
+        "expert": {
+          "words": null,
+          "reading_ease": null,
+          "level_violation_rate": null
+        },
+        "novice": {
+          "words": 61,
+          "reading_ease": 73.8,
+          "level_violation_rate": 0.0
+        }
+      },
+      "cost": {
+        "calls": 2.5,
+        "tokens": 1112,
+        "latency_ms": 102789.05
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 1,
+        "n": 1,
+        "rate": 1.0,
+        "ci95": [
+          0.20654329147389294,
+          1.0
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        }
+      ]
+    },
+    "finance/ours:full": {
+      "domain": "finance",
+      "system": "ours:full",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "fallback": 2
+      },
+      "error_free": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "error_free_llm": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 0,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0,
+        "top3_coverage": 1.0
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0
+      },
+      "by_level": {
+        "expert": {
+          "words": 87,
+          "reading_ease": 40.5,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 61,
+          "reading_ease": 73.8,
+          "level_violation_rate": 0.0
+        }
+      },
+      "cost": {
+        "calls": 1,
+        "tokens": 286,
+        "latency_ms": 96905.85
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        }
+      ]
+    }
+  },
+  "records": [
+    {
+      "domain": "finance",
+      "system": "ours:full",
+      "case": "289",
+      "level": "novice",
+      "intent": "explain",
+      "status": "fallback",
+      "attempts": 3,
+      "accepted": true,
+      "usage": {
+        "calls": 1,
+        "cached_calls": 1,
+        "prompt_tokens": 242,
+        "completion_tokens": 44
+      },
+      "latency_ms": 96804.4,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model estimates a 62% chance that an applicant with this profile is a bad credit risk, which is in the high risk band. The biggest factor is checking account (below 0 DM), which pushes the estimate up. Loan duration (24 months) pushes the estimate up. Savings (below 100 DM) pushes the estimate up. These are patterns the model learned from past data, not causes.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 61,
+        "sentences": 5,
+        "reading_ease": 73.8,
+        "agreement_det": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 3,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 1.0,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 3,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 1.0,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "direct",
+      "case": "289",
+      "level": "novice",
+      "intent": "explain",
+      "status": "shown",
+      "attempts": 1,
+      "accepted": null,
+      "usage": {
+        "calls": 1,
+        "cached_calls": 0,
+        "prompt_tokens": 189,
+        "completion_tokens": 156,
+        "estimated": true
+      },
+      "latency_ms": 918.0,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model predicts a 62.45% chance that this applicant is a bad credit risk. This prediction is higher than the average baseline risk of 33.51%. The main reasons for this increased risk are: 1) The applicant has no checking account (checking_status = 0), which added 0.1033 to the risk score. 2) The loan duration is 24 months, which added 0.0774 to the risk score. 3) The applicant has no savings (savings = 0), which added 0.0465 to the risk score. Together, these factors pushed the risk assessment above the average.",
+      "m": {
+        "fidelity_errors_llm": 6,
+        "error_free_llm": false,
+        "words": 78,
+        "sentences": 6,
+        "reading_ease": 72.2,
+        "agreement_det": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": 1.0,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 1.0,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [
+            "0.1033",
+            "0.0774",
+            "0.0465"
+          ],
+          "causal_wording": [],
+          "raw_codes": [
+            "checking_status = 0",
+            "savings = 0",
+            "checking_status"
+          ]
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [
+          "level_numbers"
+        ],
+        "fidelity_errors": 6,
+        "error_free": false,
+        "empty": false
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "b3",
+      "case": "289",
+      "level": "novice",
+      "intent": "explain",
+      "status": "llm_failed:empty",
+      "attempts": 3,
+      "accepted": false,
+      "usage": {
+        "calls": 0,
+        "cached_calls": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "estimated": true
+      },
+      "latency_ms": 190145.7,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 0,
+        "sentences": 0,
+        "reading_ease": 100.0,
+        "agreement_det": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": true
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "explingo",
+      "case": "289",
+      "level": "novice",
+      "intent": "explain",
+      "status": "shown",
+      "attempts": 1,
+      "accepted": true,
+      "usage": {
+        "calls": 2,
+        "cached_calls": 0,
+        "prompt_tokens": 1188,
+        "completion_tokens": 125,
+        "estimated": true
+      },
+      "latency_ms": 105633.4,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model estimates a 62% chance that an applicant with this profile is a bad credit risk, which is in the high risk band. The biggest factor is checking account (below 0 DM), which pushes the estimate up. Loan duration (24 months) pushes the estimate up. Savings (below 100 DM) pushes the estimate up. These are patterns the model learned from past data, not causes.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 61,
+        "sentences": 5,
+        "reading_ease": 73.8,
+        "agreement_det": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 3,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 1.0,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 3,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 1.0,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "critic_rule",
+      "case": "289",
+      "level": "novice",
+      "intent": "explain",
+      "status": "llm_failed:empty",
+      "attempts": 1,
+      "accepted": true,
+      "usage": {
+        "calls": 0,
+        "cached_calls": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "estimated": true
+      },
+      "latency_ms": 63365.3,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 0,
+        "sentences": 0,
+        "reading_ease": 100.0,
+        "agreement_det": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": true
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "musicco",
+      "case": "289",
+      "level": "novice",
+      "intent": "explain",
+      "status": "llm_failed:empty",
+      "attempts": 1,
+      "accepted": true,
+      "usage": {
+        "calls": 0,
+        "cached_calls": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "estimated": true
+      },
+      "latency_ms": 95161.5,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 0,
+        "sentences": 0,
+        "reading_ease": 100.0,
+        "agreement_det": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": true
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "ours:full",
+      "case": "289",
+      "level": "expert",
+      "intent": "explain",
+      "status": "fallback",
+      "attempts": 3,
+      "accepted": true,
+      "usage": {
+        "calls": 1,
+        "cached_calls": 1,
+        "prompt_tokens": 242,
+        "completion_tokens": 44
+      },
+      "latency_ms": 97007.3,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "Calibrated credit risk estimate: 62.5% (high band; bootstrap range 55.8% to 81.7%; review threshold 20%). Largest contribution: Checking account (below 0 DM), +10.3 percentage points (strong). Loan duration (24 months): +7.7 percentage points (moderate). Savings (below 100 DM): +4.6 percentage points (moderate). Property (real estate): -4.6 percentage points (moderate). Employment length (less than 1 year): +4.1 percentage points (moderate). Credit history (delays in repaying in the past): +3.6 percentage points (moderate). Installment rate (level 4): +3.0 percentage points (weak). Other installment plans (with stores): +1.7 percentage points (weak). Contributions are Shapley values relative to an average estimate of 33.5%; they describe the model, not causes.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 87,
+        "sentences": 10,
+        "reading_ease": 40.5,
+        "agreement_det": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 8,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 8,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "direct",
+      "case": "289",
+      "level": "expert",
+      "intent": "explain",
+      "status": "shown",
+      "attempts": 1,
+      "accepted": null,
+      "usage": {
+        "calls": 1,
+        "cached_calls": 0,
+        "prompt_tokens": 330,
+        "completion_tokens": 279,
+        "estimated": true
+      },
+      "latency_ms": 1079.0,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model predicts a 62.45% probability of bad credit risk, which is a significant deviation from the base rate of 33.51%. This elevated risk assessment is primarily driven by the applicant's checking account status (value 0.0), which contributes the largest positive SHAP value of 0.1033, indicating a strong negative signal. This is further compounded by a loan duration of 24 months (SHAP: 0.0774) and a savings account status of 0.0 (SHAP: 0.0465). Additional risk factors include an employment status of 1.0 (SHAP: 0.0411), a credit history code of 3.0 (SHAP: 0.0358), and an installment rate of 4.0 (SHAP: 0.0302). The presence of other installment plans (SHAP: 0.0169) adds a minor positive contribution to the risk score. Conversely, the property status (value 0.0) provides a slight mitigating effect with a negative SHAP value of -0.0456, but this is insufficient to offset the cumulative impact of the other risk indicators.",
+      "m": {
+        "fidelity_errors_llm": 12,
+        "error_free_llm": false,
+        "words": 131,
+        "sentences": 6,
+        "reading_ease": 38.7,
+        "agreement_det": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 0.375,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 5,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 8,
+          "rank_agreement": 0.375,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 5,
+          "stated_rank_errors": 4
+        },
+        "text_checks": {
+          "unsupported_numbers": [
+            "0.1033",
+            "0.0774",
+            "0.0465",
+            "0.0411",
+            "0.0358",
+            "0.0302",
+            "0.0169",
+            "-0.0456"
+          ],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 8,
+        "error_free": false,
+        "empty": false
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "b3",
+      "case": "289",
+      "level": "expert",
+      "intent": "explain",
+      "status": "llm_failed:empty",
+      "attempts": 3,
+      "accepted": false,
+      "usage": {
+        "calls": 0,
+        "cached_calls": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "estimated": true
+      },
+      "latency_ms": 190471.4,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 0,
+        "sentences": 0,
+        "reading_ease": 100.0,
+        "agreement_det": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": true
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "explingo",
+      "case": "289",
+      "level": "expert",
+      "intent": "explain",
+      "status": "empty",
+      "attempts": 3,
+      "accepted": false,
+      "usage": {
+        "calls": 3,
+        "cached_calls": 2,
+        "prompt_tokens": 865,
+        "completion_tokens": 46,
+        "estimated": true
+      },
+      "latency_ms": 99944.7,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 0,
+        "sentences": 0,
+        "reading_ease": 100.0,
+        "agreement_det": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": true
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "critic_rule",
+      "case": "289",
+      "level": "expert",
+      "intent": "explain",
+      "status": "empty",
+      "attempts": 1,
+      "accepted": true,
+      "usage": {
+        "calls": 1,
+        "cached_calls": 0,
+        "prompt_tokens": 439,
+        "completion_tokens": 6,
+        "estimated": true
+      },
+      "latency_ms": 60415.6,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 0,
+        "sentences": 0,
+        "reading_ease": 100.0,
+        "agreement_det": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": true
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "musicco",
+      "case": "289",
+      "level": "expert",
+      "intent": "explain",
+      "status": "llm_failed:empty",
+      "attempts": 1,
+      "accepted": true,
+      "usage": {
+        "calls": 0,
+        "cached_calls": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "estimated": true
+      },
+      "latency_ms": 95211.6,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 0,
+        "sentences": 0,
+        "reading_ease": 100.0,
+        "agreement_det": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": true
+      }
+    }
+  ],
+  "partial": null,
+  "requests_sent": {
+    "groq:qwen/qwen3.8-27b": 358,
+    "groq:openai/gpt-oss-120b": 58,
+    "gemini:gemma-4-26b-a4b-it": 69,
+    "groq:openai/gpt-oss-20b": 127
+  },
+  "tokens_used": {
+    "groq:qwen/qwen3.8-27b": 101467,
+    "groq:openai/gpt-oss-120b": 46605,
+    "gemini:gemma-4-26b-a4b-it": 88694,
+    "groq:openai/gpt-oss-20b": 185727
+  }
+}

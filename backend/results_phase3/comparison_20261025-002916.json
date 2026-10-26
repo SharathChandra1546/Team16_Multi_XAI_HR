@@ -1,0 +1,2000 @@
+{
+  "created": "2026-10-25T00:29:16+00:00",
+  "llm": "groq:qwen/qwen3.8-27b",
+  "reviewer": "groq:qwen/qwen3.8-27b",
+  "judge": "groq:openai/gpt-oss-120b",
+  "systems": [
+    "ours:full",
+    "direct",
+    "b3",
+    "explingo",
+    "critic_rule",
+    "musicco"
+  ],
+  "domains": [
+    "health"
+  ],
+  "n": 1,
+  "levels": [
+    "novice",
+    "expert"
+  ],
+  "intents": [
+    "explain"
+  ],
+  "data_sources": {
+    "health": "pima_niddk"
+  },
+  "mock_or_standin": false,
+  "summary": {
+    "health/b3": {
+      "domain": "health",
+      "system": "b3",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "shown": 2
+      },
+      "error_free": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "error_free_llm": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 0,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 0.4791,
+        "top3_coverage": 1.0
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 0.4791
+      },
+      "by_level": {
+        "expert": {
+          "words": 119,
+          "reading_ease": 39.1,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 65,
+          "reading_ease": 50.5,
+          "level_violation_rate": 1.0
+        }
+      },
+      "cost": {
+        "calls": 2,
+        "tokens": 2128.5,
+        "latency_ms": 0.5
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        }
+      ]
+    },
+    "health/critic_rule": {
+      "domain": "health",
+      "system": "critic_rule",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "shown": 2
+      },
+      "error_free": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "error_free_llm": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 1,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 0.9375,
+        "sign": 1.0,
+        "rank": 1.0,
+        "top3_coverage": 0.8334
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0
+      },
+      "by_level": {
+        "expert": {
+          "words": 145,
+          "reading_ease": 38.2,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 69,
+          "reading_ease": 79.2,
+          "level_violation_rate": 0.0
+        }
+      },
+      "cost": {
+        "calls": 4,
+        "tokens": 3458.5,
+        "latency_ms": 1.35
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        }
+      ]
+    },
+    "health/direct": {
+      "domain": "health",
+      "system": "direct",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "shown": 2
+      },
+      "error_free": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "error_free_llm": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 1,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 0.9,
+        "sign": 1.0,
+        "rank": 0.5416,
+        "top3_coverage": 1.0
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 0.5416
+      },
+      "by_level": {
+        "expert": {
+          "words": 99,
+          "reading_ease": 14.1,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 70,
+          "reading_ease": 52.5,
+          "level_violation_rate": 1.0
+        }
+      },
+      "cost": {
+        "calls": 1,
+        "tokens": 320.5,
+        "latency_ms": 0.5
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        }
+      ]
+    },
+    "health/explingo": {
+      "domain": "health",
+      "system": "explingo",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "shown": 2
+      },
+      "error_free": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "error_free_llm": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 1,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0,
+        "top3_coverage": 1.0
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0
+      },
+      "by_level": {
+        "expert": {
+          "words": 75,
+          "reading_ease": 53.7,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 59,
+          "reading_ease": 74.4,
+          "level_violation_rate": 0.0
+        }
+      },
+      "cost": {
+        "calls": 2,
+        "tokens": 1411.5,
+        "latency_ms": 862.15
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        }
+      ]
+    },
+    "health/musicco": {
+      "domain": "health",
+      "system": "musicco",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "shown": 2
+      },
+      "error_free": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "error_free_llm": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_policy_violation": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "policy_codes": {
+        "prediction_as_fact": 1
+      },
+      "text_checks": {
+        "unsupported_numbers": 1,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 0.3541,
+        "top3_coverage": 1.0
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 0.3541
+      },
+      "by_level": {
+        "expert": {
+          "words": 176,
+          "reading_ease": 36.9,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 75,
+          "reading_ease": 69.6,
+          "level_violation_rate": 0.0
+        }
+      },
+      "cost": {
+        "calls": 3,
+        "tokens": 4131,
+        "latency_ms": 0.95
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 1.0,
+          "n": 2
+        }
+      ]
+    },
+    "health/ours:full": {
+      "domain": "health",
+      "system": "ours:full",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "verified": 2
+      },
+      "error_free": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "error_free_llm": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 0,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0,
+        "top3_coverage": 0.8334
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0
+      },
+      "by_level": {
+        "expert": {
+          "words": 113,
+          "reading_ease": 51.9,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 38,
+          "reading_ease": 85.6,
+          "level_violation_rate": 0.0
+        }
+      },
+      "cost": {
+        "calls": 4,
+        "tokens": 3525,
+        "latency_ms": 320.4
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        }
+      ]
+    }
+  },
+  "records": [
+    {
+      "domain": "health",
+      "system": "ours:full",
+      "case": "44",
+      "level": "novice",
+      "intent": "explain",
+      "status": "verified",
+      "attempts": 2,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 5,
+        "cached_calls": 5,
+        "prompt_tokens": 2979,
+        "completion_tokens": 1015
+      },
+      "latency_ms": 327.2,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model estimates the patient's chance of diabetes at 57.2%. This is a high risk. Their glucose level of 159 mg/dL moves the estimate up. Their BMI of 27.4 kg/m2 moves the estimate down. This is not a diagnosis.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 38,
+        "sentences": 5,
+        "reading_ease": 85.6,
+        "agreement_det": {
+          "n_mentions": 2,
+          "n_evidence_mentions": 2,
+          "value_agreement": 1.0,
+          "n_value": 2,
+          "sign_agreement": 1.0,
+          "n_sign": 2,
+          "rank_agreement": 1.0,
+          "n_rank": 2,
+          "top3_coverage": 0.6667,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 2,
+          "n_evidence_mentions": 2,
+          "value_agreement": 1.0,
+          "n_value": 2,
+          "sign_agreement": 1.0,
+          "n_sign": 2,
+          "rank_agreement": 1.0,
+          "n_rank": 2,
+          "top3_coverage": 0.6667,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "direct",
+      "case": "44",
+      "level": "novice",
+      "intent": "explain",
+      "status": "shown",
+      "attempts": 1,
+      "accepted": null,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 1,
+        "cached_calls": 1,
+        "prompt_tokens": 118,
+        "completion_tokens": 123,
+        "estimated": true
+      },
+      "latency_ms": 0.3,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model predicts a 57.24% chance that this patient has diabetes according to the study's criteria. This prediction is higher than the average baseline risk of 27.30%. The main reason for this increased risk is the patient's high glucose level of 159.0, which strongly pushes the prediction toward diabetes. While the patient has had 7 pregnancies, which slightly increases the risk, their BMI of 27.4 actually works in their favor, slightly lowering the predicted probability.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 70,
+        "sentences": 4,
+        "reading_ease": 52.5,
+        "agreement_det": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 2,
+          "sign_agreement": 1.0,
+          "n_sign": 2,
+          "rank_agreement": 0.3333,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 2,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 3,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 0.3333,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 2,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [
+          "level_numbers",
+          "terminology"
+        ],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "b3",
+      "case": "44",
+      "level": "novice",
+      "intent": "explain",
+      "status": "shown",
+      "attempts": 1,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 2,
+        "cached_calls": 2,
+        "prompt_tokens": 1568,
+        "completion_tokens": 179,
+        "estimated": true
+      },
+      "latency_ms": 0.4,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model estimates a 57.2% risk of diabetes, which is classified as high. This estimate is significantly higher than the average of 27.3%. The primary driver is a glucose level of 159 mg/dL, which strongly increases the risk by 31.9 percentage points. A history of 7 pregnancies also contributes to a higher risk, adding 7.7 percentage points. Conversely, a BMI of 27.4 kg/m2 moderately decreases the risk by 10.0 percentage points.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 65,
+        "sentences": 5,
+        "reading_ease": 50.5,
+        "agreement_det": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 2,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 0.3333,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 2,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 3,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 0.3333,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 2,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [
+          "level_numbers"
+        ],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "explingo",
+      "case": "44",
+      "level": "novice",
+      "intent": "explain",
+      "status": "shown",
+      "attempts": 1,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 2,
+        "cached_calls": 2,
+        "prompt_tokens": 900,
+        "completion_tokens": 105,
+        "estimated": true
+      },
+      "latency_ms": 880.3,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model estimates a 57% chance that a patient with this profile has diabetes by the study's criteria, which is in the medium risk band. The biggest factor is glucose (159 mg/dL), which pushes the estimate up. BMI (27.4 kg/m2) pulls the estimate down. Pregnancies (7) pushes the estimate up. These are patterns the model learned from past data, not causes.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 59,
+        "sentences": 5,
+        "reading_ease": 74.4,
+        "agreement_det": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 3,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 1.0,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 3,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 1.0,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "critic_rule",
+      "case": "44",
+      "level": "novice",
+      "intent": "explain",
+      "status": "shown",
+      "attempts": 2,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 4,
+        "cached_calls": 4,
+        "prompt_tokens": 2349,
+        "completion_tokens": 357,
+        "estimated": true
+      },
+      "latency_ms": 1.6,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model estimates a 57% chance that this patient has diabetes. This is considered a high risk. The main reason is the blood sugar level, which is 159 mg/dL. This high reading pushes the risk up significantly. The patient's BMI is 27.4. This factor pulls the estimate down a bit. Having been pregnant 7 times also adds to the risk. Overall, the high blood sugar is the strongest driver of this result.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 69,
+        "sentences": 8,
+        "reading_ease": 79.2,
+        "agreement_det": {
+          "n_mentions": 2,
+          "n_evidence_mentions": 2,
+          "value_agreement": 1.0,
+          "n_value": 2,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": 1.0,
+          "n_rank": 2,
+          "top3_coverage": 0.6667,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 3,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 1.0,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "musicco",
+      "case": "44",
+      "level": "novice",
+      "intent": "explain",
+      "status": "shown",
+      "attempts": 1,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 3,
+        "cached_calls": 3,
+        "prompt_tokens": 2900,
+        "completion_tokens": 352,
+        "estimated": true
+      },
+      "latency_ms": 1.1,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model estimates a high risk of 57% for this patient. This is well above the average risk of 27% for the group. The main reason for this high score is the glucose level of 159 mg/dL, which moved the estimate up significantly. A history of 7 pregnancies also raised the score. The BMI of 27.4 kg/m2 slightly lowered the estimate. Please remember that this is a screening tool, not a diagnosis. Always verify with a clinical diagnosis.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": false,
+        "words": 75,
+        "sentences": 7,
+        "reading_ease": 69.6,
+        "agreement_det": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 2,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 0.3333,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 2,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 3,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 0.3333,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 2,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [
+          "prediction_as_fact"
+        ],
+        "n_policy_violations": 1,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": false,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "ours:full",
+      "case": "44",
+      "level": "expert",
+      "intent": "explain",
+      "status": "verified",
+      "attempts": 1,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 3,
+        "cached_calls": 3,
+        "prompt_tokens": 1994,
+        "completion_tokens": 1062
+      },
+      "latency_ms": 313.6,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model estimates the patient's risk of diabetes by the study's criteria at 57.2%, placing them in the high band. This estimate is 29.9 percentage points above the average estimate of 27.3%. The primary factor moving the estimate up is Glucose at 159 mg/dL, which contributes +31.9 percentage points. BMI at 27.4 kg/m2 moves the estimate down by 10.0 percentage points. Pregnancies at 7 contributes +7.7 percentage points. Age at 40 years contributes +2.4 percentage points. Diabetes pedigree at 0.3 contributes -2.0 percentage points. Skin-fold thickness at 29 mm contributes -0.1 percentage points. Blood pressure at 64 mm Hg contributes 0.0 percentage points. Insulin at 125 mu U/ml contributes -0.0 percentage points. The risk estimate is a calibrated probability based on training data patterns and is not a diagnosis.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 113,
+        "sentences": 11,
+        "reading_ease": 51.9,
+        "agreement_det": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 7,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 6,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "direct",
+      "case": "44",
+      "level": "expert",
+      "intent": "explain",
+      "status": "shown",
+      "attempts": 1,
+      "accepted": null,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 1,
+        "cached_calls": 1,
+        "prompt_tokens": 202,
+        "completion_tokens": 198,
+        "estimated": true
+      },
+      "latency_ms": 0.7,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model predicts a 57.24% probability of diabetes, exceeding the base rate of 27.30%. This positive deviation is primarily driven by a significantly elevated Glucose level of 159.0 mg/dL, which contributes a SHAP value of +0.3193. This effect is partially offset by a BMI of 27.4 (SHAP: -0.1000), suggesting that despite being overweight, the metabolic impact is dominated by hyperglycemia rather than adiposity. A history of 7 pregnancies (SHAP: +0.0769) further increases the risk, while the relatively low DiabetesPedigreeFunction (0.294, SHAP: -0.0205) indicates a lower genetic predisposition, slightly tempering the overall risk score. Other factors, including Age (40), SkinThickness, BloodPressure, and Insulin, have negligible contributions to the final prediction.",
+      "m": {
+        "fidelity_errors_llm": 4,
+        "error_free_llm": false,
+        "words": 99,
+        "sentences": 5,
+        "reading_ease": 14.1,
+        "agreement_det": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 0.8,
+          "n_value": 5,
+          "sign_agreement": 1.0,
+          "n_sign": 4,
+          "rank_agreement": 0.75,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 1,
+          "sign_errors": 0,
+          "rank_errors": 2,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 5,
+          "sign_agreement": 1.0,
+          "n_sign": 4,
+          "rank_agreement": 0.75,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 2,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [
+            "+0.3193",
+            "-0.1000",
+            "+0.0769",
+            "-0.0205"
+          ],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 5,
+        "error_free": false,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "b3",
+      "case": "44",
+      "level": "expert",
+      "intent": "explain",
+      "status": "shown",
+      "attempts": 1,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 2,
+        "cached_calls": 2,
+        "prompt_tokens": 2219,
+        "completion_tokens": 291,
+        "estimated": true
+      },
+      "latency_ms": 0.6,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model estimates a 57.2% risk of diabetes, which places this profile in the high-risk band, significantly above the average estimate of 27.3%. The primary driver of this elevated risk is the plasma glucose level of 159 mg/dL, which strongly increases the prediction by 31.9 percentage points. This is further compounded by a history of 7 pregnancies, which adds 7.7 percentage points to the risk, and an age of 40 years, contributing a smaller 2.4 percentage points. Conversely, the model notes that a BMI of 27.4 kg/m\u00b2 moderately decreases the risk by 10.0 percentage points, while a low diabetes pedigree score of 0.3 provides a minor protective effect of -2.0 percentage points. Other factors, including skin-fold thickness, blood pressure, and insulin levels, have negligible impacts on the final estimate.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 119,
+        "sentences": 5,
+        "reading_ease": 39.1,
+        "agreement_det": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 4,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 0.625,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 3,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 5,
+          "sign_agreement": 1.0,
+          "n_sign": 5,
+          "rank_agreement": 0.625,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 3,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "explingo",
+      "case": "44",
+      "level": "expert",
+      "intent": "explain",
+      "status": "shown",
+      "attempts": 1,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 2,
+        "cached_calls": 2,
+        "prompt_tokens": 1633,
+        "completion_tokens": 185,
+        "estimated": true
+      },
+      "latency_ms": 844.0,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "Calibrated diabetes risk estimate: 57.2% (high band; bootstrap range 50.6% to 63.8%; review threshold 14%). Largest contribution: Glucose (159 mg/dL), +31.9 percentage points (strong). BMI (27.4 kg/m2): -10.0 percentage points (strong). Pregnancies (7): +7.7 percentage points (moderate). Age (40 years): +2.4 percentage points (weak). Diabetes pedigree (0.3): -2.1 percentage points (weak). Skin-fold thickness (29 mm): -0.0 percentage points (weak). Blood pressure (64 mm Hg): +0.0 percentage points (weak). Insulin (125 mu U/ml): -0.0 percentage points (weak). Contributions are Shapley values relative to an average estimate of 27.3%; they describe the model, not causes.",
+      "m": {
+        "fidelity_errors_llm": 3,
+        "error_free_llm": false,
+        "words": 75,
+        "sentences": 10,
+        "reading_ease": 53.7,
+        "agreement_det": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 8,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 8,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [
+            "50.6",
+            "63.8",
+            "-2.1"
+          ],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 3,
+        "error_free": false,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "critic_rule",
+      "case": "44",
+      "level": "expert",
+      "intent": "explain",
+      "status": "shown",
+      "attempts": 2,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 4,
+        "cached_calls": 4,
+        "prompt_tokens": 3334,
+        "completion_tokens": 877,
+        "estimated": true
+      },
+      "latency_ms": 1.1,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model assigns a 57.2% probability of diabetes (95% CI: 50.4\u201364.9%), placing this patient in the 'high' risk band, which is defined as an estimated risk of \u226550%. This estimate is approximately 30 percentage points higher than the population average of 27.3%. The primary driver is the 2-hour plasma glucose level of 159 mg/dL, which contributes +31.9 percentage points to the risk score, indicating a strong positive association with the outcome. The model attributes a protective effect to the patient's BMI of 27.4 kg/m\u00b2 (-10.0 pp), suggesting that despite the elevated glucose, a moderate BMI partially offsets the risk. Secondary risk factors include a history of 7 pregnancies (+7.7 pp) and age 40 (+2.4 pp). A low Diabetes Pedigree Function score of 0.3 contributes -2.0 pp, indicating a lack of strong familial history. Other variables, including skin-fold thickness (29 mm, -0.1 pp), diastolic blood pressure (64 mm Hg, 0.0 pp), and insulin levels (125 \u00b5U/ml, -0.0 pp), have negligible contributions to the final estimate.",
+      "m": {
+        "fidelity_errors_llm": 1,
+        "error_free_llm": false,
+        "words": 145,
+        "sentences": 7,
+        "reading_ease": 38.2,
+        "agreement_det": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 0.875,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 7,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 1,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 6,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [
+            "95"
+          ],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 2,
+        "error_free": false,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "musicco",
+      "case": "44",
+      "level": "expert",
+      "intent": "explain",
+      "status": "shown",
+      "attempts": 1,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 3,
+        "cached_calls": 3,
+        "prompt_tokens": 4278,
+        "completion_tokens": 732,
+        "estimated": true
+      },
+      "latency_ms": 0.8,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model outputs a calibrated probability of 57.24% (95% CI: 50.4%\u201364.9%) for diabetes by the study's criteria, placing this patient in the 'high' risk band, well above the 14% review threshold. This estimate is significantly elevated compared to the average estimate of 27.3% for the training population. The primary driver of this high risk is the 2-hour plasma glucose level of 159 mg/dL, which contributes +31.9 percentage points to the risk estimate. This is followed by a history of 7 pregnancies, adding +7.7 percentage points, and an age of 40 years, contributing +2.4 percentage points. Conversely, the BMI of 27.4 kg/m2 exerts a protective effect in this model context, reducing the estimate by -10.0 percentage points, while the diabetes pedigree function of 0.3 contributes -2.0 percentage points. Minor influences include a diastolic blood pressure of 64 mm Hg (+0.0 points), triceps skin-fold thickness of 29 mm (-0.1 points), and serum insulin of 125 mu U/ml (-0.0 points). Note that these contributions describe the model's internal behavior relative to the average estimate and do not imply causal relationships. This probability is a statistical estimate based on training data patterns and is not a clinical diagnosis.",
+      "m": {
+        "fidelity_errors_llm": 6,
+        "error_free_llm": false,
+        "words": 176,
+        "sentences": 8,
+        "reading_ease": 36.9,
+        "agreement_det": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 7,
+          "sign_agreement": 1.0,
+          "n_sign": 8,
+          "rank_agreement": 0.375,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 5,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 6,
+          "rank_agreement": 0.375,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 5,
+          "stated_rank_errors": 5
+        },
+        "text_checks": {
+          "unsupported_numbers": [
+            "95"
+          ],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 1,
+        "error_free": false,
+        "empty": false
+      }
+    }
+  ],
+  "partial": null,
+  "requests_sent": {},
+  "tokens_used": {}
+}

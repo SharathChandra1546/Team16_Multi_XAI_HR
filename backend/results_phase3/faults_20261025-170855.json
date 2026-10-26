@@ -1,0 +1,1422 @@
+{
+  "created": "2026-10-25T17:00:27+00:00",
+  "llm": "mock:deterministic-template",
+  "judge": null,
+  "base": "template",
+  "data_source": "ibm_kaggle",
+  "domains": [
+    {
+      "domain": "hr",
+      "base": "template",
+      "injector": "template",
+      "fault_llm": null,
+      "n_cases": 30,
+      "skipped_bases_not_clean": 0,
+      "per_fault": {
+        "direction_flip": {
+          "expected_code": "direction_mismatch",
+          "category": "fidelity",
+          "n": 90,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "value_swap": {
+          "expected_code": "value_mismatch",
+          "category": "fidelity",
+          "n": 90,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "fake_feature": {
+          "expected_code": "unknown_evidence",
+          "category": "fidelity",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "wrong_top": {
+          "expected_code": "rank_mismatch",
+          "category": "fidelity",
+          "n": 90,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "unsupported_number": {
+          "expected_code": "unsupported_number",
+          "category": "fidelity",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "missing_citation": {
+          "expected_code": "missing_citation",
+          "category": "fidelity",
+          "n": 90,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "causal_claim": {
+          "expected_code": "causal_wording",
+          "category": "fidelity",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "raw_code": {
+          "expected_code": "raw_code_leak",
+          "category": "fidelity",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "decision_wording": {
+          "expected_code": "decision_wording",
+          "category": "policy",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "protected_inference": {
+          "expected_code": "protected_attribute_inference",
+          "category": "policy",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "blame_wording": {
+          "expected_code": "blame_wording",
+          "category": "policy",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "prediction_as_fact": {
+          "expected_code": "prediction_as_fact",
+          "category": "policy",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "risk_text_swap": {
+          "expected_code": "risk_mismatch",
+          "category": "fidelity",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "wrong_ordinal": {
+          "expected_code": "rank_mismatch",
+          "category": "fidelity",
+          "n": 90,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "magnitude_swap": {
+          "expected_code": "magnitude_mismatch",
+          "category": "fidelity",
+          "n": 60,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 60,
+            "n": 60,
+            "rate": 1.0,
+            "ci95": [
+              0.9398260695220669,
+              0.9999999999999999
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 60,
+            "n": 60,
+            "rate": 1.0,
+            "ci95": [
+              0.9398260695220669,
+              0.9999999999999999
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        }
+      },
+      "overall": {
+        "detection": {
+          "k": 2130,
+          "n": 2130,
+          "rate": 1.0,
+          "ci95": [
+            0.9981996789264957,
+            1.0
+          ]
+        },
+        "any_rejection": {
+          "k": 2130,
+          "n": 2130,
+          "rate": 1.0,
+          "ci95": [
+            0.9981996789264957,
+            1.0
+          ]
+        },
+        "reviewer_detection": null
+      },
+      "clean": {
+        "n": 719,
+        "false_rejection_rate": 0.0,
+        "false_rejection": {
+          "k": 0,
+          "n": 719,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.005314580677149738
+          ]
+        },
+        "reviewer_false_rejection_rate": null,
+        "codes": {}
+      },
+      "llm_fault_records": []
+    },
+    {
+      "domain": "finance",
+      "base": "template",
+      "injector": "template",
+      "fault_llm": null,
+      "n_cases": 30,
+      "skipped_bases_not_clean": 0,
+      "per_fault": {
+        "direction_flip": {
+          "expected_code": "direction_mismatch",
+          "category": "fidelity",
+          "n": 90,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "value_swap": {
+          "expected_code": "value_mismatch",
+          "category": "fidelity",
+          "n": 90,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "fake_feature": {
+          "expected_code": "unknown_evidence",
+          "category": "fidelity",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "wrong_top": {
+          "expected_code": "rank_mismatch",
+          "category": "fidelity",
+          "n": 90,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "unsupported_number": {
+          "expected_code": "unsupported_number",
+          "category": "fidelity",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "missing_citation": {
+          "expected_code": "missing_citation",
+          "category": "fidelity",
+          "n": 90,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "causal_claim": {
+          "expected_code": "causal_wording",
+          "category": "fidelity",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "raw_code": {
+          "expected_code": "raw_code_leak",
+          "category": "fidelity",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "decision_wording": {
+          "expected_code": "decision_wording",
+          "category": "policy",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "protected_inference": {
+          "expected_code": "protected_attribute_inference",
+          "category": "policy",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "blame_wording": {
+          "expected_code": "blame_wording",
+          "category": "policy",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "prediction_as_fact": {
+          "expected_code": "prediction_as_fact",
+          "category": "policy",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "risk_text_swap": {
+          "expected_code": "risk_mismatch",
+          "category": "fidelity",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "wrong_ordinal": {
+          "expected_code": "rank_mismatch",
+          "category": "fidelity",
+          "n": 90,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "magnitude_swap": {
+          "expected_code": "magnitude_mismatch",
+          "category": "fidelity",
+          "n": 60,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 60,
+            "n": 60,
+            "rate": 1.0,
+            "ci95": [
+              0.9398260695220669,
+              0.9999999999999999
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 60,
+            "n": 60,
+            "rate": 1.0,
+            "ci95": [
+              0.9398260695220669,
+              0.9999999999999999
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        }
+      },
+      "overall": {
+        "detection": {
+          "k": 2130,
+          "n": 2130,
+          "rate": 1.0,
+          "ci95": [
+            0.9981996789264957,
+            1.0
+          ]
+        },
+        "any_rejection": {
+          "k": 2130,
+          "n": 2130,
+          "rate": 1.0,
+          "ci95": [
+            0.9981996789264957,
+            1.0
+          ]
+        },
+        "reviewer_detection": null
+      },
+      "clean": {
+        "n": 705,
+        "false_rejection_rate": 0.0,
+        "false_rejection": {
+          "k": 0,
+          "n": 705,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.005419546482599215
+          ]
+        },
+        "reviewer_false_rejection_rate": null,
+        "codes": {}
+      },
+      "llm_fault_records": []
+    },
+    {
+      "domain": "health",
+      "base": "template",
+      "injector": "template",
+      "fault_llm": null,
+      "n_cases": 30,
+      "skipped_bases_not_clean": 0,
+      "per_fault": {
+        "direction_flip": {
+          "expected_code": "direction_mismatch",
+          "category": "fidelity",
+          "n": 90,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "value_swap": {
+          "expected_code": "value_mismatch",
+          "category": "fidelity",
+          "n": 90,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "fake_feature": {
+          "expected_code": "unknown_evidence",
+          "category": "fidelity",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "wrong_top": {
+          "expected_code": "rank_mismatch",
+          "category": "fidelity",
+          "n": 90,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "unsupported_number": {
+          "expected_code": "unsupported_number",
+          "category": "fidelity",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "missing_citation": {
+          "expected_code": "missing_citation",
+          "category": "fidelity",
+          "n": 90,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "causal_claim": {
+          "expected_code": "causal_wording",
+          "category": "fidelity",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "raw_code": {
+          "expected_code": "raw_code_leak",
+          "category": "fidelity",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "decision_wording": {
+          "expected_code": "decision_wording",
+          "category": "policy",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "protected_inference": {
+          "expected_code": "protected_attribute_inference",
+          "category": "policy",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "blame_wording": {
+          "expected_code": "blame_wording",
+          "category": "policy",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "prediction_as_fact": {
+          "expected_code": "prediction_as_fact",
+          "category": "policy",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "risk_text_swap": {
+          "expected_code": "risk_mismatch",
+          "category": "fidelity",
+          "n": 180,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 180,
+            "n": 180,
+            "rate": 1.0,
+            "ci95": [
+              0.9791037501849418,
+              1.0
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "wrong_ordinal": {
+          "expected_code": "rank_mismatch",
+          "category": "fidelity",
+          "n": 90,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 90,
+            "n": 90,
+            "rate": 1.0,
+            "ci95": [
+              0.9590629315783191,
+              0.9999999999999999
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        },
+        "magnitude_swap": {
+          "expected_code": "magnitude_mismatch",
+          "category": "fidelity",
+          "n": 60,
+          "detection_rate": 1.0,
+          "detection": {
+            "k": 60,
+            "n": 60,
+            "rate": 1.0,
+            "ci95": [
+              0.9398260695220669,
+              0.9999999999999999
+            ]
+          },
+          "exact_code_rate": 1.0,
+          "any_rejection": {
+            "k": 60,
+            "n": 60,
+            "rate": 1.0,
+            "ci95": [
+              0.9398260695220669,
+              0.9999999999999999
+            ]
+          },
+          "reviewer_detection_rate": null,
+          "reviewer_detection": null,
+          "collateral_codes": {}
+        }
+      },
+      "overall": {
+        "detection": {
+          "k": 2130,
+          "n": 2130,
+          "rate": 1.0,
+          "ci95": [
+            0.9981996789264957,
+            1.0
+          ]
+        },
+        "any_rejection": {
+          "k": 2130,
+          "n": 2130,
+          "rate": 1.0,
+          "ci95": [
+            0.9981996789264957,
+            1.0
+          ]
+        },
+        "reviewer_detection": null
+      },
+      "clean": {
+        "n": 711,
+        "false_rejection_rate": 0.0,
+        "false_rejection": {
+          "k": 0,
+          "n": 711,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.005374057693340734
+          ]
+        },
+        "reviewer_false_rejection_rate": null,
+        "codes": {}
+      },
+      "llm_fault_records": []
+    }
+  ],
+  "partial": null,
+  "levels": [
+    "novice",
+    "intermediate",
+    "expert"
+  ],
+  "intents": [
+    "explain",
+    "recourse"
+  ],
+  "offset": 0,
+  "n": 30
+}

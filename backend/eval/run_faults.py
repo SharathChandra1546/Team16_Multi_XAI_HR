@@ -44,6 +44,10 @@ from app.xai.evidence import build_package  # noqa: E402
 
 RESULTS = Path(__file__).resolve().parents[1] / "results"
 LEVELS = ["novice", "intermediate", "expert"]
+INTENTS = ["explain", "recourse"]
+OFFSET = 0
+BUDGET_CHECK = lambda: None  # noqa: E731  (set in main when --budget / --token-budget is given)
+STOPPED: list[str] = []
 
 # Meaning-preserving rewrites used to measure false rejections on varied, correct text.
 CLEAN_REWRITES = [
@@ -99,13 +103,17 @@ def run_domain(d, n, base, use_reviewer, seed, injector="template"):
     llm_records = []
     prompt = DEFAULT_PROMPTS[0]
     rt = d.runtime("main")
-    xs = [{f: float(r[f]) for f in rt.features} for _, r in rt.examples.head(n).iterrows()]
+    xs = [{f: float(r[f]) for f in rt.features} for _, r in rt.examples.iloc[OFFSET:OFFSET + n].iterrows()]
     det = defaultdict(lambda: {"n": 0, "detected": 0, "exact": 0, "rejected": 0, "reviewer_detected": 0,
                                "collateral": defaultdict(int)})
     clean = {"n": 0, "rejected": 0, "reviewer_rejected": 0, "codes": defaultdict(int)}
     skipped_bases = 0
     for x in xs:
-        for intent in ("explain", "recourse"):
+        why = BUDGET_CHECK()
+        if why:
+            STOPPED.append(f"{d.name}: {why}")
+            break
+        for intent in INTENTS:
             for level in LEVELS:
                 pkg, plan, gen = base_texts(d, x, level, intent, base, llm, prompt)
                 if gen is None:
@@ -152,6 +160,9 @@ def run_domain(d, n, base, use_reviewer, seed, injector="template"):
                         r["collateral"][c] += 1
                     if judge and reviewer_flags(judge, pkg, plan, bad):
                         r["reviewer_detected"] += 1
+    why = BUDGET_CHECK()  # a provider can refuse mid-case (daily quota): report it so the driver stops
+    if why and not STOPPED:
+        STOPPED.append(f"{d.name}: {why}")
     per_fault = {}
     for f, r in det.items():
         per_fault[f] = {"expected_code": FAULTS[f], "category": TAXONOMY[f]["category"], "n": r["n"],
@@ -212,6 +223,7 @@ def to_markdown(res: dict) -> str:
 
 
 def main() -> int:
+    global LEVELS, INTENTS, BUDGET_CHECK, OFFSET
     ap = argparse.ArgumentParser()
     ap.add_argument("--n", type=int, default=30)
     ap.add_argument("--base", choices=["template", "llm"], default="template")
@@ -219,7 +231,26 @@ def main() -> int:
     ap.add_argument("--domains", default="hr")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--faults", choices=["template", "llm", "both"], default="template")
+    ap.add_argument("--offset", type=int, default=0, help="skip the first N examples")
+    ap.add_argument("--levels", default=",".join(LEVELS))
+    ap.add_argument("--intents", default=",".join(INTENTS))
+    ap.add_argument("--budget", default="", help="request budget per model, e.g. 'groq:openai/gpt-oss-20b=900'")
+    ap.add_argument("--token-budget", default="", help="token budget per model, e.g. 'groq:openai/gpt-oss-20b=180k'")
     args = ap.parse_args()
+    LEVELS, INTENTS, OFFSET = args.levels.split(","), args.intents.split(","), args.offset
+    from app.llm.client import load_daily_usage, over_budget, parse_budget, save_daily_usage
+
+    rb, tb = parse_budget(args.budget), parse_budget(args.token_budget)
+    if rb or tb:
+        load_daily_usage()
+
+        used = {get_fault_llm().id} if args.faults in ("llm", "both") else set()
+        if args.reviewer:
+            used.add(get_reviewer().id)
+
+        def BUDGET_CHECK():  # noqa: N802
+            save_daily_usage()
+            return over_budget(rb, tb, used)
     reg = default_registry()
     mock_llm.DOMAIN_RESOLVER = reg.get
     res = {"created": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "llm": get_llm().id,
@@ -229,6 +260,12 @@ def main() -> int:
     for name in args.domains.split(","):
         for inj in injectors:
             res["domains"].append(run_domain(reg.get(name), args.n, args.base, args.reviewer, args.seed, inj))
+    if rb or tb:
+        save_daily_usage()
+    res["partial"] = STOPPED or None
+    res["levels"], res["intents"], res["offset"], res["n"] = LEVELS, INTENTS, OFFSET, args.n
+    if STOPPED:
+        print("PARTIAL RUN (budget reached): " + "; ".join(STOPPED), file=sys.stderr)
     RESULTS.mkdir(exist_ok=True)
     stamp = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
     (RESULTS / f"faults_{stamp}.json").write_text(json.dumps(res, indent=2), encoding="utf-8")

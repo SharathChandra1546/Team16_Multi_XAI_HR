@@ -95,20 +95,66 @@ class _Cache:
 
 
 def _parse_json(text: str) -> dict:
-    text = text.strip()
+    # some open models (Gemma 4) put their reasoning in <thought> blocks before the answer
+    text = re.sub(r"<(thought|think)>.*?</\1>", "", text.strip(), flags=re.S | re.I).strip()
     fence = re.search(r"```(?:json)?\s*(\{.*\})\s*```", text, re.S)
     if fence:
         text = fence.group(1)
     try:
         return json.loads(text)
     except json.JSONDecodeError:
-        start, end = text.find("{"), text.rfind("}")
-        if start >= 0 and end > start:
-            return json.loads(text[start : end + 1])
+        # take the LAST complete JSON object in the text (the answer follows any reasoning or examples)
+        dec, best = json.JSONDecoder(), None
+        for i, ch in enumerate(text):
+            if ch == "{":
+                try:
+                    obj, end = dec.raw_decode(text, i)
+                except json.JSONDecodeError:
+                    continue
+                if isinstance(obj, dict) and (best is None or end > best[1]):
+                    best = (obj, end)
+        if best is not None:
+            return best[0]
         raise
 
 
+def _reasoning_effort(provider: str, model: str) -> str | None:
+    """Reasoning setting for models that think before answering. LLM_REASONING_EFFORT overrides (empty = default).
+    Qwen 3 on Groq: thinking makes a request too large for the free 8K-tokens-per-minute limit, so it is off.
+    gpt-oss: 'low' keeps extraction and review calls short."""
+    if "LLM_REASONING_EFFORT" in os.environ:
+        return os.environ["LLM_REASONING_EFFORT"] or None
+    m = (model or "").lower()
+    if provider in ("groq", "cerebras") and "qwen" in m:
+        return "none"
+    if "gpt-oss" in m:
+        return "low"
+    return None
+
+
+def _retry_after(r) -> float | None:
+    """Seconds to wait from a 429 response (Retry-After header or Google's RetryInfo), if given."""
+    h = r.headers.get("retry-after")
+    if h:
+        try:
+            return float(h)
+        except ValueError:
+            pass
+    m = re.search(r'"retryDelay":\s*"(\d+(?:\.\d+)?)s"', r.text or "")
+    return float(m.group(1)) if m else None
+
+
 class OpenAICompatLLM(BaseLLM):
+    # HTTP requests sent per model ("provider:model") in this process, retries included (what a daily quota counts)
+    requests_sent: dict[str, int] = {}
+    # tokens used per model in this process (prompt + completion, cached answers excluded)
+    tokens_used: dict[str, int] = {}
+    # models whose provider said the DAILY quota is used up (Groq: "tokens per day (TPD)"); runs stop on these
+    daily_exhausted: dict[str, str] = {}
+    # calls that failed after all retries, per model (server errors, timeouts, quota): a text produced while one of
+    # these happened is a failed generation, not a pipeline decision
+    errors: dict[str, int] = {}
+
     def __init__(self, provider: str, model: str | None = None, temperature: float | None = None):
         if provider not in PROVIDERS:
             raise LLMError(f"Unknown provider '{provider}'. Choose one of {list(PROVIDERS)} or 'mock'.")
@@ -128,12 +174,16 @@ class OpenAICompatLLM(BaseLLM):
         body = {
             "model": self.model,
             "temperature": self.temperature,
-            "response_format": {"type": "json_object"},
             "messages": [
                 {"role": "system", "content": system + "\nRespond with a single valid JSON object only."},
                 {"role": "user", "content": user},
             ],
         }
+        if not self.model.startswith("gemma"):  # Gemma on the Gemini API rejects JSON mode (HTTP 500)
+            body["response_format"] = {"type": "json_object"}
+        effort = _reasoning_effort(self.name, self.model)
+        if effort:
+            body["reasoning_effort"] = effort
         key = hashlib.sha256(json.dumps(body, sort_keys=True).encode()).hexdigest()
         if self.cache and self.temperature == 0:
             hit = self.cache.get(key)
@@ -145,13 +195,25 @@ class OpenAICompatLLM(BaseLLM):
         last_err: Exception | None = None
         for attempt in range(4):
             try:
+                OpenAICompatLLM.requests_sent[self.id] = OpenAICompatLLM.requests_sent.get(self.id, 0) + 1
                 r = httpx.post(
                     f"{self.base_url}/chat/completions",
                     headers={"Authorization": f"Bearer {self.api_key}"},
                     json=body,
                     timeout=90,
                 )
-                if r.status_code == 429 or r.status_code >= 500:
+                if r.status_code == 429:
+                    # per-minute limits (Groq free tier: 8K tokens/min) say how long to wait; a daily limit does not
+                    # clear within a run, so fail instead of sleeping for hours
+                    if re.search(r"per day|PerDay|\(TPD\)|\(RPD\)", r.text or ""):
+                        OpenAICompatLLM.daily_exhausted[self.id] = r.text[:200]
+                        raise LLMError(f"HTTP 429 (daily quota used up): {r.text[:300]}")
+                    wait = _retry_after(r)
+                    if wait is not None and wait <= 90:
+                        time.sleep(wait + 1)
+                        continue
+                    raise LLMError(f"HTTP 429 (quota): {r.text[:300]}")
+                if r.status_code >= 500:
                     raise LLMError(f"HTTP {r.status_code}: {r.text[:200]}")
                 r.raise_for_status()
                 body_json = r.json()
@@ -160,18 +222,118 @@ class OpenAICompatLLM(BaseLLM):
                 usage = body_json.get("usage") or {}
                 if usage.get("prompt_tokens") is not None:
                     self.record_usage(task, usage.get("prompt_tokens", 0), usage.get("completion_tokens", 0))
+                    spent = int(usage.get("total_tokens") or (usage.get("prompt_tokens", 0) + usage.get("completion_tokens", 0)))
                 else:
                     self.record_usage(task, estimate_tokens(system + user), estimate_tokens(content), estimated=True)
+                    spent = estimate_tokens(system + user) + estimate_tokens(content)
+                OpenAICompatLLM.tokens_used[self.id] = OpenAICompatLLM.tokens_used.get(self.id, 0) + spent
                 if self.cache and self.temperature == 0:
                     self.cache.put(key, json.dumps(data))
                 return data
             except Exception as e:  # retry with backoff (free tiers rate-limit)
                 last_err = e
+                if self.id in OpenAICompatLLM.daily_exhausted:
+                    break  # retrying cannot help until the provider's daily window frees up
                 time.sleep(2 ** attempt * 2)
+        OpenAICompatLLM.errors[self.id] = OpenAICompatLLM.errors.get(self.id, 0) + 1
         raise LLMError(f"{self.id} failed for task '{task}': {last_err}")
 
 
 _instances: dict[tuple, BaseLLM] = {}
+
+
+def _usage_file():
+    import datetime as _dt
+    from pathlib import Path as _P
+
+    day = _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%d")
+    return _P(__file__).resolve().parents[2] / "results" / f"llm_usage_{day}.json"
+
+
+_SAVED: dict[str, dict[str, int]] = {"requests": {}, "tokens": {}}  # what this process already wrote to the file
+
+
+def _read_usage() -> dict:
+    try:
+        return json.loads(_usage_file().read_text(encoding="utf-8"))
+    except Exception:
+        return {"requests": {}, "tokens": {}, "exhausted": {}}
+
+
+EXHAUSTED_TTL_S = 3600  # a provider's "daily quota used up" is believed for an hour, then tried again
+
+
+def load_daily_usage() -> None:
+    """Count today's (UTC) usage by other runs, so a daily budget holds across restarts and parallel runs."""
+    import time as _t
+
+    d = _read_usage()
+    for mid, ts in (d.get("exhausted") or {}).items():
+        if _t.time() - float(ts) < EXHAUSTED_TTL_S:
+            OpenAICompatLLM.daily_exhausted.setdefault(mid, "reported by an earlier run in the last hour")
+    for kind, counts in (("requests", OpenAICompatLLM.requests_sent), ("tokens", OpenAICompatLLM.tokens_used)):
+        for k, v in d.get(kind, {}).items():
+            counts[k] = counts.get(k, 0) + int(v)
+            _SAVED[kind][k] = _SAVED[kind].get(k, 0) + int(v)
+
+
+def save_daily_usage() -> None:
+    """Add this process's new usage to the file (merge, so parallel runs do not overwrite each other)."""
+    import fcntl
+
+    f = _usage_file()
+    f.parent.mkdir(exist_ok=True)
+    with open(f.with_suffix(".lock"), "w") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        d = _read_usage()
+        for kind, counts in (("requests", OpenAICompatLLM.requests_sent), ("tokens", OpenAICompatLLM.tokens_used)):
+            for k, v in counts.items():
+                delta = v - _SAVED[kind].get(k, 0)
+                if delta:
+                    d.setdefault(kind, {})[k] = d.get(kind, {}).get(k, 0) + delta
+                    _SAVED[kind][k] = v
+            # pick up what parallel runs added meanwhile
+            for k, v in d.get(kind, {}).items():
+                mine = _SAVED[kind].get(k, 0)
+                if v > mine:
+                    counts[k] = counts.get(k, 0) + (v - mine)
+                    _SAVED[kind][k] = v
+        import time as _t
+
+        ex = d.setdefault("exhausted", {})
+        for mid in OpenAICompatLLM.daily_exhausted:
+            if OpenAICompatLLM.daily_exhausted[mid] != "reported by an earlier run in the last hour":
+                ex[mid] = ex.get(mid) if mid in ex and _t.time() - float(ex[mid]) < EXHAUSTED_TTL_S else _t.time()
+        f.write_text(json.dumps(d, indent=1), encoding="utf-8")
+
+
+def parse_budget(spec: str) -> dict[str, int]:
+    """'groq=900,gemini:gemma-4-26b-a4b-it=5000' -> {key: cap}; k/M suffixes allowed (200k)."""
+    out = {}
+    for part in (spec or "").split(","):
+        if "=" in part:
+            k, v = part.rsplit("=", 1)
+            v = v.strip().lower()
+            mult = 1_000_000 if v.endswith("m") else 1_000 if v.endswith("k") else 1
+            out[k.strip()] = int(float(v.rstrip("km")) * mult)
+    return out
+
+
+def over_budget(request_budget: dict[str, int], token_budget: dict[str, int], only: set[str] | None = None) -> str | None:
+    """First model (provider:model, or a provider key) that reached its request or token budget today.
+    `only`: the model ids this run actually uses; other models' budgets do not stop it."""
+    for mid, why in OpenAICompatLLM.daily_exhausted.items():
+        if only is None or mid in only:
+            return f"{mid}: provider reports the daily quota used up"
+    for counts, budget, unit in ((OpenAICompatLLM.requests_sent, request_budget, "requests"),
+                                 (OpenAICompatLLM.tokens_used, token_budget, "tokens")):
+        for mid, n in counts.items():
+            if only is not None and mid not in only:
+                continue
+            for key, cap in budget.items():
+                if (mid == key or mid.split(":", 1)[0] == key) and n >= cap:
+                    return f"{mid} used {n} {unit} (budget {key}={cap})"
+    return None
 
 
 def get_llm(provider: str | None = None, model: str | None = None) -> BaseLLM:

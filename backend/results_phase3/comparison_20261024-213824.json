@@ -1,0 +1,1659 @@
+{
+  "created": "2026-10-24T21:38:24+00:00",
+  "llm": "gemini:gemma-4-26b-a4b-it",
+  "reviewer": "gemini:gemma-4-26b-a4b-it",
+  "judge": "groq:openai/gpt-oss-120b",
+  "systems": [
+    "ours:full",
+    "ours:no_verifier",
+    "ours:no_critic",
+    "ours:no_repair",
+    "ours:no_policy_rules"
+  ],
+  "domains": [
+    "finance"
+  ],
+  "n": 1,
+  "levels": [
+    "novice",
+    "expert"
+  ],
+  "intents": [
+    "explain"
+  ],
+  "data_sources": {
+    "finance": "uci_statlog"
+  },
+  "mock_or_standin": false,
+  "summary": {
+    "finance/ours:full": {
+      "domain": "finance",
+      "system": "ours:full",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "verified": 2
+      },
+      "error_free": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "error_free_llm": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 0,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0,
+        "top3_coverage": 0.5
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 0.5,
+        "rank": 1.0
+      },
+      "by_level": {
+        "expert": {
+          "words": 116,
+          "reading_ease": 64.7,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 30,
+          "reading_ease": 73.2,
+          "level_violation_rate": 0.0
+        }
+      },
+      "cost": {
+        "calls": 4,
+        "tokens": 4153,
+        "latency_ms": 1414.35
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        }
+      ]
+    },
+    "finance/ours:no_critic": {
+      "domain": "finance",
+      "system": "ours:no_critic",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "unverified": 1,
+        "verified": 1
+      },
+      "error_free": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "error_free_llm": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 0,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0,
+        "top3_coverage": 0.6666
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0
+      },
+      "by_level": {
+        "expert": {
+          "words": 116,
+          "reading_ease": 64.7,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 36,
+          "reading_ease": 66.4,
+          "level_violation_rate": 1.0
+        }
+      },
+      "cost": {
+        "calls": 2,
+        "tokens": 2758,
+        "latency_ms": 1345.15
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        }
+      ]
+    },
+    "finance/ours:no_policy_rules": {
+      "domain": "finance",
+      "system": "ours:no_policy_rules",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "verified": 2
+      },
+      "error_free": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "error_free_llm": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 0,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0,
+        "top3_coverage": 0.5
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 0.5,
+        "rank": 1.0
+      },
+      "by_level": {
+        "expert": {
+          "words": 116,
+          "reading_ease": 64.7,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 30,
+          "reading_ease": 73.2,
+          "level_violation_rate": 0.0
+        }
+      },
+      "cost": {
+        "calls": 4,
+        "tokens": 4153,
+        "latency_ms": 1506.2
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        }
+      ]
+    },
+    "finance/ours:no_repair": {
+      "domain": "finance",
+      "system": "ours:no_repair",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "fallback": 1,
+        "verified": 1
+      },
+      "error_free": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "error_free_llm": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 0,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0,
+        "top3_coverage": 1.0
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0
+      },
+      "by_level": {
+        "expert": {
+          "words": 116,
+          "reading_ease": 64.7,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 67,
+          "reading_ease": 69.5,
+          "level_violation_rate": 0.0
+        }
+      },
+      "cost": {
+        "calls": 5,
+        "tokens": 5221.5,
+        "latency_ms": 1367.55
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        }
+      ]
+    },
+    "finance/ours:no_verifier": {
+      "domain": "finance",
+      "system": "ours:no_verifier",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "verified": 2
+      },
+      "error_free": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "error_free_llm": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 0,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0,
+        "top3_coverage": 0.5
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 0.5,
+        "rank": 1.0
+      },
+      "by_level": {
+        "expert": {
+          "words": 116,
+          "reading_ease": 64.7,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 30,
+          "reading_ease": 73.2,
+          "level_violation_rate": 0.0
+        }
+      },
+      "cost": {
+        "calls": 4,
+        "tokens": 4153,
+        "latency_ms": 1446.8
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        }
+      ]
+    }
+  },
+  "records": [
+    {
+      "domain": "finance",
+      "system": "ours:full",
+      "case": "875",
+      "level": "novice",
+      "intent": "explain",
+      "status": "verified",
+      "attempts": 2,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 5,
+        "cached_calls": 5,
+        "prompt_tokens": 4152,
+        "completion_tokens": 570
+      },
+      "latency_ms": 1454.5,
+      "escalation_score": 0.5123,
+      "would_escalate_rule": true,
+      "text": "The applicant has a 23.2% chance of being a bad credit risk, which is in the medium risk band. Having critical account or credits at other banks moves the estimate down.",
+      "m": {
+        "fidelity_errors_llm": 2,
+        "error_free_llm": false,
+        "words": 30,
+        "sentences": 2,
+        "reading_ease": 73.2,
+        "agreement_det": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 2,
+          "n_evidence_mentions": 2,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": 0.0,
+          "n_sign": 2,
+          "rank_agreement": 1.0,
+          "n_rank": 2,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 2,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "ours:no_verifier",
+      "case": "875",
+      "level": "novice",
+      "intent": "explain",
+      "status": "verified",
+      "attempts": 2,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 5,
+        "cached_calls": 5,
+        "prompt_tokens": 4152,
+        "completion_tokens": 570
+      },
+      "latency_ms": 1426.2,
+      "escalation_score": 0.5123,
+      "would_escalate_rule": true,
+      "text": "The applicant has a 23.2% chance of being a bad credit risk, which is in the medium risk band. Having critical account or credits at other banks moves the estimate down.",
+      "m": {
+        "fidelity_errors_llm": 2,
+        "error_free_llm": false,
+        "words": 30,
+        "sentences": 2,
+        "reading_ease": 73.2,
+        "agreement_det": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 2,
+          "n_evidence_mentions": 2,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": 0.0,
+          "n_sign": 2,
+          "rank_agreement": 1.0,
+          "n_rank": 2,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 2,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "ours:no_critic",
+      "case": "875",
+      "level": "novice",
+      "intent": "explain",
+      "status": "unverified",
+      "attempts": 1,
+      "accepted": false,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 2,
+        "cached_calls": 2,
+        "prompt_tokens": 2016,
+        "completion_tokens": 256
+      },
+      "latency_ms": 1342.8,
+      "escalation_score": 0.5123,
+      "would_escalate_rule": true,
+      "text": "The applicant has a 23.2% chance of being a bad credit risk, which is in the medium risk band. The credit history of critical account or credits at other banks moves the estimate down by 8.0 percentage points.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 36,
+        "sentences": 2,
+        "reading_ease": 66.4,
+        "agreement_det": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [
+          "level_numbers"
+        ],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "ours:no_repair",
+      "case": "875",
+      "level": "novice",
+      "intent": "explain",
+      "status": "fallback",
+      "attempts": 3,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 7,
+        "cached_calls": 7,
+        "prompt_tokens": 6017,
+        "completion_tokens": 842
+      },
+      "latency_ms": 1353.1,
+      "escalation_score": 0.5123,
+      "would_escalate_rule": true,
+      "text": "The model estimates a 23% chance that an applicant with this profile is a bad credit risk, which is in the medium risk band. The biggest factor is credit history (critical account or credits at other banks), which pulls the estimate down. Savings (1000 DM or more) pulls the estimate down. Loan duration (11 months) pulls the estimate down. These are patterns the model learned from past data, not causes.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 67,
+        "sentences": 5,
+        "reading_ease": 69.5,
+        "agreement_det": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 3,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 1.0,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 3,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 1.0,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "ours:no_policy_rules",
+      "case": "875",
+      "level": "novice",
+      "intent": "explain",
+      "status": "verified",
+      "attempts": 2,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 5,
+        "cached_calls": 5,
+        "prompt_tokens": 4152,
+        "completion_tokens": 570
+      },
+      "latency_ms": 1319.0,
+      "escalation_score": 0.5123,
+      "would_escalate_rule": true,
+      "text": "The applicant has a 23.2% chance of being a bad credit risk, which is in the medium risk band. Having critical account or credits at other banks moves the estimate down.",
+      "m": {
+        "fidelity_errors_llm": 2,
+        "error_free_llm": false,
+        "words": 30,
+        "sentences": 2,
+        "reading_ease": 73.2,
+        "agreement_det": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 2,
+          "n_evidence_mentions": 2,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": 0.0,
+          "n_sign": 2,
+          "rank_agreement": 1.0,
+          "n_rank": 2,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 2,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "ours:full",
+      "case": "875",
+      "level": "expert",
+      "intent": "explain",
+      "status": "verified",
+      "attempts": 1,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 3,
+        "cached_calls": 3,
+        "prompt_tokens": 2612,
+        "completion_tokens": 972
+      },
+      "latency_ms": 1374.2,
+      "escalation_score": 0.5123,
+      "would_escalate_rule": true,
+      "text": "The applicant has a risk estimate of 23.2%, which is in the medium risk band. Credit history with a value of critical account or credits at other banks moves the estimate down by 8.0 percentage points. Savings of 1000 DM or more moves the estimate down by 6.8 percentage points. Loan duration of 11 months moves the estimate down by 6.0 percentage points. Checking account status of 0 to 200 DM moves the estimate up by 4.1 percentage points. Loan purpose of new car moves the estimate up by 3.4 percentage points. Credit amount of 1,322 DM moves the estimate up by 2.1 percentage points. Other installment plans of none moves the estimate down by 1.9 percentage points. Installment rate of level 4 moves the estimate up by 1.4 percentage points.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 116,
+        "sentences": 9,
+        "reading_ease": 64.7,
+        "agreement_det": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 8,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 8,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "ours:no_verifier",
+      "case": "875",
+      "level": "expert",
+      "intent": "explain",
+      "status": "verified",
+      "attempts": 1,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 3,
+        "cached_calls": 3,
+        "prompt_tokens": 2612,
+        "completion_tokens": 972
+      },
+      "latency_ms": 1467.4,
+      "escalation_score": 0.5123,
+      "would_escalate_rule": true,
+      "text": "The applicant has a risk estimate of 23.2%, which is in the medium risk band. Credit history with a value of critical account or credits at other banks moves the estimate down by 8.0 percentage points. Savings of 1000 DM or more moves the estimate down by 6.8 percentage points. Loan duration of 11 months moves the estimate down by 6.0 percentage points. Checking account status of 0 to 200 DM moves the estimate up by 4.1 percentage points. Loan purpose of new car moves the estimate up by 3.4 percentage points. Credit amount of 1,322 DM moves the estimate up by 2.1 percentage points. Other installment plans of none moves the estimate down by 1.9 percentage points. Installment rate of level 4 moves the estimate up by 1.4 percentage points.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 116,
+        "sentences": 9,
+        "reading_ease": 64.7,
+        "agreement_det": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 8,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 8,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "ours:no_critic",
+      "case": "875",
+      "level": "expert",
+      "intent": "explain",
+      "status": "verified",
+      "attempts": 1,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 2,
+        "cached_calls": 2,
+        "prompt_tokens": 2326,
+        "completion_tokens": 918
+      },
+      "latency_ms": 1347.5,
+      "escalation_score": 0.5123,
+      "would_escalate_rule": true,
+      "text": "The applicant has a risk estimate of 23.2%, which is in the medium risk band. Credit history with a value of critical account or credits at other banks moves the estimate down by 8.0 percentage points. Savings of 1000 DM or more moves the estimate down by 6.8 percentage points. Loan duration of 11 months moves the estimate down by 6.0 percentage points. Checking account status of 0 to 200 DM moves the estimate up by 4.1 percentage points. Loan purpose of new car moves the estimate up by 3.4 percentage points. Credit amount of 1,322 DM moves the estimate up by 2.1 percentage points. Other installment plans of none moves the estimate down by 1.9 percentage points. Installment rate of level 4 moves the estimate up by 1.4 percentage points.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 116,
+        "sentences": 9,
+        "reading_ease": 64.7,
+        "agreement_det": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 8,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 8,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "ours:no_repair",
+      "case": "875",
+      "level": "expert",
+      "intent": "explain",
+      "status": "verified",
+      "attempts": 1,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 3,
+        "cached_calls": 3,
+        "prompt_tokens": 2612,
+        "completion_tokens": 972
+      },
+      "latency_ms": 1382.0,
+      "escalation_score": 0.5123,
+      "would_escalate_rule": true,
+      "text": "The applicant has a risk estimate of 23.2%, which is in the medium risk band. Credit history with a value of critical account or credits at other banks moves the estimate down by 8.0 percentage points. Savings of 1000 DM or more moves the estimate down by 6.8 percentage points. Loan duration of 11 months moves the estimate down by 6.0 percentage points. Checking account status of 0 to 200 DM moves the estimate up by 4.1 percentage points. Loan purpose of new car moves the estimate up by 3.4 percentage points. Credit amount of 1,322 DM moves the estimate up by 2.1 percentage points. Other installment plans of none moves the estimate down by 1.9 percentage points. Installment rate of level 4 moves the estimate up by 1.4 percentage points.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 116,
+        "sentences": 9,
+        "reading_ease": 64.7,
+        "agreement_det": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 8,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 8,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "finance",
+      "system": "ours:no_policy_rules",
+      "case": "875",
+      "level": "expert",
+      "intent": "explain",
+      "status": "verified",
+      "attempts": 1,
+      "accepted": true,
+      "llm_errors": 0,
+      "usage": {
+        "calls": 3,
+        "cached_calls": 3,
+        "prompt_tokens": 2612,
+        "completion_tokens": 972
+      },
+      "latency_ms": 1693.4,
+      "escalation_score": 0.5123,
+      "would_escalate_rule": true,
+      "text": "The applicant has a risk estimate of 23.2%, which is in the medium risk band. Credit history with a value of critical account or credits at other banks moves the estimate down by 8.0 percentage points. Savings of 1000 DM or more moves the estimate down by 6.8 percentage points. Loan duration of 11 months moves the estimate down by 6.0 percentage points. Checking account status of 0 to 200 DM moves the estimate up by 4.1 percentage points. Loan purpose of new car moves the estimate up by 3.4 percentage points. Credit amount of 1,322 DM moves the estimate up by 2.1 percentage points. Other installment plans of none moves the estimate down by 1.9 percentage points. Installment rate of level 4 moves the estimate up by 1.4 percentage points.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 116,
+        "sentences": 9,
+        "reading_ease": 64.7,
+        "agreement_det": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 8,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 8,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    }
+  ],
+  "partial": null,
+  "requests_sent": {
+    "groq:qwen/qwen3.8-27b": 506,
+    "groq:openai/gpt-oss-120b": 105,
+    "gemini:gemma-4-26b-a4b-it": 212,
+    "groq:openai/gpt-oss-20b": 127
+  },
+  "tokens_used": {
+    "groq:qwen/qwen3.8-27b": 104016,
+    "groq:openai/gpt-oss-120b": 78665,
+    "gemini:gemma-4-26b-a4b-it": 184458,
+    "groq:openai/gpt-oss-20b": 185727
+  }
+}

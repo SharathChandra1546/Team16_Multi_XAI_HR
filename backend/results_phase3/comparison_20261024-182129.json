@@ -1,0 +1,1649 @@
+{
+  "created": "2026-10-24T18:21:29+00:00",
+  "llm": "gemini:gemma-4-26b-a4b-it",
+  "reviewer": "gemini:gemma-4-26b-a4b-it",
+  "judge": "groq:openai/gpt-oss-120b",
+  "systems": [
+    "ours:full",
+    "ours:no_verifier",
+    "ours:no_critic",
+    "ours:no_repair",
+    "ours:no_policy_rules"
+  ],
+  "domains": [
+    "health"
+  ],
+  "n": 1,
+  "levels": [
+    "novice",
+    "expert"
+  ],
+  "intents": [
+    "explain"
+  ],
+  "data_sources": {
+    "health": "pima_niddk"
+  },
+  "mock_or_standin": false,
+  "summary": {
+    "health/ours:full": {
+      "domain": "health",
+      "system": "ours:full",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "verified": 2
+      },
+      "error_free": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "error_free_llm": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 0,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0,
+        "top3_coverage": 0.3333
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0
+      },
+      "by_level": {
+        "expert": {
+          "words": 32,
+          "reading_ease": 74.3,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 20,
+          "reading_ease": 82.5,
+          "level_violation_rate": 0.0
+        }
+      },
+      "cost": {
+        "calls": 4,
+        "tokens": 2769,
+        "latency_ms": 312.05
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        }
+      ]
+    },
+    "health/ours:no_critic": {
+      "domain": "health",
+      "system": "ours:no_critic",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "unverified": 1,
+        "verified": 1
+      },
+      "error_free": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "error_free_llm": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 0,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0,
+        "top3_coverage": 0.3333
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0
+      },
+      "by_level": {
+        "expert": {
+          "words": 32,
+          "reading_ease": 74.3,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 28,
+          "reading_ease": 82.5,
+          "level_violation_rate": 1.0
+        }
+      },
+      "cost": {
+        "calls": 2,
+        "tokens": 1793.5,
+        "latency_ms": 317.2
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        }
+      ]
+    },
+    "health/ours:no_policy_rules": {
+      "domain": "health",
+      "system": "ours:no_policy_rules",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "verified": 2
+      },
+      "error_free": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "error_free_llm": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 0,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0,
+        "top3_coverage": 0.3333
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0
+      },
+      "by_level": {
+        "expert": {
+          "words": 32,
+          "reading_ease": 74.3,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 20,
+          "reading_ease": 82.5,
+          "level_violation_rate": 0.0
+        }
+      },
+      "cost": {
+        "calls": 4,
+        "tokens": 2769,
+        "latency_ms": 341.3
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        }
+      ]
+    },
+    "health/ours:no_repair": {
+      "domain": "health",
+      "system": "ours:no_repair",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "fallback": 1,
+        "verified": 1
+      },
+      "error_free": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "error_free_llm": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 0,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0,
+        "top3_coverage": 0.6666
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0
+      },
+      "by_level": {
+        "expert": {
+          "words": 32,
+          "reading_ease": 74.3,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 58,
+          "reading_ease": 71.1,
+          "level_violation_rate": 0.0
+        }
+      },
+      "cost": {
+        "calls": 5,
+        "tokens": 3556.5,
+        "latency_ms": 325.4
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        }
+      ]
+    },
+    "health/ours:no_verifier": {
+      "domain": "health",
+      "system": "ours:no_verifier",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "verified": 2
+      },
+      "error_free": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "error_free_llm": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 0,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0,
+        "top3_coverage": 0.3333
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0
+      },
+      "by_level": {
+        "expert": {
+          "words": 32,
+          "reading_ease": 74.3,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 20,
+          "reading_ease": 82.5,
+          "level_violation_rate": 0.0
+        }
+      },
+      "cost": {
+        "calls": 4,
+        "tokens": 2769,
+        "latency_ms": 297.05
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        }
+      ]
+    }
+  },
+  "records": [
+    {
+      "domain": "health",
+      "system": "ours:full",
+      "case": "630",
+      "level": "novice",
+      "intent": "explain",
+      "status": "verified",
+      "attempts": 2,
+      "accepted": true,
+      "usage": {
+        "calls": 5,
+        "cached_calls": 5,
+        "prompt_tokens": 2889,
+        "completion_tokens": 517
+      },
+      "latency_ms": 307.2,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The patient has a 26.5% chance of diabetes by the study's criteria. A BMI of 27.4 kg/m2 moves the estimate down.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 20,
+        "sentences": 2,
+        "reading_ease": 82.5,
+        "agreement_det": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "ours:no_verifier",
+      "case": "630",
+      "level": "novice",
+      "intent": "explain",
+      "status": "verified",
+      "attempts": 2,
+      "accepted": true,
+      "usage": {
+        "calls": 5,
+        "cached_calls": 5,
+        "prompt_tokens": 2889,
+        "completion_tokens": 517
+      },
+      "latency_ms": 290.5,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The patient has a 26.5% chance of diabetes by the study's criteria. A BMI of 27.4 kg/m2 moves the estimate down.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 20,
+        "sentences": 2,
+        "reading_ease": 82.5,
+        "agreement_det": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "ours:no_critic",
+      "case": "630",
+      "level": "novice",
+      "intent": "explain",
+      "status": "unverified",
+      "attempts": 1,
+      "accepted": false,
+      "usage": {
+        "calls": 2,
+        "cached_calls": 2,
+        "prompt_tokens": 1397,
+        "completion_tokens": 264
+      },
+      "latency_ms": 329.3,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The patient has a 26.5% chance of diabetes by the study's criteria. This is a medium risk. A BMI of 27.4 kg/m2 moves the estimate down by 10.3 percentage points.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 28,
+        "sentences": 3,
+        "reading_ease": 82.5,
+        "agreement_det": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [
+          "level_numbers"
+        ],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "ours:no_repair",
+      "case": "630",
+      "level": "novice",
+      "intent": "explain",
+      "status": "fallback",
+      "attempts": 3,
+      "accepted": true,
+      "usage": {
+        "calls": 7,
+        "cached_calls": 7,
+        "prompt_tokens": 4126,
+        "completion_tokens": 855
+      },
+      "latency_ms": 344.4,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model estimates a 26% chance that a patient with this profile has diabetes by the study's criteria, which is in the medium risk band. The biggest factor is bMI (27.4 kg/m2), which pulls the estimate down. Pregnancies (7) pushes the estimate up. Diabetes pedigree (0.7) pushes the estimate up. These are patterns the model learned from past data, not causes.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 58,
+        "sentences": 5,
+        "reading_ease": 71.1,
+        "agreement_det": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 3,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 1.0,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 3,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 1.0,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "ours:no_policy_rules",
+      "case": "630",
+      "level": "novice",
+      "intent": "explain",
+      "status": "verified",
+      "attempts": 2,
+      "accepted": true,
+      "usage": {
+        "calls": 5,
+        "cached_calls": 5,
+        "prompt_tokens": 2889,
+        "completion_tokens": 517
+      },
+      "latency_ms": 356.9,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The patient has a 26.5% chance of diabetes by the study's criteria. A BMI of 27.4 kg/m2 moves the estimate down.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 20,
+        "sentences": 2,
+        "reading_ease": 82.5,
+        "agreement_det": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "ours:full",
+      "case": "630",
+      "level": "expert",
+      "intent": "explain",
+      "status": "verified",
+      "attempts": 1,
+      "accepted": true,
+      "usage": {
+        "calls": 3,
+        "cached_calls": 3,
+        "prompt_tokens": 1837,
+        "completion_tokens": 295
+      },
+      "latency_ms": 316.9,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The patient's risk of diabetes by the study's criteria is estimated at 26.5% (range 22.5% to 29.5%), which is in the medium risk band. BMI of 27.4 kg/m2 moves the estimate down by 10.3 percentage points.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 32,
+        "sentences": 2,
+        "reading_ease": 74.3,
+        "agreement_det": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "ours:no_verifier",
+      "case": "630",
+      "level": "expert",
+      "intent": "explain",
+      "status": "verified",
+      "attempts": 1,
+      "accepted": true,
+      "usage": {
+        "calls": 3,
+        "cached_calls": 3,
+        "prompt_tokens": 1837,
+        "completion_tokens": 295
+      },
+      "latency_ms": 303.6,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The patient's risk of diabetes by the study's criteria is estimated at 26.5% (range 22.5% to 29.5%), which is in the medium risk band. BMI of 27.4 kg/m2 moves the estimate down by 10.3 percentage points.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 32,
+        "sentences": 2,
+        "reading_ease": 74.3,
+        "agreement_det": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "ours:no_critic",
+      "case": "630",
+      "level": "expert",
+      "intent": "explain",
+      "status": "verified",
+      "attempts": 1,
+      "accepted": true,
+      "usage": {
+        "calls": 2,
+        "cached_calls": 2,
+        "prompt_tokens": 1686,
+        "completion_tokens": 240
+      },
+      "latency_ms": 305.1,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The patient's risk of diabetes by the study's criteria is estimated at 26.5% (range 22.5% to 29.5%), which is in the medium risk band. BMI of 27.4 kg/m2 moves the estimate down by 10.3 percentage points.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 32,
+        "sentences": 2,
+        "reading_ease": 74.3,
+        "agreement_det": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "ours:no_repair",
+      "case": "630",
+      "level": "expert",
+      "intent": "explain",
+      "status": "verified",
+      "attempts": 1,
+      "accepted": true,
+      "usage": {
+        "calls": 3,
+        "cached_calls": 3,
+        "prompt_tokens": 1837,
+        "completion_tokens": 295
+      },
+      "latency_ms": 306.4,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The patient's risk of diabetes by the study's criteria is estimated at 26.5% (range 22.5% to 29.5%), which is in the medium risk band. BMI of 27.4 kg/m2 moves the estimate down by 10.3 percentage points.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 32,
+        "sentences": 2,
+        "reading_ease": 74.3,
+        "agreement_det": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "ours:no_policy_rules",
+      "case": "630",
+      "level": "expert",
+      "intent": "explain",
+      "status": "verified",
+      "attempts": 1,
+      "accepted": true,
+      "usage": {
+        "calls": 3,
+        "cached_calls": 3,
+        "prompt_tokens": 1837,
+        "completion_tokens": 295
+      },
+      "latency_ms": 325.7,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The patient's risk of diabetes by the study's criteria is estimated at 26.5% (range 22.5% to 29.5%), which is in the medium risk band. BMI of 27.4 kg/m2 moves the estimate down by 10.3 percentage points.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 32,
+        "sentences": 2,
+        "reading_ease": 74.3,
+        "agreement_det": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 1,
+          "n_evidence_mentions": 1,
+          "value_agreement": 1.0,
+          "n_value": 1,
+          "sign_agreement": 1.0,
+          "n_sign": 1,
+          "rank_agreement": 1.0,
+          "n_rank": 1,
+          "top3_coverage": 0.3333,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    }
+  ],
+  "partial": null,
+  "requests_sent": {
+    "groq:qwen/qwen3.8-27b": 108,
+    "groq:openai/gpt-oss-120b": 53,
+    "gemini:gemma-4-26b-a4b-it": 69,
+    "groq:openai/gpt-oss-20b": 127
+  },
+  "tokens_used": {
+    "groq:qwen/qwen3.8-27b": 86973,
+    "groq:openai/gpt-oss-120b": 41991,
+    "gemini:gemma-4-26b-a4b-it": 88694,
+    "groq:openai/gpt-oss-20b": 185727
+  }
+}

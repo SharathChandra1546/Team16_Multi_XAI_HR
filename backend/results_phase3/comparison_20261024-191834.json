@@ -1,0 +1,1726 @@
+{
+  "created": "2026-10-24T19:18:34+00:00",
+  "llm": "groq:qwen/qwen3.8-27b",
+  "reviewer": "groq:qwen/qwen3.8-27b",
+  "judge": "groq:openai/gpt-oss-120b",
+  "systems": [
+    "ours:full",
+    "direct",
+    "b3",
+    "explingo",
+    "critic_rule",
+    "musicco"
+  ],
+  "domains": [
+    "health"
+  ],
+  "n": 1,
+  "levels": [
+    "novice",
+    "expert"
+  ],
+  "intents": [
+    "explain"
+  ],
+  "data_sources": {
+    "health": "pima_niddk"
+  },
+  "mock_or_standin": false,
+  "summary": {
+    "health/critic_rule": {
+      "domain": "health",
+      "system": "critic_rule",
+      "n_cases": 2,
+      "n_shown": 0,
+      "status": {
+        "empty": 2
+      },
+      "error_free": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "error_free_llm": null,
+      "any_fidelity_error_llm": null,
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {},
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "agreement_det": {
+        "value": null,
+        "sign": null,
+        "rank": null,
+        "top3_coverage": null
+      },
+      "agreement_llm": null,
+      "by_level": {
+        "expert": {
+          "words": null,
+          "reading_ease": null,
+          "level_violation_rate": null
+        },
+        "novice": {
+          "words": null,
+          "reading_ease": null,
+          "level_violation_rate": null
+        }
+      },
+      "cost": {
+        "calls": 1,
+        "tokens": 232,
+        "latency_ms": 31735.65
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        }
+      ]
+    },
+    "health/direct": {
+      "domain": "health",
+      "system": "direct",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "shown": 2
+      },
+      "error_free": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "error_free_llm": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 1,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0,
+        "top3_coverage": 0.8334
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0
+      },
+      "by_level": {
+        "expert": {
+          "words": 79,
+          "reading_ease": 42.2,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 66,
+          "reading_ease": 64.0,
+          "level_violation_rate": 1.0
+        }
+      },
+      "cost": {
+        "calls": 1,
+        "tokens": 421,
+        "latency_ms": 4204.2
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 1,
+        "n": 2,
+        "rate": 0.5,
+        "ci95": [
+          0.09452865480086614,
+          0.9054713451991339
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.5,
+          "n": 2
+        }
+      ]
+    },
+    "health/explingo": {
+      "domain": "health",
+      "system": "explingo",
+      "n_cases": 2,
+      "n_shown": 0,
+      "status": {
+        "empty": 2
+      },
+      "error_free": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "error_free_llm": null,
+      "any_fidelity_error_llm": null,
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {},
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "agreement_det": {
+        "value": null,
+        "sign": null,
+        "rank": null,
+        "top3_coverage": null
+      },
+      "agreement_llm": null,
+      "by_level": {
+        "expert": {
+          "words": null,
+          "reading_ease": null,
+          "level_violation_rate": null
+        },
+        "novice": {
+          "words": null,
+          "reading_ease": null,
+          "level_violation_rate": null
+        }
+      },
+      "cost": {
+        "calls": 3,
+        "tokens": 770.5,
+        "latency_ms": 96847.6
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 2
+        }
+      ]
+    },
+    "health/musicco": {
+      "domain": "health",
+      "system": "musicco",
+      "n_cases": 1,
+      "n_shown": 0,
+      "status": {
+        "empty": 1
+      },
+      "error_free": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "error_free_llm": null,
+      "any_fidelity_error_llm": null,
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {},
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "agreement_det": {
+        "value": null,
+        "sign": null,
+        "rank": null,
+        "top3_coverage": null
+      },
+      "agreement_llm": null,
+      "by_level": {
+        "novice": {
+          "words": null,
+          "reading_ease": null,
+          "level_violation_rate": null
+        }
+      },
+      "cost": {
+        "calls": 3,
+        "tokens": 2754,
+        "latency_ms": 290420.6
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 0,
+        "n": 0,
+        "rate": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": null,
+          "n": 1
+        }
+      ]
+    },
+    "health/ours:full": {
+      "domain": "health",
+      "system": "ours:full",
+      "n_cases": 2,
+      "n_shown": 2,
+      "status": {
+        "fallback": 2
+      },
+      "error_free": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "error_free_llm": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "any_fidelity_error_llm": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_fidelity_error": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "any_policy_violation": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "policy_codes": {},
+      "text_checks": {
+        "unsupported_numbers": 0,
+        "causal_wording": 0,
+        "raw_codes": 0
+      },
+      "unsupported_mention_rate": {
+        "k": 0,
+        "n": 2,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.6576280471103807
+        ]
+      },
+      "agreement_det": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0,
+        "top3_coverage": 1.0
+      },
+      "agreement_llm": {
+        "value": 1.0,
+        "sign": 1.0,
+        "rank": 1.0
+      },
+      "by_level": {
+        "expert": {
+          "words": 75,
+          "reading_ease": 50.3,
+          "level_violation_rate": 0.0
+        },
+        "novice": {
+          "words": 59,
+          "reading_ease": 74.4,
+          "level_violation_rate": 0.0
+        }
+      },
+      "cost": {
+        "calls": 1,
+        "tokens": 275,
+        "latency_ms": 95739.05
+      },
+      "error_free_outside_rule_escalation": {
+        "k": 2,
+        "n": 2,
+        "rate": 1.0,
+        "ci95": [
+          0.34237195288961925,
+          1.0
+        ]
+      },
+      "coverage_risk": [
+        {
+          "threshold": 0.0,
+          "coverage": 0.0,
+          "error_rate": null,
+          "n": 0
+        },
+        {
+          "threshold": 0.1,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.2,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.3,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.4,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.5,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.6,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.7,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.8,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 0.9,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.0,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        },
+        {
+          "threshold": 1.01,
+          "coverage": 1.0,
+          "error_rate": 0.0,
+          "n": 2
+        }
+      ]
+    }
+  },
+  "records": [
+    {
+      "domain": "health",
+      "system": "ours:full",
+      "case": "700",
+      "level": "novice",
+      "intent": "explain",
+      "status": "fallback",
+      "attempts": 3,
+      "accepted": true,
+      "usage": {
+        "calls": 1,
+        "cached_calls": 1,
+        "prompt_tokens": 244,
+        "completion_tokens": 31
+      },
+      "latency_ms": 96096.0,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model estimates a 31% chance that a patient with this profile has diabetes by the study's criteria, which is in the medium risk band. The biggest factor is glucose (122 mg/dL), which pushes the estimate up. BMI (35.9 kg/m2) pushes the estimate up. Pregnancies (2) pulls the estimate down. These are patterns the model learned from past data, not causes.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 59,
+        "sentences": 5,
+        "reading_ease": 74.4,
+        "agreement_det": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 3,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 1.0,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 3,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 1.0,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "direct",
+      "case": "700",
+      "level": "novice",
+      "intent": "explain",
+      "status": "shown",
+      "attempts": 1,
+      "accepted": null,
+      "usage": {
+        "calls": 1,
+        "cached_calls": 0,
+        "prompt_tokens": 196,
+        "completion_tokens": 116,
+        "estimated": true
+      },
+      "latency_ms": 649.1,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model predicts a 31% chance that this person has diabetes according to the study's criteria. This estimate is slightly higher than the average risk for the group (27%). The main reason for this increase is the high blood glucose level (122.0), which added about 4% to the risk. A high BMI (35.9) also contributed to a higher risk, adding about 3%. However, having only 2 pregnancies slightly lowered the risk by about 2%.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 66,
+        "sentences": 5,
+        "reading_ease": 64.0,
+        "agreement_det": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 2,
+          "sign_agreement": 1.0,
+          "n_sign": 2,
+          "rank_agreement": 1.0,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 3,
+          "n_evidence_mentions": 3,
+          "value_agreement": 1.0,
+          "n_value": 3,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 1.0,
+          "n_rank": 3,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [
+          "level_numbers"
+        ],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "b3",
+      "case": "700",
+      "level": "novice",
+      "intent": "explain",
+      "status": "llm_failed:empty",
+      "attempts": 3,
+      "accepted": false,
+      "usage": {
+        "calls": 0,
+        "cached_calls": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "estimated": true
+      },
+      "latency_ms": 190133.0,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 0,
+        "sentences": 0,
+        "reading_ease": 100.0,
+        "agreement_det": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": true
+      }
+    },
+    {
+      "domain": "health",
+      "system": "explingo",
+      "case": "700",
+      "level": "novice",
+      "intent": "explain",
+      "status": "empty",
+      "attempts": 3,
+      "accepted": false,
+      "usage": {
+        "calls": 3,
+        "cached_calls": 2,
+        "prompt_tokens": 568,
+        "completion_tokens": 46,
+        "estimated": true
+      },
+      "latency_ms": 96847.0,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 0,
+        "sentences": 0,
+        "reading_ease": 100.0,
+        "agreement_det": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": true
+      }
+    },
+    {
+      "domain": "health",
+      "system": "critic_rule",
+      "case": "700",
+      "level": "novice",
+      "intent": "explain",
+      "status": "empty",
+      "attempts": 1,
+      "accepted": true,
+      "usage": {
+        "calls": 1,
+        "cached_calls": 1,
+        "prompt_tokens": 228,
+        "completion_tokens": 4,
+        "estimated": true
+      },
+      "latency_ms": 31638.3,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 0,
+        "sentences": 0,
+        "reading_ease": 100.0,
+        "agreement_det": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": true
+      }
+    },
+    {
+      "domain": "health",
+      "system": "musicco",
+      "case": "700",
+      "level": "novice",
+      "intent": "explain",
+      "status": "empty",
+      "attempts": 3,
+      "accepted": false,
+      "usage": {
+        "calls": 3,
+        "cached_calls": 2,
+        "prompt_tokens": 2565,
+        "completion_tokens": 189,
+        "estimated": true
+      },
+      "latency_ms": 290420.6,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 0,
+        "sentences": 0,
+        "reading_ease": 100.0,
+        "agreement_det": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": true
+      }
+    },
+    {
+      "domain": "health",
+      "system": "ours:full",
+      "case": "700",
+      "level": "expert",
+      "intent": "explain",
+      "status": "fallback",
+      "attempts": 3,
+      "accepted": true,
+      "usage": {
+        "calls": 1,
+        "cached_calls": 1,
+        "prompt_tokens": 244,
+        "completion_tokens": 31
+      },
+      "latency_ms": 95382.1,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "Calibrated diabetes risk estimate: 30.9% (medium band; bootstrap range 24.7% to 35.4%; review threshold 14%). Largest contribution: Glucose (122 mg/dL), +4.0 percentage points (strong). BMI (35.9 kg/m2): +2.8 percentage points (strong). Pregnancies (2): -1.9 percentage points (moderate). Age (26 years): -1.3 percentage points (moderate). Diabetes pedigree (0.5): +0.5 percentage points (weak). Insulin (200 mu U/ml): -0.4 percentage points (weak). Skin-fold thickness (27 mm): -0.2 percentage points (weak). Blood pressure (76 mm Hg): -0.0 percentage points (weak). Contributions are Shapley values relative to an average estimate of 27.3%; they describe the model, not causes.",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 75,
+        "sentences": 10,
+        "reading_ease": 50.3,
+        "agreement_det": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 8,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 8,
+          "n_evidence_mentions": 8,
+          "value_agreement": 1.0,
+          "n_value": 8,
+          "sign_agreement": 1.0,
+          "n_sign": 8,
+          "rank_agreement": 1.0,
+          "n_rank": 8,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "direct",
+      "case": "700",
+      "level": "expert",
+      "intent": "explain",
+      "status": "shown",
+      "attempts": 1,
+      "accepted": null,
+      "usage": {
+        "calls": 1,
+        "cached_calls": 0,
+        "prompt_tokens": 342,
+        "completion_tokens": 188,
+        "estimated": true
+      },
+      "latency_ms": 7759.3,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "The model predicts a 30.87% probability of diabetes, slightly exceeding the base rate of 27.30%. This upward shift is primarily driven by a Glucose level of 122.0 mg/dL (SHAP +0.0403) and a BMI of 35.9 (SHAP +0.0281), which are the dominant positive contributors. These effects are partially offset by a low Pregnancy count of 2 (SHAP -0.0187) and a young Age of 26 (SHAP -0.0133), which act as protective factors in this context. The remaining features, including a low DiabetesPedigreeFunction (0.483) and Insulin (200.0), contribute minimally to the final prediction.",
+      "m": {
+        "fidelity_errors_llm": 4,
+        "error_free_llm": false,
+        "words": 79,
+        "sentences": 4,
+        "reading_ease": 42.2,
+        "agreement_det": {
+          "n_mentions": 5,
+          "n_evidence_mentions": 5,
+          "value_agreement": 1.0,
+          "n_value": 5,
+          "sign_agreement": 1.0,
+          "n_sign": 3,
+          "rank_agreement": 1.0,
+          "n_rank": 5,
+          "top3_coverage": 0.6667,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 6,
+          "n_evidence_mentions": 6,
+          "value_agreement": 1.0,
+          "n_value": 6,
+          "sign_agreement": 1.0,
+          "n_sign": 4,
+          "rank_agreement": 1.0,
+          "n_rank": 6,
+          "top3_coverage": 1.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [
+            "+0.0403",
+            "+0.0281",
+            "-0.0187",
+            "-0.0133"
+          ],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 4,
+        "error_free": false,
+        "empty": false
+      }
+    },
+    {
+      "domain": "health",
+      "system": "b3",
+      "case": "700",
+      "level": "expert",
+      "intent": "explain",
+      "status": "llm_failed:empty",
+      "attempts": 3,
+      "accepted": false,
+      "usage": {
+        "calls": 0,
+        "cached_calls": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "estimated": true
+      },
+      "latency_ms": 190248.6,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 0,
+        "sentences": 0,
+        "reading_ease": 100.0,
+        "agreement_det": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": true
+      }
+    },
+    {
+      "domain": "health",
+      "system": "explingo",
+      "case": "700",
+      "level": "expert",
+      "intent": "explain",
+      "status": "empty",
+      "attempts": 3,
+      "accepted": false,
+      "usage": {
+        "calls": 3,
+        "cached_calls": 2,
+        "prompt_tokens": 881,
+        "completion_tokens": 46,
+        "estimated": true
+      },
+      "latency_ms": 96848.2,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 0,
+        "sentences": 0,
+        "reading_ease": 100.0,
+        "agreement_det": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": true
+      }
+    },
+    {
+      "domain": "health",
+      "system": "critic_rule",
+      "case": "700",
+      "level": "expert",
+      "intent": "explain",
+      "status": "empty",
+      "attempts": 1,
+      "accepted": true,
+      "usage": {
+        "calls": 1,
+        "cached_calls": 1,
+        "prompt_tokens": 228,
+        "completion_tokens": 4,
+        "estimated": true
+      },
+      "latency_ms": 31833.0,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 0,
+        "sentences": 0,
+        "reading_ease": 100.0,
+        "agreement_det": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": true
+      }
+    },
+    {
+      "domain": "health",
+      "system": "musicco",
+      "case": "700",
+      "level": "expert",
+      "intent": "explain",
+      "status": "llm_failed:empty",
+      "attempts": 1,
+      "accepted": true,
+      "usage": {
+        "calls": 0,
+        "cached_calls": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "estimated": true
+      },
+      "latency_ms": 95157.2,
+      "escalation_score": 0.0,
+      "would_escalate_rule": false,
+      "text": "",
+      "m": {
+        "fidelity_errors_llm": 0,
+        "error_free_llm": true,
+        "words": 0,
+        "sentences": 0,
+        "reading_ease": 100.0,
+        "agreement_det": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "agreement_llm": {
+          "n_mentions": 0,
+          "n_evidence_mentions": 0,
+          "value_agreement": null,
+          "n_value": 0,
+          "sign_agreement": null,
+          "n_sign": 0,
+          "rank_agreement": null,
+          "n_rank": 0,
+          "top3_coverage": 0.0,
+          "unsupported_mentions": [],
+          "value_errors": 0,
+          "sign_errors": 0,
+          "rank_errors": 0,
+          "stated_rank_errors": 0
+        },
+        "text_checks": {
+          "unsupported_numbers": [],
+          "causal_wording": [],
+          "raw_codes": []
+        },
+        "policy_violations": [],
+        "n_policy_violations": 0,
+        "level_violations": [],
+        "fidelity_errors": 0,
+        "error_free": true,
+        "empty": true
+      }
+    }
+  ],
+  "partial": null,
+  "requests_sent": {
+    "groq:qwen/qwen3.8-27b": 506,
+    "groq:openai/gpt-oss-120b": 71,
+    "gemini:gemma-4-26b-a4b-it": 107,
+    "groq:openai/gpt-oss-20b": 127
+  },
+  "tokens_used": {
+    "groq:qwen/qwen3.8-27b": 104016,
+    "groq:openai/gpt-oss-120b": 55892,
+    "gemini:gemma-4-26b-a4b-it": 108810,
+    "groq:openai/gpt-oss-20b": 185727
+  }
+}

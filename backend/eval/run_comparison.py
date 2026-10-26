@@ -97,12 +97,17 @@ def cases_for(d, n: int, offset: int):
 def summarize(records: list[dict]) -> dict:
     by = defaultdict(list)
     for r in records:
+        if str(r.get("status", "")).startswith("llm_failed"):
+            continue  # reported separately; never counted as a system result
         by[(r["domain"], r["system"])].append(r)
     out = {}
     for (dom, sysname), rs in sorted(by.items()):
         shown = [r for r in rs if not r["m"]["empty"]]
         n = len(rs)
         ef = sum(r["m"]["error_free"] for r in shown)
+        llm_scored = [r for r in shown if r["m"].get("error_free_llm") is not None]
+        ef_llm = sum(r["m"]["error_free_llm"] for r in llm_scored)
+        fid_llm = sum(r["m"]["fidelity_errors_llm"] > 0 for r in llm_scored)
         fid = sum(r["m"]["fidelity_errors"] > 0 for r in shown)
         pol = sum(r["m"]["n_policy_violations"] > 0 for r in shown)
         codes = Counter(c for r in shown for c in r["m"]["policy_violations"])
@@ -126,6 +131,8 @@ def summarize(records: list[dict]) -> dict:
             "domain": dom, "system": sysname, "n_cases": n, "n_shown": len(shown),
             "status": dict(status),
             "error_free": rate(ef, len(shown)),
+            "error_free_llm": rate(ef_llm, len(llm_scored)) if llm_scored else None,
+            "any_fidelity_error_llm": rate(fid_llm, len(llm_scored)) if llm_scored else None,
             "any_fidelity_error": rate(fid, len(shown)),
             "any_policy_violation": rate(pol, len(shown)),
             "policy_codes": dict(codes),
@@ -164,6 +171,12 @@ def to_markdown(res: dict) -> str:
     out = [f"# System comparison ({res['created']})", "",
            f"Generator `{res['llm']}`, reviewer `{res['reviewer']}`, judge (LLM extractor) `{res['judge'] or 'not used'}`. "
            f"Cases: {res['n']} per domain x levels {res['levels']} x intents {res['intents']}.", ""]
+    if res.get("partial"):
+        out += [f"> PARTIAL RUN (request budget reached: {res['partial']}). Not all cases are included.", ""]
+    if res.get("requests_sent"):
+        out += ["HTTP requests sent today across runs with a budget, else in this run (cached answers excluded): "
+                + ", ".join(f"`{k}` {v}" for k, v in res["requests_sent"].items())
+                + ". Tokens: " + ", ".join(f"`{k}` {v}" for k, v in (res.get("tokens_used") or {}).items()), ""]
     if res["mock_or_standin"]:
         out += ["> Mock LLM and/or synthetic stand-in data: these numbers test the software only. Do not report them.", ""]
     out += ["> Measurement shares the deterministic text and policy rules this framework gates on, which favours it. "
@@ -171,11 +184,11 @@ def to_markdown(res: dict) -> str:
     for dom in res["domains"]:
         rows = [v for v in res["summary"].values() if v["domain"] == dom]
         out += [f"## {dom}", "",
-                "| System | n shown | Error-free | Any fidelity error | Any policy violation | VA | SA | RA | Top-3 cov. | Calls | Tokens |",
-                "|---|---|---|---|---|---|---|---|---|---|---|"]
+                "| System | n shown | Error-free (LLM scorer) | Error-free (rule-based) | Any fidelity error | Any policy violation | VA | SA | RA | Top-3 cov. | Calls | Tokens |",
+                "|---|---|---|---|---|---|---|---|---|---|---|---|"]
         for v in rows:
             a = v["agreement_det"]
-            out.append(f"| {v['system']} | {v['n_shown']}/{v['n_cases']} | {ci(v['error_free'])} | {ci(v['any_fidelity_error'])} | "
+            out.append(f"| {v['system']} | {v['n_shown']}/{v['n_cases']} | {ci(v.get('error_free_llm'))} | {ci(v['error_free'])} | {ci(v['any_fidelity_error'])} | "
                        f"{ci(v['any_policy_violation'])} | {f(a['value'])} | {f(a['sign'])} | {f(a['rank'])} | "
                        f"{f(a['top3_coverage'])} | {f(v['cost']['calls'])} | {f(v['cost']['tokens'])} |")
         if any(v["agreement_llm"] for v in rows):
@@ -207,6 +220,12 @@ def main() -> int:
     ap.add_argument("--levels", default="novice,intermediate,expert")
     ap.add_argument("--intents", default="explain")
     ap.add_argument("--judge", action="store_true", help="also measure with the LLM extractor (JUDGE_PROVIDER)")
+    ap.add_argument("--token-budget", default=os.getenv("TOKEN_BUDGET", ""),
+                    help="like --budget but in tokens, e.g. 'groq:qwen/qwen3.8-27b=180k' (Groq free tier: 200K/day)")
+    ap.add_argument("--budget", default=os.getenv("REQUEST_BUDGET", ""),
+                    help="stop starting new cases once a model has sent this many HTTP requests, e.g. "
+                         "'groq=900,gemini:gemma-4-31b-it=5000' (key = provider or provider:model). Cached answers "
+                         "are free, so rerunning the same command the next day resumes where this run stopped.")
     args = ap.parse_args()
     systems = [s for s in (args.systems.split(",") if args.systems else PRESETS[args.preset or "baselines"]) if s]
     for s in systems:
@@ -220,10 +239,32 @@ def main() -> int:
                   reviewer_llm=reviewer)
     levels, intents = args.levels.split(","), args.intents.split(",")
     records = []
+    llm_failures = 0
+    from app.llm.client import load_daily_usage, over_budget as _over, parse_budget, save_daily_usage
+
+    budget, tok_budget = parse_budget(args.budget), parse_budget(args.token_budget)
+    if budget or tok_budget:
+        load_daily_usage()  # today's usage by earlier runs counts against the same daily budget
+    stopped_for_budget = None
+
+    used = {c.id for c in (llm, reviewer, judge) if c is not None}
+
+    def over_budget():
+        return _over(budget, tok_budget, used)
+    for client in {id(c): c for c in (llm, reviewer, judge) if c is not None and c.name != "mock"}.values():
+        try:  # fail fast: a dead key, quota or retired model would otherwise yield silent template fallbacks
+            client.json("preflight", "Return the JSON object {\"ok\": true}.", "ping")
+        except Exception as e:  # noqa: BLE001
+            raise SystemExit(f"{client.id} is not usable: {e}")
     for dname in args.domains.split(","):
         d = reg.get(dname)
         rt = d.runtime("main")
         for cid, x in cases_for(d, args.n, args.offset):
+            if budget or tok_budget:
+                save_daily_usage()
+            stopped_for_budget = stopped_for_budget or over_budget()
+            if stopped_for_budget:
+                break
             esc = escalation_info(rt, x, rt.predict(x))
             for level in levels:
                 for intent in intents:
@@ -232,6 +273,9 @@ def main() -> int:
                     q = d.language.default_question if intent == "explain" else "What would lower the risk?"
                     for s in systems:
                         t0 = time.perf_counter()
+                        from app.llm.client import OpenAICompatLLM as _C
+
+                        err0 = sum(_C.errors.values())
                         if s.startswith("ours:"):
                             o = run_ours(svc, s[5:], d, x, level, intent, q)
                         else:
@@ -239,20 +283,45 @@ def main() -> int:
                             o = {"text": r.text, "status": "shown" if r.text.strip() else "empty", "attempts": r.rounds,
                                  "usage": r.usage, "accepted": r.accepted}
                         lat = (time.perf_counter() - t0) * 1000
+                        o["llm_errors"] = sum(_C.errors.values()) - err0
+                        if o["llm_errors"] and not str(o["status"]).startswith("llm_failed"):
+                            # an API error during generation (e.g. a template fallback after a server error) is a
+                            # failed generation for every system alike; rerunning regenerates it
+                            o["status"] = f"llm_failed:api_error:{o['status']}"
+                            llm_failures += 1
+                        elif llm.name != "mock" and not (o["usage"] or {}).get("calls"):
+                            # no LLM call succeeded (quota, network, retired model): the text is a template or empty
+                            o["status"] = f"llm_failed:{o['status']}"
+                            llm_failures += 1
                         m = measure_text(o["text"], pkg, plan, d, judge)
                         records.append({"domain": dname, "system": s, "case": cid, "level": level, "intent": intent,
                                         "status": o["status"], "attempts": o["attempts"], "accepted": o["accepted"],
+                                        "llm_errors": o.get("llm_errors", 0),
                                         "usage": o["usage"], "latency_ms": round(lat, 1),
                                         "escalation_score": esc["score"], "would_escalate_rule": esc["rule_decision"],
                                         "text": o["text"], "m": m})
-                print(f"{dname} case {cid} done", flush=True)
+                print(f"{dname} case {cid} level {level} done", flush=True)
+            # a provider can refuse mid-case (daily quota): report it so the driver stops instead of moving on
+            if budget or tok_budget:
+                stopped_for_budget = stopped_for_budget or over_budget()
     data_sources = {n: getattr(reg.get(n), "data_source", "unknown") for n in args.domains.split(",")}
+    if budget or tok_budget:
+        save_daily_usage()
+    if stopped_for_budget:
+        print(f"PARTIAL RUN: stopped starting new cases because {stopped_for_budget}. Rerun the same command after "
+              "the quota resets; cached answers are reused for free.", file=sys.stderr, flush=True)
+    if llm_failures:
+        print(f"WARNING: {llm_failures} of {len(records)} outputs had no successful LLM call (quota, network or model "
+              "error). They are marked llm_failed:* and excluded from the tables. Do not report this run.",
+              file=sys.stderr, flush=True)
     res = {"created": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "llm": llm.id,
            "reviewer": reviewer.id, "judge": judge.id if judge else None, "systems": systems,
            "domains": args.domains.split(","), "n": args.n, "levels": levels, "intents": intents,
            "data_sources": data_sources,
            "mock_or_standin": llm.name == "mock" or any(v == "synthetic_standin" for v in data_sources.values()),
-           "summary": summarize(records), "records": records}
+           "summary": summarize(records), "records": records,
+           "partial": stopped_for_budget, "requests_sent": __import__("app.llm.client", fromlist=["x"]).OpenAICompatLLM.requests_sent,
+           "tokens_used": __import__("app.llm.client", fromlist=["x"]).OpenAICompatLLM.tokens_used}
     RESULTS.mkdir(exist_ok=True)
     stamp = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
     (RESULTS / f"comparison_{stamp}.json").write_text(json.dumps(res, indent=2, default=str), encoding="utf-8")

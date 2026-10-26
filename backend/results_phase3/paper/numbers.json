@@ -1,0 +1,2482 @@
+{
+ "generated": "2026-10-26T01:12:13+00:00",
+ "judge": "groq:openai/gpt-oss-120b",
+ "runs": [
+  {
+   "file": "comparison_20261024-161512.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 24
+  },
+  {
+   "file": "comparison_20261024-164748.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261024-164806.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261024-164950.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-165223.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-165326.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-165429.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-165728.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-165847.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-165903.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261024-170245.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-170353.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-170549.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-175638.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 0
+  },
+  {
+   "file": "comparison_20261024-180747.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261024-180755.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261024-181009.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-181017.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-181055.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-181103.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-181125.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-181133.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-182122.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-182129.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-182151.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-182217.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261024-183932.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261024-185802.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261024-185951.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-190109.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-190227.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-191834.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261024-193259.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-193307.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-193329.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-193336.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-193358.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-193405.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-193426.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-193434.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-193456.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-195331.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-195339.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-195401.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-195409.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-195431.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-195438.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-195501.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-195509.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-195531.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-203448.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-203512.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-203520.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-203654.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-203821.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-204144.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-204247.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-204435.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-204534.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-204705.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-204812.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-205236.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-205244.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-205307.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-205315.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-205338.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-205346.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-205411.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-205419.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-205443.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-210219.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-210226.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-210248.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-210255.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-210317.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-210325.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-210346.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-210353.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-210415.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213604.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213627.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213635.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213656.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213704.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213726.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213734.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213755.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213803.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213824.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261024-213831.json",
+   "llm": "gemini:gemma-4-26b-a4b-it",
+   "reviewer": "gemini:gemma-4-26b-a4b-it",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 10
+  },
+  {
+   "file": "comparison_20261025-002909.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261025-002916.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261025-003120.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261025-003421.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261025-162631.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261025-162639.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261025-162706.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261025-162834.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261025-163649.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261025-164154.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261025-164438.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261025-175123.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261025-175131.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261025-175152.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261025-175159.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261025-175222.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261025-175229.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261025-175304.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261026-005558.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261026-005609.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261026-005717.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261026-005727.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261026-005756.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261026-005806.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261026-010154.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  },
+  {
+   "file": "comparison_20261026-010742.json",
+   "llm": "groq:qwen/qwen3.8-27b",
+   "reviewer": "groq:qwen/qwen3.8-27b",
+   "judge": "groq:openai/gpt-oss-120b",
+   "n_records": 12
+  }
+ ],
+ "main": {
+  "ours:full": {
+   "pooled": {
+    "n_generated": 16,
+    "n_failed": 0,
+    "n_shown": 16,
+    "n_empty": 0,
+    "status": {
+     "verified": 10,
+     "fallback": 6
+    },
+    "error_free_llm": {
+     "k": 16,
+     "n": 16,
+     "rate": 1.0,
+     "lo": 0.8063865817272801,
+     "hi": 1.0
+    },
+    "error_free_rule": {
+     "k": 16,
+     "n": 16,
+     "rate": 1.0,
+     "lo": 0.8063865817272801,
+     "hi": 1.0
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 16,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.19361341827271994
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 16,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.19361341827271994
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 1.0,
+    "top3": 0.91666875,
+    "words": 69.75,
+    "calls": 4.1875,
+    "tokens": 6041.0,
+    "latency_s": 20.4623625
+   },
+   "finance": {
+    "n_generated": 8,
+    "n_failed": 0,
+    "n_shown": 8,
+    "n_empty": 0,
+    "status": {
+     "verified": 3,
+     "fallback": 5
+    },
+    "error_free_llm": {
+     "k": 8,
+     "n": 8,
+     "rate": 1.0,
+     "lo": 0.6755843804891231,
+     "hi": 1.0
+    },
+    "error_free_rule": {
+     "k": 8,
+     "n": 8,
+     "rate": 1.0,
+     "lo": 0.6755843804891231,
+     "hi": 1.0
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 8,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3244156195108769
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 8,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3244156195108769
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 1.0,
+    "top3": 0.9583375,
+    "words": 70.25,
+    "calls": 4.5,
+    "tokens": 7941.5,
+    "latency_s": 19.8312625
+   },
+   "health": {
+    "n_generated": 8,
+    "n_failed": 0,
+    "n_shown": 8,
+    "n_empty": 0,
+    "status": {
+     "verified": 7,
+     "fallback": 1
+    },
+    "error_free_llm": {
+     "k": 8,
+     "n": 8,
+     "rate": 1.0,
+     "lo": 0.6755843804891231,
+     "hi": 1.0
+    },
+    "error_free_rule": {
+     "k": 8,
+     "n": 8,
+     "rate": 1.0,
+     "lo": 0.6755843804891231,
+     "hi": 1.0
+    },
+    "fidelity_error_llm": {
+     "k": 0,
+     "n": 8,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3244156195108769
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 8,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3244156195108769
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 1.0,
+    "top3": 0.875,
+    "words": 69.25,
+    "calls": 3.875,
+    "tokens": 4140.5,
+    "latency_s": 21.0934625
+   }
+  },
+  "direct": {
+   "pooled": {
+    "n_generated": 16,
+    "n_failed": 0,
+    "n_shown": 16,
+    "n_empty": 0,
+    "status": {
+     "shown": 16
+    },
+    "error_free_llm": {
+     "k": 7,
+     "n": 16,
+     "rate": 0.4375,
+     "lo": 0.2309836333518552,
+     "hi": 0.6682180439322348
+    },
+    "error_free_rule": {
+     "k": 5,
+     "n": 16,
+     "rate": 0.3125,
+     "lo": 0.14164435051961052,
+     "hi": 0.5559606813326594
+    },
+    "fidelity_error_llm": {
+     "k": 9,
+     "n": 16,
+     "rate": 0.5625,
+     "lo": 0.3317819560677652,
+     "hi": 0.7690163666481449
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 16,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.19361341827271994
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.836975,
+    "top3": 1.0,
+    "words": 83.4375,
+    "calls": 1.0,
+    "tokens": 324.5625,
+    "latency_s": 2.5255187500000003
+   },
+   "finance": {
+    "n_generated": 8,
+    "n_failed": 0,
+    "n_shown": 8,
+    "n_empty": 0,
+    "status": {
+     "shown": 8
+    },
+    "error_free_llm": {
+     "k": 3,
+     "n": 8,
+     "rate": 0.375,
+     "lo": 0.13684175946152105,
+     "hi": 0.6942621454161982
+    },
+    "error_free_rule": {
+     "k": 3,
+     "n": 8,
+     "rate": 0.375,
+     "lo": 0.13684175946152105,
+     "hi": 0.6942621454161982
+    },
+    "fidelity_error_llm": {
+     "k": 5,
+     "n": 8,
+     "rate": 0.625,
+     "lo": 0.3057378545838018,
+     "hi": 0.863158240538479
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 8,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3244156195108769
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.8385375,
+    "top3": 1.0,
+    "words": 87.125,
+    "calls": 1.0,
+    "tokens": 318.125,
+    "latency_s": 0.0005625
+   },
+   "health": {
+    "n_generated": 8,
+    "n_failed": 0,
+    "n_shown": 8,
+    "n_empty": 0,
+    "status": {
+     "shown": 8
+    },
+    "error_free_llm": {
+     "k": 4,
+     "n": 8,
+     "rate": 0.5,
+     "lo": 0.2152125268244419,
+     "hi": 0.7847874731755581
+    },
+    "error_free_rule": {
+     "k": 2,
+     "n": 8,
+     "rate": 0.25,
+     "lo": 0.07147768885802765,
+     "hi": 0.5907301208974108
+    },
+    "fidelity_error_llm": {
+     "k": 4,
+     "n": 8,
+     "rate": 0.5,
+     "lo": 0.2152125268244419,
+     "hi": 0.7847874731755581
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 8,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3244156195108769
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.8354125,
+    "top3": 1.0,
+    "words": 79.75,
+    "calls": 1.0,
+    "tokens": 331.0,
+    "latency_s": 5.0504750000000005
+   }
+  },
+  "b3": {
+   "pooled": {
+    "n_generated": 16,
+    "n_failed": 0,
+    "n_shown": 16,
+    "n_empty": 0,
+    "status": {
+     "shown": 16
+    },
+    "error_free_llm": {
+     "k": 12,
+     "n": 16,
+     "rate": 0.75,
+     "lo": 0.5050123107060135,
+     "hi": 0.8981809801576265
+    },
+    "error_free_rule": {
+     "k": 12,
+     "n": 16,
+     "rate": 0.75,
+     "lo": 0.5050123107060135,
+     "hi": 0.8981809801576265
+    },
+    "fidelity_error_llm": {
+     "k": 4,
+     "n": 16,
+     "rate": 0.25,
+     "lo": 0.10181901984237347,
+     "hi": 0.4949876892939865
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 16,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.19361341827271994
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.7510375,
+    "top3": 1.0,
+    "words": 100.5625,
+    "calls": 2.125,
+    "tokens": 3123.375,
+    "latency_s": 3.6971000000000003
+   },
+   "finance": {
+    "n_generated": 8,
+    "n_failed": 0,
+    "n_shown": 8,
+    "n_empty": 0,
+    "status": {
+     "shown": 8
+    },
+    "error_free_llm": {
+     "k": 6,
+     "n": 8,
+     "rate": 0.75,
+     "lo": 0.40926987910258916,
+     "hi": 0.9285223111419724
+    },
+    "error_free_rule": {
+     "k": 5,
+     "n": 8,
+     "rate": 0.625,
+     "lo": 0.3057378545838018,
+     "hi": 0.863158240538479
+    },
+    "fidelity_error_llm": {
+     "k": 2,
+     "n": 8,
+     "rate": 0.25,
+     "lo": 0.07147768885802765,
+     "hi": 0.5907301208974108
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 8,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3244156195108769
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.6979125,
+    "top3": 1.0,
+    "words": 109.25,
+    "calls": 2.25,
+    "tokens": 4001.625,
+    "latency_s": 4.5424125
+   },
+   "health": {
+    "n_generated": 8,
+    "n_failed": 0,
+    "n_shown": 8,
+    "n_empty": 0,
+    "status": {
+     "shown": 8
+    },
+    "error_free_llm": {
+     "k": 6,
+     "n": 8,
+     "rate": 0.75,
+     "lo": 0.40926987910258916,
+     "hi": 0.9285223111419724
+    },
+    "error_free_rule": {
+     "k": 7,
+     "n": 8,
+     "rate": 0.875,
+     "lo": 0.5291051942301385,
+     "hi": 0.9775830911367039
+    },
+    "fidelity_error_llm": {
+     "k": 2,
+     "n": 8,
+     "rate": 0.25,
+     "lo": 0.07147768885802765,
+     "hi": 0.5907301208974108
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 8,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3244156195108769
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.8041625,
+    "top3": 1.0,
+    "words": 91.875,
+    "calls": 2.0,
+    "tokens": 2245.125,
+    "latency_s": 2.8517875
+   }
+  },
+  "explingo": {
+   "pooled": {
+    "n_generated": 16,
+    "n_failed": 1,
+    "n_shown": 15,
+    "n_empty": 0,
+    "status": {
+     "shown": 15
+    },
+    "error_free_llm": {
+     "k": 7,
+     "n": 15,
+     "rate": 0.4666666666666667,
+     "lo": 0.24809225259746442,
+     "hi": 0.6988336984894922
+    },
+    "error_free_rule": {
+     "k": 7,
+     "n": 15,
+     "rate": 0.4666666666666667,
+     "lo": 0.24809225259746442,
+     "hi": 0.6988336984894922
+    },
+    "fidelity_error_llm": {
+     "k": 8,
+     "n": 15,
+     "rate": 0.5333333333333333,
+     "lo": 0.3011663015105079,
+     "hi": 0.7519077474025356
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 15,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.20388926630434784
+    },
+    "va": 0.9138866666666666,
+    "sa": 1.0,
+    "ra": 1.0,
+    "top3": 1.0,
+    "words": 71.13333333333334,
+    "calls": 2.2666666666666666,
+    "tokens": 1641.9333333333334,
+    "latency_s": 25.464066666666668
+   },
+   "finance": {
+    "n_generated": 8,
+    "n_failed": 0,
+    "n_shown": 8,
+    "n_empty": 0,
+    "status": {
+     "shown": 8
+    },
+    "error_free_llm": {
+     "k": 3,
+     "n": 8,
+     "rate": 0.375,
+     "lo": 0.13684175946152105,
+     "hi": 0.6942621454161982
+    },
+    "error_free_rule": {
+     "k": 3,
+     "n": 8,
+     "rate": 0.375,
+     "lo": 0.13684175946152105,
+     "hi": 0.6942621454161982
+    },
+    "fidelity_error_llm": {
+     "k": 5,
+     "n": 8,
+     "rate": 0.625,
+     "lo": 0.3057378545838018,
+     "hi": 0.863158240538479
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 8,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3244156195108769
+    },
+    "va": 0.8385375,
+    "sa": 1.0,
+    "ra": 1.0,
+    "top3": 1.0,
+    "words": 76.0,
+    "calls": 2.5,
+    "tokens": 1850.875,
+    "latency_s": 45.2736875
+   },
+   "health": {
+    "n_generated": 8,
+    "n_failed": 1,
+    "n_shown": 7,
+    "n_empty": 0,
+    "status": {
+     "shown": 7
+    },
+    "error_free_llm": {
+     "k": 4,
+     "n": 7,
+     "rate": 0.5714285714285714,
+     "lo": 0.2504542304090258,
+     "hi": 0.8417830777373732
+    },
+    "error_free_rule": {
+     "k": 4,
+     "n": 7,
+     "rate": 0.5714285714285714,
+     "lo": 0.2504542304090258,
+     "hi": 0.8417830777373732
+    },
+    "fidelity_error_llm": {
+     "k": 3,
+     "n": 7,
+     "rate": 0.42857142857142855,
+     "lo": 0.1582169222626268,
+     "hi": 0.7495457695909742
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 7,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.35433884297520657
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 1.0,
+    "top3": 1.0,
+    "words": 65.57142857142857,
+    "calls": 2.0,
+    "tokens": 1403.142857142857,
+    "latency_s": 2.8245
+   }
+  },
+  "critic_rule": {
+   "pooled": {
+    "n_generated": 16,
+    "n_failed": 1,
+    "n_shown": 15,
+    "n_empty": 0,
+    "status": {
+     "shown": 15
+    },
+    "error_free_llm": {
+     "k": 10,
+     "n": 15,
+     "rate": 0.6666666666666666,
+     "lo": 0.4171312515121298,
+     "hi": 0.8482389930530875
+    },
+    "error_free_rule": {
+     "k": 10,
+     "n": 15,
+     "rate": 0.6666666666666666,
+     "lo": 0.4171312515121298,
+     "hi": 0.8482389930530875
+    },
+    "fidelity_error_llm": {
+     "k": 5,
+     "n": 15,
+     "rate": 0.3333333333333333,
+     "lo": 0.15176100694691236,
+     "hi": 0.5828687484878702
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 15,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.20388926630434784
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.9031733333333333,
+    "top3": 0.97778,
+    "words": 109.66666666666667,
+    "calls": 4.066666666666666,
+    "tokens": 4807.666666666667,
+    "latency_s": 0.9633466666666666
+   },
+   "finance": {
+    "n_generated": 8,
+    "n_failed": 0,
+    "n_shown": 8,
+    "n_empty": 0,
+    "status": {
+     "shown": 8
+    },
+    "error_free_llm": {
+     "k": 4,
+     "n": 8,
+     "rate": 0.5,
+     "lo": 0.2152125268244419,
+     "hi": 0.7847874731755581
+    },
+    "error_free_rule": {
+     "k": 4,
+     "n": 8,
+     "rate": 0.5,
+     "lo": 0.2152125268244419,
+     "hi": 0.7847874731755581
+    },
+    "fidelity_error_llm": {
+     "k": 4,
+     "n": 8,
+     "rate": 0.5,
+     "lo": 0.2152125268244419,
+     "hi": 0.7847874731755581
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 8,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3244156195108769
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.8497,
+    "top3": 0.9583375,
+    "words": 122.375,
+    "calls": 4.5,
+    "tokens": 6224.125,
+    "latency_s": 0.7894749999999999
+   },
+   "health": {
+    "n_generated": 8,
+    "n_failed": 1,
+    "n_shown": 7,
+    "n_empty": 0,
+    "status": {
+     "shown": 7
+    },
+    "error_free_llm": {
+     "k": 6,
+     "n": 7,
+     "rate": 0.8571428571428571,
+     "lo": 0.4868654966809702,
+     "hi": 0.9743210440510253
+    },
+    "error_free_rule": {
+     "k": 6,
+     "n": 7,
+     "rate": 0.8571428571428571,
+     "lo": 0.4868654966809702,
+     "hi": 0.9743210440510253
+    },
+    "fidelity_error_llm": {
+     "k": 1,
+     "n": 7,
+     "rate": 0.14285714285714285,
+     "lo": 0.02567895594897479,
+     "hi": 0.5131345033190299
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 7,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.35433884297520657
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.9642857142857143,
+    "top3": 1.0,
+    "words": 95.14285714285714,
+    "calls": 3.5714285714285716,
+    "tokens": 3188.8571428571427,
+    "latency_s": 1.1620571428571427
+   }
+  },
+  "musicco": {
+   "pooled": {
+    "n_generated": 16,
+    "n_failed": 1,
+    "n_shown": 15,
+    "n_empty": 0,
+    "status": {
+     "shown": 15
+    },
+    "error_free_llm": {
+     "k": 6,
+     "n": 15,
+     "rate": 0.4,
+     "lo": 0.19824228082594664,
+     "hi": 0.6425355724349229
+    },
+    "error_free_rule": {
+     "k": 6,
+     "n": 15,
+     "rate": 0.4,
+     "lo": 0.19824228082594664,
+     "hi": 0.6425355724349229
+    },
+    "fidelity_error_llm": {
+     "k": 8,
+     "n": 15,
+     "rate": 0.5333333333333333,
+     "lo": 0.3011663015105079,
+     "hi": 0.7519077474025356
+    },
+    "policy_violation": {
+     "k": 1,
+     "n": 15,
+     "rate": 0.06666666666666667,
+     "lo": 0.011866588606194859,
+     "hi": 0.29817077552423993
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.8055533333333333,
+    "top3": 1.0,
+    "words": 148.8,
+    "calls": 4.333333333333333,
+    "tokens": 9012.2,
+    "latency_s": 8.344153333333333
+   },
+   "finance": {
+    "n_generated": 8,
+    "n_failed": 0,
+    "n_shown": 8,
+    "n_empty": 0,
+    "status": {
+     "shown": 8
+    },
+    "error_free_llm": {
+     "k": 3,
+     "n": 8,
+     "rate": 0.375,
+     "lo": 0.13684175946152105,
+     "hi": 0.6942621454161982
+    },
+    "error_free_rule": {
+     "k": 3,
+     "n": 8,
+     "rate": 0.375,
+     "lo": 0.13684175946152105,
+     "hi": 0.6942621454161982
+    },
+    "fidelity_error_llm": {
+     "k": 5,
+     "n": 8,
+     "rate": 0.625,
+     "lo": 0.3057378545838018,
+     "hi": 0.863158240538479
+    },
+    "policy_violation": {
+     "k": 0,
+     "n": 8,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.3244156195108769
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.921875,
+    "top3": 1.0,
+    "words": 171.125,
+    "calls": 4.75,
+    "tokens": 12063.875,
+    "latency_s": 10.2499125
+   },
+   "health": {
+    "n_generated": 8,
+    "n_failed": 1,
+    "n_shown": 7,
+    "n_empty": 0,
+    "status": {
+     "shown": 7
+    },
+    "error_free_llm": {
+     "k": 3,
+     "n": 7,
+     "rate": 0.42857142857142855,
+     "lo": 0.1582169222626268,
+     "hi": 0.7495457695909742
+    },
+    "error_free_rule": {
+     "k": 3,
+     "n": 7,
+     "rate": 0.42857142857142855,
+     "lo": 0.1582169222626268,
+     "hi": 0.7495457695909742
+    },
+    "fidelity_error_llm": {
+     "k": 3,
+     "n": 7,
+     "rate": 0.42857142857142855,
+     "lo": 0.1582169222626268,
+     "hi": 0.7495457695909742
+    },
+    "policy_violation": {
+     "k": 1,
+     "n": 7,
+     "rate": 0.14285714285714285,
+     "lo": 0.02567895594897479,
+     "hi": 0.5131345033190299
+    },
+    "va": 1.0,
+    "sa": 1.0,
+    "ra": 0.6726142857142857,
+    "top3": 1.0,
+    "words": 123.28571428571429,
+    "calls": 3.857142857142857,
+    "tokens": 5524.571428571428,
+    "latency_s": 6.166142857142858
+   }
+  }
+ },
+ "paired": {
+  "direct": {
+   "pairs": 16,
+   "ours_only": 9,
+   "other_only": 0,
+   "both": 7,
+   "neither": 0,
+   "p_mcnemar": 0.00390625
+  },
+  "b3": {
+   "pairs": 16,
+   "ours_only": 4,
+   "other_only": 0,
+   "both": 12,
+   "neither": 0,
+   "p_mcnemar": 0.125
+  },
+  "explingo": {
+   "pairs": 15,
+   "ours_only": 8,
+   "other_only": 0,
+   "both": 7,
+   "neither": 0,
+   "p_mcnemar": 0.0078125
+  },
+  "critic_rule": {
+   "pairs": 15,
+   "ours_only": 5,
+   "other_only": 0,
+   "both": 10,
+   "neither": 0,
+   "p_mcnemar": 0.0625
+  },
+  "musicco": {
+   "pairs": 15,
+   "ours_only": 9,
+   "other_only": 0,
+   "both": 6,
+   "neither": 0,
+   "p_mcnemar": 0.00390625
+  }
+ },
+ "errors": {
+  "ours:full": {
+   "value": 0,
+   "direction": 0,
+   "stated rank": 0,
+   "unsupported factor": 0,
+   "unsupported number": 0,
+   "causal wording": 0,
+   "raw code": 0
+  },
+  "direct": {
+   "value": 0,
+   "direction": 0,
+   "stated rank": 1,
+   "unsupported factor": 0,
+   "unsupported number": 9,
+   "causal wording": 1,
+   "raw code": 2
+  },
+  "b3": {
+   "value": 0,
+   "direction": 0,
+   "stated rank": 4,
+   "unsupported factor": 0,
+   "unsupported number": 0,
+   "causal wording": 1,
+   "raw code": 0
+  },
+  "explingo": {
+   "value": 3,
+   "direction": 0,
+   "stated rank": 0,
+   "unsupported factor": 0,
+   "unsupported number": 8,
+   "causal wording": 0,
+   "raw code": 0
+  },
+  "critic_rule": {
+   "value": 0,
+   "direction": 0,
+   "stated rank": 2,
+   "unsupported factor": 0,
+   "unsupported number": 2,
+   "causal wording": 3,
+   "raw code": 0
+  },
+  "musicco": {
+   "value": 0,
+   "direction": 0,
+   "stated rank": 1,
+   "unsupported factor": 0,
+   "unsupported number": 5,
+   "causal wording": 3,
+   "raw code": 0,
+   "policy: prediction_as_fact": 1
+  }
+ },
+ "ablations": {
+  "ours:full": {
+   "n_generated": 40,
+   "n_failed": 0,
+   "n_shown": 40,
+   "n_empty": 0,
+   "status": {
+    "verified": 33,
+    "fallback": 7
+   },
+   "error_free_llm": {
+    "k": 39,
+    "n": 40,
+    "rate": 0.975,
+    "lo": 0.8711834051199223,
+    "hi": 0.9955732825922052
+   },
+   "error_free_rule": {
+    "k": 40,
+    "n": 40,
+    "rate": 1.0,
+    "lo": 0.9123754607496077,
+    "hi": 1.0
+   },
+   "fidelity_error_llm": {
+    "k": 1,
+    "n": 40,
+    "rate": 0.025,
+    "lo": 0.004426717407794919,
+    "hi": 0.1288165948800778
+   },
+   "policy_violation": {
+    "k": 0,
+    "n": 40,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.08762453925039232
+   },
+   "va": 1.0,
+   "sa": 0.975,
+   "ra": 0.9833325,
+   "top3": 0.7083275,
+   "words": 54.7,
+   "calls": 4.375,
+   "tokens": 4063.6,
+   "latency_s": 18.2173325
+  },
+  "ours:no_verifier": {
+   "n_generated": 40,
+   "n_failed": 0,
+   "n_shown": 40,
+   "n_empty": 0,
+   "status": {
+    "verified": 31,
+    "fallback": 4,
+    "unverified": 5
+   },
+   "error_free_llm": {
+    "k": 39,
+    "n": 40,
+    "rate": 0.975,
+    "lo": 0.8711834051199223,
+    "hi": 0.9955732825922052
+   },
+   "error_free_rule": {
+    "k": 40,
+    "n": 40,
+    "rate": 1.0,
+    "lo": 0.9123754607496077,
+    "hi": 1.0
+   },
+   "fidelity_error_llm": {
+    "k": 1,
+    "n": 40,
+    "rate": 0.025,
+    "lo": 0.004426717407794919,
+    "hi": 0.1288165948800778
+   },
+   "policy_violation": {
+    "k": 0,
+    "n": 40,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.08762453925039232
+   },
+   "va": 1.0,
+   "sa": 0.975,
+   "ra": 0.9833325,
+   "top3": 0.6583249999999999,
+   "words": 50.5,
+   "calls": 4.3,
+   "tokens": 3802.4,
+   "latency_s": 0.872405
+  },
+  "ours:no_critic": {
+   "n_generated": 40,
+   "n_failed": 0,
+   "n_shown": 40,
+   "n_empty": 0,
+   "status": {
+    "unverified": 19,
+    "verified": 20,
+    "fallback": 1
+   },
+   "error_free_llm": {
+    "k": 40,
+    "n": 40,
+    "rate": 1.0,
+    "lo": 0.9123754607496077,
+    "hi": 1.0
+   },
+   "error_free_rule": {
+    "k": 40,
+    "n": 40,
+    "rate": 1.0,
+    "lo": 0.9123754607496077,
+    "hi": 1.0
+   },
+   "fidelity_error_llm": {
+    "k": 0,
+    "n": 40,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.08762453925039232
+   },
+   "policy_violation": {
+    "k": 0,
+    "n": 40,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.08762453925039232
+   },
+   "va": 1.0,
+   "sa": 1.0,
+   "ra": 0.9833325,
+   "top3": 0.5583125,
+   "words": 48.0,
+   "calls": 2.1,
+   "tokens": 2448.6,
+   "latency_s": 20.4232175
+  },
+  "ours:no_repair": {
+   "n_generated": 40,
+   "n_failed": 0,
+   "n_shown": 40,
+   "n_empty": 0,
+   "status": {
+    "fallback": 25,
+    "verified": 15
+   },
+   "error_free_llm": {
+    "k": 40,
+    "n": 40,
+    "rate": 1.0,
+    "lo": 0.9123754607496077,
+    "hi": 1.0
+   },
+   "error_free_rule": {
+    "k": 40,
+    "n": 40,
+    "rate": 1.0,
+    "lo": 0.9123754607496077,
+    "hi": 1.0
+   },
+   "fidelity_error_llm": {
+    "k": 0,
+    "n": 40,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.08762453925039232
+   },
+   "policy_violation": {
+    "k": 0,
+    "n": 40,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.08762453925039232
+   },
+   "va": 1.0,
+   "sa": 1.0,
+   "ra": 1.0,
+   "top3": 0.8833275,
+   "words": 67.45,
+   "calls": 5.125,
+   "tokens": 4852.7,
+   "latency_s": 0.8677675
+  },
+  "ours:no_policy_rules": {
+   "n_generated": 40,
+   "n_failed": 0,
+   "n_shown": 40,
+   "n_empty": 0,
+   "status": {
+    "verified": 33,
+    "fallback": 7
+   },
+   "error_free_llm": {
+    "k": 39,
+    "n": 40,
+    "rate": 0.975,
+    "lo": 0.8711834051199223,
+    "hi": 0.9955732825922052
+   },
+   "error_free_rule": {
+    "k": 40,
+    "n": 40,
+    "rate": 1.0,
+    "lo": 0.9123754607496077,
+    "hi": 1.0
+   },
+   "fidelity_error_llm": {
+    "k": 1,
+    "n": 40,
+    "rate": 0.025,
+    "lo": 0.004426717407794919,
+    "hi": 0.1288165948800778
+   },
+   "policy_violation": {
+    "k": 0,
+    "n": 40,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.08762453925039232
+   },
+   "va": 1.0,
+   "sa": 0.975,
+   "ra": 0.9833325,
+   "top3": 0.7083275,
+   "words": 54.7,
+   "calls": 4.375,
+   "tokens": 4063.6,
+   "latency_s": 20.4478875
+  }
+ },
+ "faults": {
+  "llm": {
+   "files": [
+    "faults_20261025-003703.json",
+    "faults_20261025-003722.json",
+    "faults_20261025-003739.json",
+    "faults_20261025-003758.json",
+    "faults_20261025-003814.json",
+    "faults_20261025-003834.json",
+    "faults_20261025-003850.json",
+    "faults_20261026-004956.json",
+    "faults_20261026-005003.json",
+    "faults_20261026-005331.json",
+    "faults_20261026-005338.json",
+    "faults_20261026-010203.json"
+   ],
+   "chunks": 12,
+   "per_fault": {
+    "direction_flip": {
+     "k": 10,
+     "n": 10,
+     "rate": 1.0,
+     "lo": 0.7224598312333834,
+     "hi": 1.0
+    },
+    "value_swap": {
+     "k": 10,
+     "n": 10,
+     "rate": 1.0,
+     "lo": 0.7224598312333834,
+     "hi": 1.0
+    },
+    "fake_feature": {
+     "k": 10,
+     "n": 10,
+     "rate": 1.0,
+     "lo": 0.7224598312333834,
+     "hi": 1.0
+    },
+    "wrong_top": {
+     "k": 11,
+     "n": 11,
+     "rate": 1.0,
+     "lo": 0.7411599827511859,
+     "hi": 1.0
+    },
+    "unsupported_number": {
+     "k": 8,
+     "n": 9,
+     "rate": 0.8888888888888888,
+     "lo": 0.5649937852319398,
+     "hi": 0.9801096286728695
+    },
+    "missing_citation": {
+     "k": 10,
+     "n": 10,
+     "rate": 1.0,
+     "lo": 0.7224598312333834,
+     "hi": 1.0
+    },
+    "causal_claim": {
+     "k": 10,
+     "n": 10,
+     "rate": 1.0,
+     "lo": 0.7224598312333834,
+     "hi": 1.0
+    },
+    "raw_code": {
+     "k": 2,
+     "n": 10,
+     "rate": 0.2,
+     "lo": 0.05668094798069332,
+     "hi": 0.5098431532792765
+    },
+    "decision_wording": {
+     "k": 10,
+     "n": 10,
+     "rate": 1.0,
+     "lo": 0.7224598312333834,
+     "hi": 1.0
+    },
+    "protected_inference": {
+     "k": 10,
+     "n": 10,
+     "rate": 1.0,
+     "lo": 0.7224598312333834,
+     "hi": 1.0
+    },
+    "blame_wording": {
+     "k": 7,
+     "n": 9,
+     "rate": 0.7777777777777778,
+     "lo": 0.4525833436728054,
+     "hi": 0.9367762376877727
+    },
+    "prediction_as_fact": {
+     "k": 3,
+     "n": 8,
+     "rate": 0.375,
+     "lo": 0.13684175946152105,
+     "hi": 0.6942621454161982
+    },
+    "magnitude_swap": {
+     "k": 5,
+     "n": 9,
+     "rate": 0.5555555555555556,
+     "lo": 0.26664734574402965,
+     "hi": 0.8112245705280859
+    },
+    "risk_text_swap": {
+     "k": 9,
+     "n": 9,
+     "rate": 1.0,
+     "lo": 0.7008472464490406,
+     "hi": 1.0
+    },
+    "wrong_ordinal": {
+     "k": 1,
+     "n": 6,
+     "rate": 0.16666666666666666,
+     "lo": 0.030052585871730285,
+     "hi": 0.563509436563646
+    }
+   },
+   "overall": {
+    "k": 116,
+    "n": 141,
+    "rate": 0.8226950354609929,
+    "lo": 0.7513503390842609,
+    "hi": 0.8769222014013455
+   },
+   "per_fault_exact": {
+    "direction_flip": {
+     "k": 10,
+     "n": 10,
+     "rate": 1.0,
+     "lo": 0.7224598312333834,
+     "hi": 1.0
+    },
+    "value_swap": {
+     "k": 10,
+     "n": 10,
+     "rate": 1.0,
+     "lo": 0.7224598312333834,
+     "hi": 1.0
+    },
+    "fake_feature": {
+     "k": 0,
+     "n": 10,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.2775401687666165
+    },
+    "wrong_top": {
+     "k": 11,
+     "n": 11,
+     "rate": 1.0,
+     "lo": 0.7411599827511859,
+     "hi": 1.0
+    },
+    "unsupported_number": {
+     "k": 3,
+     "n": 9,
+     "rate": 0.3333333333333333,
+     "lo": 0.12058159868274292,
+     "hi": 0.6458026525009103
+    },
+    "missing_citation": {
+     "k": 10,
+     "n": 10,
+     "rate": 1.0,
+     "lo": 0.7224598312333834,
+     "hi": 1.0
+    },
+    "causal_claim": {
+     "k": 10,
+     "n": 10,
+     "rate": 1.0,
+     "lo": 0.7224598312333834,
+     "hi": 1.0
+    },
+    "raw_code": {
+     "k": 2,
+     "n": 10,
+     "rate": 0.2,
+     "lo": 0.05668094798069332,
+     "hi": 0.5098431532792765
+    },
+    "decision_wording": {
+     "k": 9,
+     "n": 10,
+     "rate": 0.9,
+     "lo": 0.5958436145024278,
+     "hi": 0.9821242504842789
+    },
+    "protected_inference": {
+     "k": 9,
+     "n": 10,
+     "rate": 0.9,
+     "lo": 0.5958436145024278,
+     "hi": 0.9821242504842789
+    },
+    "blame_wording": {
+     "k": 6,
+     "n": 9,
+     "rate": 0.6666666666666666,
+     "lo": 0.35419734749908977,
+     "hi": 0.8794184013172571
+    },
+    "prediction_as_fact": {
+     "k": 3,
+     "n": 8,
+     "rate": 0.375,
+     "lo": 0.13684175946152105,
+     "hi": 0.6942621454161982
+    },
+    "magnitude_swap": {
+     "k": 0,
+     "n": 9,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.2991527535509594
+    },
+    "risk_text_swap": {
+     "k": 9,
+     "n": 9,
+     "rate": 1.0,
+     "lo": 0.7008472464490406,
+     "hi": 1.0
+    },
+    "wrong_ordinal": {
+     "k": 1,
+     "n": 6,
+     "rate": 0.16666666666666666,
+     "lo": 0.030052585871730285,
+     "hi": 0.563509436563646
+    }
+   },
+   "overall_exact": {
+    "k": 93,
+    "n": 141,
+    "rate": 0.6595744680851063,
+    "lo": 0.5780554468943209,
+    "hi": 0.7326287764227372
+   },
+   "clean_false_rejection": {
+    "k": 0,
+    "n": 93,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.0396689026203615
+   },
+   "domains": [
+    "finance",
+    "health"
+   ]
+  },
+  "template": {
+   "files": [
+    "faults_20261025-170855.json"
+   ],
+   "chunks": 3,
+   "per_fault": {
+    "direction_flip": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "value_swap": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "fake_feature": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "wrong_top": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "unsupported_number": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "missing_citation": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "causal_claim": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "raw_code": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "decision_wording": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "protected_inference": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "blame_wording": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "prediction_as_fact": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "risk_text_swap": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "wrong_ordinal": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "magnitude_swap": {
+     "k": 180,
+     "n": 180,
+     "rate": 1.0,
+     "lo": 0.9791037501849419,
+     "hi": 1.0
+    }
+   },
+   "overall": {
+    "k": 6390,
+    "n": 6390,
+    "rate": 1.0,
+    "lo": 0.9993991718531158,
+    "hi": 1.0
+   },
+   "per_fault_exact": {
+    "direction_flip": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "value_swap": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "fake_feature": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "wrong_top": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "unsupported_number": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "missing_citation": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "causal_claim": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "raw_code": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "decision_wording": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "protected_inference": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "blame_wording": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "prediction_as_fact": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "risk_text_swap": {
+     "k": 540,
+     "n": 540,
+     "rate": 1.0,
+     "lo": 0.9929361784754973,
+     "hi": 1.0
+    },
+    "wrong_ordinal": {
+     "k": 270,
+     "n": 270,
+     "rate": 1.0,
+     "lo": 0.9859714521095407,
+     "hi": 1.0
+    },
+    "magnitude_swap": {
+     "k": 180,
+     "n": 180,
+     "rate": 1.0,
+     "lo": 0.9791037501849419,
+     "hi": 1.0
+    }
+   },
+   "overall_exact": {
+    "k": 6390,
+    "n": 6390,
+    "rate": 1.0,
+    "lo": 0.9993991718531158,
+    "hi": 1.0
+   },
+   "clean_false_rejection": {
+    "k": 0,
+    "n": 2135,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.0017961124376858952
+   },
+   "domains": [
+    "finance",
+    "health",
+    "hr"
+   ]
+  }
+ }
+}

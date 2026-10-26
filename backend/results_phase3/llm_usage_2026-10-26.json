@@ -1,0 +1,16 @@
+{
+ "requests": {
+  "groq:qwen/qwen3.8-27b": 73,
+  "groq:openai/gpt-oss-120b": 12,
+  "groq:openai/gpt-oss-20b": 34
+ },
+ "tokens": {
+  "groq:qwen/qwen3.8-27b": 58256,
+  "groq:openai/gpt-oss-120b": 10618,
+  "groq:openai/gpt-oss-20b": 57642
+ },
+ "exhausted": {
+  "groq:openai/gpt-oss-20b": 1792976523.6403854,
+  "groq:qwen/qwen3.8-27b": 1792976862.1700518
+ }
+}
