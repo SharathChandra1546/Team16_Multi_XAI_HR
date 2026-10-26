@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-26T01:12:13+00:00",
+ "generated": "2026-10-26T10:28:59+00:00",
  "judge": "groq:openai/gpt-oss-120b",
  "runs": [
   {
@@ -815,6 +815,229 @@
    "n_records": 12
   }
  ],
+ "coverage_risk": {
+  "ours:full": [
+   {
+    "threshold": 0.198,
+    "coverage": 0.5,
+    "error_rate": 0.0,
+    "n": 8
+   },
+   {
+    "threshold": 0.2933,
+    "coverage": 0.625,
+    "error_rate": 0.0,
+    "n": 10
+   },
+   {
+    "threshold": 0.532,
+    "coverage": 0.75,
+    "error_rate": 0.0,
+    "n": 12
+   },
+   {
+    "threshold": 0.7413,
+    "coverage": 0.875,
+    "error_rate": 0.0,
+    "n": 14
+   },
+   {
+    "threshold": 1.01,
+    "coverage": 1.0,
+    "error_rate": 0.0,
+    "n": 16
+   }
+  ],
+  "direct": [
+   {
+    "threshold": 0.198,
+    "coverage": 0.5,
+    "error_rate": 0.625,
+    "n": 8
+   },
+   {
+    "threshold": 0.2933,
+    "coverage": 0.625,
+    "error_rate": 0.6,
+    "n": 10
+   },
+   {
+    "threshold": 0.532,
+    "coverage": 0.75,
+    "error_rate": 0.5833333333333334,
+    "n": 12
+   },
+   {
+    "threshold": 0.7413,
+    "coverage": 0.875,
+    "error_rate": 0.5714285714285714,
+    "n": 14
+   },
+   {
+    "threshold": 1.01,
+    "coverage": 1.0,
+    "error_rate": 0.5625,
+    "n": 16
+   }
+  ],
+  "b3": [
+   {
+    "threshold": 0.198,
+    "coverage": 0.5,
+    "error_rate": 0.125,
+    "n": 8
+   },
+   {
+    "threshold": 0.2933,
+    "coverage": 0.625,
+    "error_rate": 0.2,
+    "n": 10
+   },
+   {
+    "threshold": 0.532,
+    "coverage": 0.75,
+    "error_rate": 0.16666666666666666,
+    "n": 12
+   },
+   {
+    "threshold": 0.7413,
+    "coverage": 0.875,
+    "error_rate": 0.21428571428571427,
+    "n": 14
+   },
+   {
+    "threshold": 1.01,
+    "coverage": 1.0,
+    "error_rate": 0.25,
+    "n": 16
+   }
+  ],
+  "explingo": [
+   {
+    "threshold": 0.198,
+    "coverage": 0.4666666666666667,
+    "error_rate": 0.42857142857142855,
+    "n": 7
+   },
+   {
+    "threshold": 0.2933,
+    "coverage": 0.6,
+    "error_rate": 0.4444444444444444,
+    "n": 9
+   },
+   {
+    "threshold": 0.532,
+    "coverage": 0.7333333333333333,
+    "error_rate": 0.5454545454545454,
+    "n": 11
+   },
+   {
+    "threshold": 0.7413,
+    "coverage": 0.8666666666666667,
+    "error_rate": 0.5384615384615384,
+    "n": 13
+   },
+   {
+    "threshold": 1.01,
+    "coverage": 1.0,
+    "error_rate": 0.5333333333333333,
+    "n": 15
+   }
+  ],
+  "critic_rule": [
+   {
+    "threshold": 0.198,
+    "coverage": 0.4666666666666667,
+    "error_rate": 0.2857142857142857,
+    "n": 7
+   },
+   {
+    "threshold": 0.2933,
+    "coverage": 0.6,
+    "error_rate": 0.4444444444444444,
+    "n": 9
+   },
+   {
+    "threshold": 0.532,
+    "coverage": 0.7333333333333333,
+    "error_rate": 0.36363636363636365,
+    "n": 11
+   },
+   {
+    "threshold": 0.7413,
+    "coverage": 0.8666666666666667,
+    "error_rate": 0.38461538461538464,
+    "n": 13
+   },
+   {
+    "threshold": 1.01,
+    "coverage": 1.0,
+    "error_rate": 0.3333333333333333,
+    "n": 15
+   }
+  ],
+  "musicco": [
+   {
+    "threshold": 0.198,
+    "coverage": 0.4666666666666667,
+    "error_rate": 0.5714285714285714,
+    "n": 7
+   },
+   {
+    "threshold": 0.2933,
+    "coverage": 0.6,
+    "error_rate": 0.6666666666666666,
+    "n": 9
+   },
+   {
+    "threshold": 0.532,
+    "coverage": 0.7333333333333333,
+    "error_rate": 0.6363636363636364,
+    "n": 11
+   },
+   {
+    "threshold": 0.7413,
+    "coverage": 0.8666666666666667,
+    "error_rate": 0.6153846153846154,
+    "n": 13
+   },
+   {
+    "threshold": 1.01,
+    "coverage": 1.0,
+    "error_rate": 0.6,
+    "n": 15
+   }
+  ]
+ },
+ "scorer_agreement": {
+  "Main comparison (Qwen writer)": {
+   "n": 93,
+   "observed_agreement": 0.9354838709677419,
+   "kappa": 0.8641013151485629,
+   "both_error_free": 54,
+   "llm_only_error_free": 4,
+   "rule_only_error_free": 2,
+   "both_error": 33
+  },
+  "Ablations (Gemma writer)": {
+   "n": 200,
+   "observed_agreement": 0.985,
+   "kappa": 0.0,
+   "both_error_free": 197,
+   "llm_only_error_free": 0,
+   "rule_only_error_free": 3,
+   "both_error": 0
+  },
+  "All texts": {
+   "n": 293,
+   "observed_agreement": 0.9692832764505119,
+   "kappa": 0.8623910661169962,
+   "both_error_free": 251,
+   "llm_only_error_free": 4,
+   "rule_only_error_free": 5,
+   "both_error": 33
+  }
+ },
  "main": {
   "ours:full": {
    "pooled": {

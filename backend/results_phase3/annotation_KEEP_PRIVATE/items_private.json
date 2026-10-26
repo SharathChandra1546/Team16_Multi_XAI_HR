@@ -1,0 +1,1308 @@
+{
+ "source": "results/paper/main_texts_merged.json",
+ "seed": 2026,
+ "items": {
+  "I0001": {
+   "system": "explingo",
+   "domain": "finance",
+   "case": "289",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 6,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0002": {
+   "system": "direct",
+   "domain": "finance",
+   "case": "216",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 17,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0003": {
+   "system": "b3",
+   "domain": "finance",
+   "case": "128",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 1,
+    "policy_violations": 0,
+    "level_violations": 3
+   }
+  },
+  "I0004": {
+   "system": "explingo",
+   "domain": "health",
+   "case": "700",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0005": {
+   "system": "musicco",
+   "domain": "health",
+   "case": "44",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 0,
+    "policy_violations": 1,
+    "level_violations": 0
+   }
+  },
+  "I0006": {
+   "system": "ours:full",
+   "domain": "health",
+   "case": "44",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0007": {
+   "system": "ours:full",
+   "domain": "health",
+   "case": "44",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0008": {
+   "system": "direct",
+   "domain": "finance",
+   "case": "128",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 9,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0009": {
+   "system": "b3",
+   "domain": "finance",
+   "case": "30",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 2
+   }
+  },
+  "I0010": {
+   "system": "critic_rule",
+   "domain": "finance",
+   "case": "128",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": false,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 1
+   }
+  },
+  "I0011": {
+   "system": "b3",
+   "domain": "finance",
+   "case": "289",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 2
+   }
+  },
+  "I0012": {
+   "system": "musicco",
+   "domain": "health",
+   "case": "672",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 1
+   }
+  },
+  "I0013": {
+   "system": "critic_rule",
+   "domain": "finance",
+   "case": "289",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 2,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0014": {
+   "system": "musicco",
+   "domain": "finance",
+   "case": "128",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 1,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0015": {
+   "system": "direct",
+   "domain": "health",
+   "case": "630",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": true,
+    "fidelity_errors": 1,
+    "policy_violations": 0,
+    "level_violations": 1
+   }
+  },
+  "I0016": {
+   "system": "explingo",
+   "domain": "finance",
+   "case": "30",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 4,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0017": {
+   "system": "b3",
+   "domain": "health",
+   "case": "44",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0018": {
+   "system": "ours:full",
+   "domain": "health",
+   "case": "700",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0019": {
+   "system": "b3",
+   "domain": "health",
+   "case": "700",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 1
+   }
+  },
+  "I0020": {
+   "system": "direct",
+   "domain": "health",
+   "case": "44",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 5,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0021": {
+   "system": "direct",
+   "domain": "finance",
+   "case": "30",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 4,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0022": {
+   "system": "ours:full",
+   "domain": "finance",
+   "case": "128",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0023": {
+   "system": "direct",
+   "domain": "finance",
+   "case": "289",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 8,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0024": {
+   "system": "musicco",
+   "domain": "health",
+   "case": "700",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 1,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0025": {
+   "system": "direct",
+   "domain": "finance",
+   "case": "216",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0026": {
+   "system": "direct",
+   "domain": "finance",
+   "case": "289",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 6,
+    "policy_violations": 0,
+    "level_violations": 1
+   }
+  },
+  "I0027": {
+   "system": "explingo",
+   "domain": "health",
+   "case": "672",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0028": {
+   "system": "direct",
+   "domain": "health",
+   "case": "630",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 6,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0029": {
+   "system": "critic_rule",
+   "domain": "health",
+   "case": "44",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0030": {
+   "system": "explingo",
+   "domain": "finance",
+   "case": "289",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0031": {
+   "system": "critic_rule",
+   "domain": "finance",
+   "case": "216",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 3,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0032": {
+   "system": "explingo",
+   "domain": "health",
+   "case": "630",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0033": {
+   "system": "explingo",
+   "domain": "health",
+   "case": "700",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 1,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0034": {
+   "system": "direct",
+   "domain": "health",
+   "case": "44",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 2
+   }
+  },
+  "I0035": {
+   "system": "b3",
+   "domain": "finance",
+   "case": "216",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 2
+   }
+  },
+  "I0036": {
+   "system": "ours:full",
+   "domain": "finance",
+   "case": "30",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0037": {
+   "system": "direct",
+   "domain": "health",
+   "case": "700",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 1
+   }
+  },
+  "I0038": {
+   "system": "critic_rule",
+   "domain": "finance",
+   "case": "30",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 1
+   }
+  },
+  "I0039": {
+   "system": "ours:full",
+   "domain": "health",
+   "case": "630",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0040": {
+   "system": "musicco",
+   "domain": "health",
+   "case": "672",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 2,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0041": {
+   "system": "ours:full",
+   "domain": "health",
+   "case": "672",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0042": {
+   "system": "direct",
+   "domain": "health",
+   "case": "672",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 5,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0043": {
+   "system": "b3",
+   "domain": "health",
+   "case": "700",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0044": {
+   "system": "explingo",
+   "domain": "finance",
+   "case": "216",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0045": {
+   "system": "explingo",
+   "domain": "health",
+   "case": "672",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 4,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0046": {
+   "system": "musicco",
+   "domain": "health",
+   "case": "630",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 2
+   }
+  },
+  "I0047": {
+   "system": "direct",
+   "domain": "finance",
+   "case": "30",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 1
+   }
+  },
+  "I0048": {
+   "system": "musicco",
+   "domain": "finance",
+   "case": "30",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 1,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0049": {
+   "system": "critic_rule",
+   "domain": "health",
+   "case": "700",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0050": {
+   "system": "critic_rule",
+   "domain": "health",
+   "case": "700",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0051": {
+   "system": "musicco",
+   "domain": "finance",
+   "case": "216",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 1
+   }
+  },
+  "I0052": {
+   "system": "musicco",
+   "domain": "health",
+   "case": "44",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 1,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0053": {
+   "system": "b3",
+   "domain": "health",
+   "case": "672",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": false,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0054": {
+   "system": "musicco",
+   "domain": "health",
+   "case": "700",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 1
+   }
+  },
+  "I0055": {
+   "system": "explingo",
+   "domain": "finance",
+   "case": "128",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 1,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0056": {
+   "system": "b3",
+   "domain": "finance",
+   "case": "216",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 1,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0057": {
+   "system": "b3",
+   "domain": "health",
+   "case": "630",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 1,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0058": {
+   "system": "explingo",
+   "domain": "finance",
+   "case": "216",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 2,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0059": {
+   "system": "musicco",
+   "domain": "finance",
+   "case": "128",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 2,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0060": {
+   "system": "explingo",
+   "domain": "health",
+   "case": "44",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 3,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0061": {
+   "system": "ours:full",
+   "domain": "health",
+   "case": "700",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0062": {
+   "system": "explingo",
+   "domain": "finance",
+   "case": "30",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 6,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0063": {
+   "system": "b3",
+   "domain": "finance",
+   "case": "289",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": true,
+    "fidelity_errors": 1,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0064": {
+   "system": "b3",
+   "domain": "health",
+   "case": "630",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 1
+   }
+  },
+  "I0065": {
+   "system": "critic_rule",
+   "domain": "health",
+   "case": "672",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0066": {
+   "system": "ours:full",
+   "domain": "finance",
+   "case": "216",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0067": {
+   "system": "ours:full",
+   "domain": "finance",
+   "case": "216",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0068": {
+   "system": "b3",
+   "domain": "finance",
+   "case": "128",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0069": {
+   "system": "musicco",
+   "domain": "finance",
+   "case": "216",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 2,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0070": {
+   "system": "direct",
+   "domain": "finance",
+   "case": "128",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 1
+   }
+  },
+  "I0071": {
+   "system": "critic_rule",
+   "domain": "health",
+   "case": "672",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0072": {
+   "system": "ours:full",
+   "domain": "health",
+   "case": "630",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0073": {
+   "system": "musicco",
+   "domain": "finance",
+   "case": "289",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 1,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0074": {
+   "system": "direct",
+   "domain": "health",
+   "case": "700",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 4,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0075": {
+   "system": "explingo",
+   "domain": "health",
+   "case": "44",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0076": {
+   "system": "critic_rule",
+   "domain": "finance",
+   "case": "128",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 1,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0077": {
+   "system": "ours:full",
+   "domain": "finance",
+   "case": "128",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0078": {
+   "system": "critic_rule",
+   "domain": "finance",
+   "case": "30",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": true,
+    "fidelity_errors": 1,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0079": {
+   "system": "direct",
+   "domain": "health",
+   "case": "672",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": true,
+    "fidelity_errors": 1,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0080": {
+   "system": "b3",
+   "domain": "health",
+   "case": "44",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 1
+   }
+  },
+  "I0081": {
+   "system": "ours:full",
+   "domain": "finance",
+   "case": "289",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0082": {
+   "system": "ours:full",
+   "domain": "finance",
+   "case": "289",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0083": {
+   "system": "musicco",
+   "domain": "finance",
+   "case": "30",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 2
+   }
+  },
+  "I0084": {
+   "system": "b3",
+   "domain": "health",
+   "case": "672",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 1
+   }
+  },
+  "I0085": {
+   "system": "explingo",
+   "domain": "finance",
+   "case": "128",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0086": {
+   "system": "ours:full",
+   "domain": "finance",
+   "case": "30",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0087": {
+   "system": "critic_rule",
+   "domain": "health",
+   "case": "630",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 1
+   }
+  },
+  "I0088": {
+   "system": "ours:full",
+   "domain": "health",
+   "case": "672",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0089": {
+   "system": "b3",
+   "domain": "finance",
+   "case": "30",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0090": {
+   "system": "critic_rule",
+   "domain": "health",
+   "case": "44",
+   "level": "expert",
+   "intent": "explain",
+   "auto": {
+    "error_free": false,
+    "error_free_llm": false,
+    "fidelity_errors": 2,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0091": {
+   "system": "critic_rule",
+   "domain": "finance",
+   "case": "289",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 0
+   }
+  },
+  "I0092": {
+   "system": "musicco",
+   "domain": "finance",
+   "case": "289",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 1
+   }
+  },
+  "I0093": {
+   "system": "critic_rule",
+   "domain": "finance",
+   "case": "216",
+   "level": "novice",
+   "intent": "explain",
+   "auto": {
+    "error_free": true,
+    "error_free_llm": true,
+    "fidelity_errors": 0,
+    "policy_violations": 0,
+    "level_violations": 2
+   }
+  }
+ }
+}

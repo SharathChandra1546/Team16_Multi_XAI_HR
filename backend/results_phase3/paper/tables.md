@@ -1,6 +1,6 @@
 # Phase 3 results (reduced real-LLM study): finance and health
 
-Generated 2026-10-26T01:12:13+00:00 by `backend/eval/paper_tables.py` from 116 run files. Every text was re-measured with the current measurement code. Do not edit numbers by hand.
+Generated 2026-10-26T10:28:59+00:00 by `backend/eval/paper_tables.py` from 116 run files. Every text was re-measured with the current measurement code. Do not edit numbers by hand.
 
 ## Table 1. Main comparison
 
@@ -105,3 +105,30 @@ Clean texts: 2135, false rejections 0% [0, 0].
 - Measurement shares the text and policy rules our pipeline gates on, which favours it; the LLM-scorer figure and the human labels are the measures without that bias.
 - Open-weights models on free-tier APIs (Qwen 3.8 27B and gpt-oss on Groq, Gemma 4 26B on the Gemini API); the ablations use a different writer from the main comparison.
 - Generation failures (empty or error replies from the provider) are excluded and counted per system.
+
+## Coverage-risk (main comparison)
+
+A case is explained when its escalation score is below the threshold and sent to a person otherwise; error rate is among explained texts (LLM scorer). The score is per case, so all systems share the cases.
+
+| System | t<0.3 | t<0.5 | t<0.7 | t<1.01 |
+|---|---|---|---|---|
+| Ours (full pipeline) | 75% / 0% | 75% / 0% | 88% / 0% | 100% / 0% |
+| Direct prompting | 75% / 58% | 75% / 58% | 88% / 57% | 100% / 56% |
+| B3 (LLM reviewer loop) | 75% / 17% | 75% / 17% | 88% / 21% | 100% / 25% |
+| Explingo-style | 73% / 55% | 73% / 55% | 87% / 54% | 100% / 53% |
+| Critic-Rule (He & Martens) | 73% / 36% | 73% / 36% | 87% / 38% | 100% / 33% |
+| Musicco et al.-style | 73% / 64% | 73% / 64% | 87% / 62% | 100% / 60% |
+
+Cells: coverage / error rate among explained texts.
+
+## Agreement between the two automatic scorers (error present)
+
+| Texts | n | Both correct | Both error | Disagree | Agreement | Cohen's kappa |
+|---|---|---|---|---|---|---|
+| Main comparison (Qwen writer) | 93 | 54 | 33 | 6 | 93.5% | 0.86 |
+| Ablations (Gemma writer) | 200 | 197 | 0 | 3 | 98.5% | 0.00 |
+| All texts | 293 | 251 | 33 | 9 | 96.9% | 0.86 |
+
+When one scorer finds no errors at all (ablation texts), kappa is 0 by construction although raw agreement is high (the kappa prevalence paradox); read that row with its counts.
+
+Human agreement (two annotators) is pending; it is not estimated here.

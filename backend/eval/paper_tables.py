@@ -396,14 +396,101 @@ def main() -> int:
     with open(OUT / "records.csv", "w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh)
         w.writerow(["writer", "domain", "case", "level", "intent", "system", "status", "failed", "empty",
-                    "error_free_llm", "error_free_rule", "fidelity_errors_llm", "policy_violations", "file", "text"])
+                    "error_free_llm", "error_free_rule", "fidelity_errors_llm", "policy_violations", "escalation_score",
+                    "file", "text"])
         for r in recs:
             m = r.get("m") or {}
             w.writerow([r["_writer"], r["domain"], r["case"], r["level"], r["intent"], r["system"], r.get("status"),
                         int(r["_failed"]), int(bool(m.get("empty"))) if m else "",
                         "" if m.get("error_free_llm") is None else int(m["error_free_llm"]),
                         "" if not m else int(m["error_free"]), "" if m.get("fidelity_errors_llm") is None else m["fidelity_errors_llm"],
-                        ";".join(m.get("policy_violations") or []), r["_file"], r["text"]])
+                        ";".join(m.get("policy_violations") or []), r.get("escalation_score"), r["_file"], r["text"]])
+    # ---------------- coverage-risk (escalation score is per case, so every system faces the same cases)
+    scored_main = [r for r in main_recs if not r["_failed"] and not r["m"]["empty"]
+                   and r["m"].get("error_free_llm") is not None and r.get("escalation_score") is not None]
+    thresholds = sorted({round(float(r["escalation_score"]), 4) for r in scored_main} | {1.01})
+    num_cov = {}
+    for s in systems:
+        rs = [r for r in scored_main if r["system"] == s]
+        pts = []
+        for t in thresholds:
+            kept = [r for r in rs if float(r["escalation_score"]) < t]
+            if not kept:
+                continue
+            err = sum(not r["m"]["error_free_llm"] for r in kept)
+            pts.append({"threshold": t, "coverage": len(kept) / len(rs), "error_rate": err / len(kept), "n": len(kept)})
+        num_cov[s] = pts
+    rows_c = []
+    for s in systems:
+        for p in num_cov[s]:
+            rows_c.append([s, p["threshold"], round(p["coverage"], 4), round(p["error_rate"], 4), p["n"]])
+    write_csv("table_coverage_risk", ["system", "escalation_threshold", "coverage", "error_rate_explained", "n_explained"], rows_c)
+    md += ["## Coverage-risk (main comparison)", "",
+           "A case is explained when its escalation score is below the threshold and sent to a person otherwise; "
+           "error rate is among explained texts (LLM scorer). The score is per case, so all systems share the cases.", ""]
+    head_c = ["System"] + [f"t<{t:g}" for t in (0.3, 0.5, 0.7, 1.01)]
+    rows_cm = []
+    for s in systems:
+        cells = []
+        for t in (0.3, 0.5, 0.7, 1.01):
+            rs = [r for r in scored_main if r["system"] == s]
+            kept = [r for r in rs if float(r["escalation_score"]) < t]
+            cells.append(f"{100 * len(kept) / len(rs):.0f}% / {100 * sum(not r['m']['error_free_llm'] for r in kept) / len(kept):.0f}%"
+                         if kept and rs else "0% / n/a")
+        rows_cm.append([SYS_LABEL[s].replace("\\&", "&")] + cells)
+    md += md_table(head_c, rows_cm) + ["", "Cells: coverage / error rate among explained texts.", ""]
+    write_tex("table_coverage_risk", "Coverage and error rate among explained texts at escalation-score thresholds "
+              "(main comparison; coverage / error rate).", "tab:coverage",
+              head_c, [[SYS_LABEL[s]] + [c.replace("%", "\\%") for c in r[1:]] for s, r in zip(systems, rows_cm)])
+
+    # ---------------- agreement between the two automatic scorers (Table VI, measured part)
+    def kappa2(pairs):
+        n = len(pairs)
+        if not n:
+            return None, None, (0, 0, 0, 0)
+        a11 = sum(1 for x, y in pairs if x and y)
+        a00 = sum(1 for x, y in pairs if not x and not y)
+        a10 = sum(1 for x, y in pairs if x and not y)
+        a01 = sum(1 for x, y in pairs if not x and y)
+        po = (a11 + a00) / n
+        px, py = (a11 + a10) / n, (a11 + a01) / n
+        pe = px * py + (1 - px) * (1 - py)
+        return po, (None if pe == 1 else (po - pe) / (1 - pe)), (a11, a10, a01, a00)
+
+    num_agree = {}
+    rows_k = []
+    for name, sub in (("Main comparison (Qwen writer)", [r for r in recs if r["_writer"] == MAIN_WRITER]),
+                      ("Ablations (Gemma writer)", [r for r in recs if r["_writer"] == ABL_WRITER]),
+                      ("All texts", recs)):
+        pairs = [(bool(r["m"]["error_free_llm"]), bool(r["m"]["error_free"])) for r in sub
+                 if not r["_failed"] and not r["m"]["empty"] and r["m"].get("error_free_llm") is not None]
+        po, k, cells = kappa2(pairs)
+        num_agree[name] = {"n": len(pairs), "observed_agreement": po, "kappa": k,
+                           "both_error_free": cells[0], "llm_only_error_free": cells[1],
+                           "rule_only_error_free": cells[2], "both_error": cells[3]}
+        rows_k.append([name, len(pairs), cells[0], cells[3], cells[1] + cells[2],
+                       f"{100 * po:.1f}\\%" if po is not None else "n/a", f"{k:.2f}" if k is not None else "n/a"])
+    write_tex("table_scorer_agreement", "Agreement on ``error present'' between the independent LLM scorer "
+              "(gpt-oss-120b) and the rule-based checker (Cohen's $\\kappa$). On the ablation texts the rule-based checker "
+              f"found no errors, so $\\kappa=0$ there despite {100 * (num_agree['Ablations (Gemma writer)']['observed_agreement'] or 0):.1f}\\% raw agreement (prevalence paradox). Human agreement is pending the blind "
+              "annotation (sheets in \\texttt{annotation/phase3}).", "tab:agreement",
+              ["Texts", "n", "Both correct", "Both error", "Disagree", "Agreement", "Cohen's $\\kappa$"], rows_k)
+    write_csv("table_scorer_agreement", ["texts", "n", "both_error_free", "both_error", "disagree", "observed_agreement", "kappa"],
+              [r[:5] + [r[5].replace("\\%", "%"), r[6]] for r in rows_k])
+    md += ["## Agreement between the two automatic scorers (error present)", ""]
+    md += md_table(["Texts", "n", "Both correct", "Both error", "Disagree", "Agreement", "Cohen's kappa"],
+                   [r[:5] + [r[5].replace("\\%", "%"), r[6]] for r in rows_k])
+    md += ["", "When one scorer finds no errors at all (ablation texts), kappa is 0 by construction although raw "
+           "agreement is high (the kappa prevalence paradox); read that row with its counts."]
+    md += ["", "Human agreement (two annotators) is pending; it is not estimated here.", ""]
+
+    # merged main-comparison texts in the comparison-run format, for eval/make_annotation_sheets.py
+    merged = [{k: v for k, v in r.items() if not k.startswith("_")} for r in main_recs
+              if not r["_failed"] and not r["m"]["empty"]]
+    (OUT / "main_texts_merged.json").write_text(json.dumps({"systems": systems, "mock_or_standin": False,
+                                                            "records": merged}, indent=1, default=str), encoding="utf-8")
+    numbers["coverage_risk"] = num_cov
+    numbers["scorer_agreement"] = num_agree
     numbers.update({"main": num_main, "paired": num_pairs, "errors": num_err, "ablations": num_abl,
                     "faults": num_faults})
     (OUT / "numbers.json").write_text(json.dumps(numbers, indent=1, default=str), encoding="utf-8")

@@ -1,0 +1,4 @@
+texts,n,both_error_free,both_error,disagree,observed_agreement,kappa
+Main comparison (Qwen writer),93,54,33,6,93.5%,0.86
+Ablations (Gemma writer),200,197,0,3,98.5%,0.00
+All texts,293,251,33,9,96.9%,0.86

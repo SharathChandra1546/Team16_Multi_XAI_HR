@@ -107,7 +107,7 @@ def main() -> int:
         item_id = f"I{n:04d}"
         d = reg.get(r["domain"])
         rt = d.runtime("main")
-        row = next(row for idx, row in rt.examples.iterrows() if str(idx) == r["case"])
+        row = next(row for idx, row in rt.examples.iterrows() if str(idx) == str(r["case"]))
         x = {f: float(row[f]) for f in rt.features}
         pkg = build_package(d, x, r["level"], r["intent"])
         q = d.language.default_question if r["intent"] == "explain" else "What would lower the risk?"
@@ -115,7 +115,8 @@ def main() -> int:
                      "question": q, "evidence": render_evidence(pkg), "explanation": r["text"].strip()})
         m = r["m"]
         private[item_id] = {"system": r["system"], "domain": r["domain"], "case": r["case"], "level": r["level"],
-                            "intent": r["intent"], "auto": {"error_free": m["error_free"], "fidelity_errors": m["fidelity_errors"],
+                            "intent": r["intent"], "auto": {"error_free": m["error_free"], "error_free_llm": m.get("error_free_llm"),
+                                                          "fidelity_errors": m["fidelity_errors"],
                                                           "policy_violations": m["n_policy_violations"],
                                                           "level_violations": len(m.get("level_violations") or [])}}
     for a in [x.strip() for x in args.annotators.split(",") if x.strip()]:

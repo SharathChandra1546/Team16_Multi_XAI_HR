@@ -1,6 +1,6 @@
 # Phase 3 results: real-LLM experiments (reduced study, finance + health)
 
-Status: **v2, 2026-10-26** (v1 plus a top-up run that added one credit case to the main comparison and one credit
+Status: **v2.1, 2026-10-26** (adds the coverage-risk curve, the measured part of Table VI and the annotation sheets) (v2: v1 plus a top-up run that added one credit case to the main comparison and one credit
 case to the LLM-fault test). Every number below comes from `backend/results/paper/numbers.json`, built by `eval/paper_tables.py` from the raw
 run files (backed up in `backend/results_phase3/`). The non-LLM results (models, fairness, cost sensitivity, routing,
 guardrail) are in `docs/RESULTS_REAL_DATA.md`.
@@ -15,6 +15,8 @@ guardrail) are in `docs/RESULTS_REAL_DATA.md`.
 | Ablations | `table_ablations.tex` | `.csv`, `fig_ablation.pdf/.png` |
 | LLM-written faults | `table_faults_llm.tex` | `.csv`, `fig_faults_llm.pdf/.png` |
 | Template faults (upper bound) | `table_faults_template.tex` | `.csv` |
+| Fig. 2 coverage-risk | `table_coverage_risk.tex` | `.csv`, `fig_coverage_risk.pdf/.png` |
+| Table VI agreement (measured part) | `table_scorer_agreement.tex` | `.csv` |
 
 The `.tex` tables use `booktabs` (`\usepackage{booktabs}`). `records.csv` holds one row per generated text (with
 the text), and `numbers.json` holds every figure with its interval.
@@ -121,6 +123,57 @@ study, so the gaps are reported, not fixed):
 
 Template faults are an upper bound (the checks were written knowing those patterns); report the LLM-written figure
 as the realistic one.
+
+## Fig. 2. Coverage-risk (main comparison)
+
+A case is explained when its escalation score (prediction-interval width and out-of-distribution component) is below
+a threshold and sent to a person otherwise. The score belongs to the case, so every system faces the same cases.
+
+| System | Score < 0.3 | < 0.5 | < 0.7 | All cases |
+|---|---|---|---|---|
+| Ours (full pipeline) | 75% / 0% | 75% / 0% | 88% / 0% | 100% / 0% |
+| Direct prompting | 75% / 58% | 75% / 58% | 88% / 57% | 100% / 56% |
+| B3 (LLM reviewer loop) | 75% / 17% | 75% / 17% | 88% / 21% | 100% / 25% |
+| Explingo-style | 73% / 55% | 73% / 55% | 87% / 54% | 100% / 53% |
+| Critic-Rule (He & Martens) | 73% / 36% | 73% / 36% | 87% / 38% | 100% / 33% |
+| Musicco et al.-style | 73% / 64% | 73% / 64% | 87% / 62% | 100% / 60% |
+
+Cells: share of cases explained / error rate among the explained texts (LLM scorer).
+
+**Finding to state:** escalating the most uncertain cases barely changes the baselines' error rates (direct prompting
+58% at 75% coverage against 56% at full coverage). The escalation score measures uncertainty in the prediction, not
+the risk that an LLM misstates the evidence; so escalation complements the verifier but cannot replace it. Our pipeline
+has no error at any coverage. With 15 to 16 texts per system the curves are coarse.
+
+## Table VI. Agreement
+
+**Measured: the two automatic scorers.** "Error present" according to the independent LLM scorer (gpt-oss-120b) and
+to the rule-based checker, on the same texts.
+
+| Texts | n | Both correct | Both error | Disagree | Agreement | Cohen's κ |
+|---|---|---|---|---|---|---|
+| Main comparison (Qwen writer) | 93 | 54 | 33 | 6 | 93.5% | 0.86 |
+| Ablations (Gemma writer) | 200 | 197 | 0 | 3 | 98.5% | 0.00 |
+| All texts | 293 | 251 | 33 | 9 | 96.9% | 0.86 |
+
+**Finding to state:** the two scorers agree on 93.5% of the main-comparison texts (κ = 0.86, almost perfect on the
+Landis–Koch scale), so the headline result does not depend on which scorer is used. On the ablation texts the
+rule-based checker found no error at all, so κ is 0 there by construction despite 98.5% raw agreement (the kappa
+prevalence paradox); report that row with its counts.
+
+**Pending: human agreement.** The rows "annotators, error present", "annotators, policy compliance", "annotators,
+audience fit" and "automatic vs adjudicated" can only come from two people labelling independently. No values are
+given here, and none should be entered until the labels exist. Everything else is ready:
+
+1. Send annotator A only `annotation_sheets/sheet_A.csv`, annotator B only `sheet_B.csv`, and both
+   `docs/ANNOTATION_GUIDE.md`. The 93 items are every main-comparison text, the system names are hidden, and each
+   sheet has its own order. Keep `items_private.json` away from the annotators (it names the systems).
+2. Both label the first 10 rows of the guide's practice set together, then everything else alone (about 2 to 3 hours
+   each).
+3. Put the returned sheets in `backend/annotation/phase3/` and run
+   `python eval/score_annotations.py --dir annotation/phase3`. It reports Cohen's κ for faithful, unsupported claim
+   and policy violation, quadratic-weighted κ for level fit and clarity, the human error-free rate per system, and
+   κ between the automatic verdict (LLM scorer) and the adjudicated human verdict: the four rows of Table VI.
 
 ## Caveats (state them)
 

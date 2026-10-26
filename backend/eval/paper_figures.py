@@ -118,6 +118,42 @@ def fig_faults(num):
     save(fig, "fig_faults_llm")
 
 
+def fig_coverage(num):
+    cov = num.get("coverage_risk") or {}
+    if not cov:
+        return
+    colors = {"ours:full": INK, "direct": "#2a78d6", "b3": "#eb6834", "explingo": "#1baf7a",
+              "critic_rule": "#eda100", "musicco": "#e87ba4"}
+    markers = {"ours:full": "D", "direct": "o", "b3": "s", "explingo": "^", "critic_rule": "v", "musicco": "P"}
+    fig, ax = plt.subplots(figsize=(3.4, 2.9))
+    for s, pts in cov.items():
+        if not pts:
+            continue
+        pts = sorted(pts, key=lambda p: p["coverage"])
+        xs = [100 * p["coverage"] for p in pts]
+        ys = [100 * p["error_rate"] for p in pts]
+        ax.plot(xs, ys, color=colors.get(s, MUTED), linewidth=2 if s == "ours:full" else 1.4,
+                marker=markers.get(s, "o"), markersize=4.5, markeredgecolor="white", markeredgewidth=0.6,
+                label=LABEL.get(s, s), zorder=3 if s == "ours:full" else 2)
+    ax.set_xlim(-3, 103)
+    ax.set_ylim(-3, 103)
+    ax.set_xticks([0, 20, 40, 60, 80, 100])
+    ax.set_yticks([0, 20, 40, 60, 80, 100])
+    ax.set_xlabel("Coverage: cases explained (%)", color=INK2, fontsize=8)
+    ax.set_ylabel("Error rate among explained (%)", color=INK2, fontsize=8)
+    ax.grid(color=GRID, linewidth=0.6)
+    ax.set_axisbelow(True)
+    for sp in ("top", "right"):
+        ax.spines[sp].set_visible(False)
+    for sp in ("left", "bottom"):
+        ax.spines[sp].set_color(MUTED)
+    ax.tick_params(colors=INK2, labelsize=8, length=0)
+    ax.legend(frameon=False, fontsize=6.5, loc="lower center", bbox_to_anchor=(0.45, 1.0), ncol=3, handletextpad=0.3,
+              columnspacing=0.8, borderaxespad=0.1)
+    fig.tight_layout()
+    save(fig, "fig_coverage_risk")
+
+
 def save(fig, name):
     fig.savefig(OUT / f"{name}.pdf")
     fig.savefig(OUT / f"{name}.png", dpi=300)
@@ -132,6 +168,7 @@ def main() -> int:
     fig_main(num)
     fig_ablation(num)
     fig_faults(num)
+    fig_coverage(num)
     return 0
 
 

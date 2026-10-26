@@ -165,7 +165,9 @@ def main() -> int:
             per[k]["level_fit"].append(r["level_fit"])
             per[k]["clarity"].append(r["clarity"])
             if he is not None:
-                ce = 0 if p["auto"]["error_free"] else 1
+                # the independent LLM scorer's verdict when the run had one, else the rule-based checker's
+                auto_ok = p["auto"].get("error_free_llm")
+                ce = 0 if (p["auto"]["error_free"] if auto_ok is None else auto_ok) else 1
                 cell = 0 if (ce and he) else 1 if ce else 2 if he else 3
                 tp[k][cell] += 1
     res["systems"] = {}
@@ -182,6 +184,19 @@ def main() -> int:
         cf = c["both_flag"] + c["checker_only"]
         v["checker_recall_of_human_errors"] = rate(c["both_flag"], he)
         v["checker_precision"] = rate(c["both_flag"], cf)
+    # Cohen's kappa between the automatic verdict and the (adjudicated) human verdict, all items
+    cells = [0, 0, 0, 0]
+    for k, v in tp.items():
+        if k.startswith("all/"):
+            cells = [a + b for a, b in zip(cells, v)]
+    both, conly, honly, neither = cells
+    n_all = sum(cells)
+    if n_all:
+        po = (both + neither) / n_all
+        pc, ph = (both + conly) / n_all, (both + honly) / n_all
+        pe = pc * ph + (1 - pc) * (1 - ph)
+        res["checker_vs_human_kappa"] = {"n": n_all, "observed_agreement": po,
+                                         "kappa": None if pe == 1 else (po - pe) / (1 - pe), "cells": cells}
     (d / "scores.json").write_text(json.dumps(res, indent=1), encoding="utf-8")
 
     f = lambda x: "n/a" if x is None else f"{x:.2f}"
@@ -198,6 +213,10 @@ def main() -> int:
                   f"{ci(v['checker_recall_of_human_errors'])} | {ci(v['checker_precision'])} |")
     md += ["", "The checker is the automatic measurement in app/metrics/measure.py. Recall: of the items humans marked as having an error, "
            "the share the checker also flagged. Precision: of the items the checker flagged, the share humans also marked."]
+    kv = res.get("checker_vs_human_kappa")
+    if kv:
+        md += ["", f"Automatic verdict vs (adjudicated) human verdict, error present: kappa {f(kv['kappa'])} "
+               f"(agreement {kv['observed_agreement']:.1%}, n = {kv['n']}; cells both/auto only/human only/neither = {kv['cells']})."]
     (d / "scores.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
     return 0
